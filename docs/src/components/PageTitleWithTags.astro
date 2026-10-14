@@ -1,0 +1,20 @@
+---
+import TagBadges from './TagBadges.astro';
+
+const { title, tags } = Astro.locals.starlightRoute.entry.data;
+---
+
+<h1 id="_top">{title}</h1>
+<TagBadges tags={tags ?? []} />
+
+<style>
+	@layer starlight.core {
+		h1 {
+			margin-top: 1rem;
+			font-size: var(--sl-text-h1);
+			line-height: var(--sl-line-height-headings);
+			font-weight: 600;
+			color: var(--sl-color-white);
+		}
+	}
+</style>

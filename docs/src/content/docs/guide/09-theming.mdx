@@ -1,0 +1,150 @@
+---
+title: テーマとカスタマイズ
+description: ThemeProvider によるライト / ダーク切り替え、テーマ領域、ブランドカラーの上書き、デザイントークンの使い方
+tags: [engineer]
+type: guide
+audience: engineer
+difficulty: intermediate
+sidebar:
+  order: 9
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Sun のテーマは **`data-theme` 属性 → CSS 変数 → コンポーネントのスタイル** という CSS のカスケードだけで動いています。コンポーネントは JavaScript のテーマオブジェクトを参照しないため、テーマを切り替えてもコンポーネントの再レンダリングは発生しません。
+
+## ThemeProvider でライト / ダーク / システムを切り替える
+
+`ThemeProvider` は `/theme-provider` から import します。
+
+```tsx
+// app/layout.tsx（Server Component のままで OK）
+import '@sun-asterisk/nova/styles';
+import { ThemeProvider, getThemeScript } from '@sun-asterisk/nova/theme-provider';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        {/* ハイドレーション前に data-theme を設定し、テーマのちらつき（FOUC）を防ぐ */}
+        <script dangerouslySetInnerHTML={{ __html: getThemeScript() }} />
+      </head>
+      <body>
+        <ThemeProvider defaultMode="system">{children}</ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+- `ThemeProvider` 自体が `'use client'` を宣言しているので、ルートレイアウト（Server Component）にそのまま置けます。
+- `getThemeScript()` が書き換える `<html>` には `suppressHydrationWarning` を付けてください。
+- React 19 / Next.js 16 の開発モードでは生の `<script>` に警告が出ます（本番は問題なし）。気になる場合は `next/script` を使います:
+  `<Script id="sun-theme" strategy="beforeInteractive" dangerouslySetInnerHTML={{ __html: getThemeScript() }} />`
+
+### 主な props
+
+| prop | 既定値 | 説明 |
+|---|---|---|
+| `defaultMode` | `'system'` | 非制御モードの初期値。`'light'` / `'dark'` / `'system'` |
+| `mode` / `onModeChange` | — | 制御モードで使う場合に指定 |
+| `storageKey` | `'sun-theme'` | ユーザーの選択を保存する localStorage のキー |
+| `storage` | localStorage | 保存方法を差し替える。`null` で保存しない |
+| `disableTransitionOnChange` | `false` | 切り替え時のトランジション抑止を無効にする |
+| `scoped` | `false` | `<html>` ではなくラッパー `<div>` にテーマを適用し、独立したテーマ領域を作る |
+| `unmanaged` | `false` | `data-theme` を自分では書き込まない（アプリ側で既にテーマ管理をしている場合） |
+
+`getThemeScript({ storageKey, defaultMode })` には `ThemeProvider` と同じ値を渡してください。
+
+### useTheme
+
+テーマに応じて JS 側で処理を変えたいとき（画像の差し替えなど）だけ `useTheme()` を使います。スタイリングのためには不要です。
+
+```tsx
+'use client';
+import { useTheme } from '@sun-asterisk/nova/theme-provider';
+
+export function ThemeToggle() {
+  const { mode, resolvedTheme, setMode } = useTheme();
+  return (
+    <button onClick={() => setMode(resolvedTheme === 'dark' ? 'light' : 'dark')}>
+      現在: {mode}
+    </button>
+  );
+}
+```
+
+- `mode` はユーザーの選択（`'system'` を含む）、`resolvedTheme` は実際に適用されているテーマ（`'light'` / `'dark'`）です。
+- SSR 時のハイドレーションのレンダーでは `defaultMode` の値を返し、その直後に保存済みの値で再レンダーされます。色は `getThemeScript()` が設定した `data-theme` から決まるので、ちらつきは起きません。
+
+## テーマ領域（scoped / data-theme）
+
+`data-theme="light"` / `"dark"` は `<html>` だけでなく**任意の要素**に付けられます。その要素の配下では、Sun のコンポーネントも `var(--color-sds-*)` を使った自前の CSS も、その領域のテーマに従います。`<ThemeProvider scoped>` はこの仕組みを使っています。
+
+```tsx
+<ThemeProvider scoped defaultMode="light" className="bg-sds-background-base">
+  {/* ダークなページの中に、常にライトのウィジェットを置く */}
+</ThemeProvider>
+```
+
+<Aside type="caution" title="テーマ領域の注意点">
+- **領域自体には背景色が付きません。** ダークなページの中のライト領域では、ライトの文字がダークの背景に乗ってしまうため、`bg-sds-background-base` などで領域に背景を付けてください。
+- **Portal で描画されるもの**（Modal / DropdownMenu / Tooltip / DatePicker）は、既定では `document.body` に描画されるため領域の外に出てしまいます。`ModalContent` / `DropdownMenuContent` / `TooltipContent` / `DatePicker` の `container` prop に領域の要素（`ref` で取得）を渡してください。
+- scoped な `ThemeProvider` は選択を保存しません。`mode="system"` の場合、サーバー側では `light` で描画され、ハイドレーション後に切り替わります。
+</Aside>
+
+## ブランドカラーを上書きする
+
+JavaScript のテーマオブジェクトはありません。ブランドに合わせた色の変更は、**公開されているセマンティック変数 `--color-sds-<role>`** を任意の祖先要素で上書きするだけです。
+
+```css
+.brand-ocean {
+  --color-sds-surface-primary: #0b5cad;
+  --color-sds-surface-primary-hover: #0a4f96;
+  --color-sds-text-link: #0b5cad;
+}
+
+/* ダークテーマでは別の値にしたい場合 */
+[data-theme='dark'] .brand-ocean,
+.brand-ocean[data-theme='dark'] {
+  --color-sds-surface-primary: #7fb8f0;
+}
+```
+
+その要素の配下にあるすべての Sun コンポーネントと、`var(--color-sds-surface-primary)` を使う自前の CSS に反映されます。
+
+<Aside type="danger" title="上書きしてはいけない変数">
+`--color-sds-*--ref` は内部用の変数です。名前や存在が予告なく変わる可能性があるため、上書きしないでください。
+</Aside>
+
+- 入れ子の `data-theme` 領域は、その領域のテーマの値を当て直します。入れ子の領域にもブランドを適用したい場合は、`.brand-ocean, .brand-ocean [data-theme] { … }` のように領域も対象にするか、領域の要素自体にブランドのクラスを付けてください。
+- ブランドのルールは CSS の `@layer` の外に書いてください。
+
+## デザイントークンを使う
+
+`/styles` を読み込んでいれば、すべてのトークンが CSS 変数として使えます。
+
+```css
+.my-card {
+  color: var(--color-sds-text-primary);
+  background: var(--color-sds-surface-base);
+  padding: var(--spacing-sds-200);
+  border-radius: var(--radius-sds-400);
+}
+```
+
+Tailwind v4 を使っていて `/global.css` を読み込んでいる場合（[インストールと基本の使い方](/guide/08-installation/#tailwind-css-と組み合わせる任意) 参照）は、同じトークンをユーティリティクラスとして使えます。
+
+| 種類 | 例 |
+|---|---|
+| 色（セマンティック） | `bg-sds-surface-primary` `text-sds-text-danger` `border-sds-border-focus` |
+| スペーシング | `p-sds-200` `gap-sds-150` |
+| 角丸 | `rounded-sds-400` |
+| 影 | `shadow-sds-level-3` |
+| タイポグラフィ | `typo-heading-desktop-h1` `typo-title-l` `typo-body-s` |
+
+色はプリミティブ（`--color-sds-neutral-800` など）ではなく、できるだけセマンティックなトークンを使ってください。プリミティブはテーマによって値が変わらないため、ダークテーマで意図しない見た目になります。
+
+## モーション
+
+`prefers-reduced-motion: reduce` が有効な環境では、ライブラリ全体のアニメーション（開閉アニメーションや Spinner の回転など）がグローバルに抑制されます。コンポーネントごとの対応は不要です。

@@ -1,0 +1,57 @@
+---
+title: Scrim
+description: スクリムは、前面のコンポーネントの背後に敷き、背後の画面が一時的に操作できないことを示す全画面の背景です。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">スクリムは、前面のコンポーネントの背後に敷き、背後の画面が一時的に操作できないことを示す全画面の背景です。装飾のための背景ではなく、操作の状態を伝えるための要素です。</p>
+
+![Scrim のバリエーション一覧](/assets/components/scrim/showcase.png)
+
+## 概要
+
+- 前面のコンポーネントが表示されるタイミングで同時にフェードインし、閉じるときにフェードアウトします
+- 背景のクリックで前面のコンポーネントを閉じられる場合は、スクリム全体がクリック領域になり、クリックするとすぐに閉じます
+- Snackbar のような、操作を妨げない一時的な通知には使いません
+
+**Modal では自分で置く必要はありません。** `ModalContent` が同じ背景を自動で表示します。`Scrim` を直接使うのは、ドロワーなど独自のオーバーレイを作る場合だけです。
+
+## 使い方
+
+```tsx
+import { Scrim } from '@sun-asterisk/nova/scrim';
+
+{open && (
+  <>
+    <Scrim onClick={() => setOpen(false)} />
+    <MyDrawer onClose={() => setOpen(false)} />
+  </>
+)}
+```
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `onClick` | `(event) => void` | — | 背景のクリックで前面のコンポーネントを閉じる場合に指定します |
+| `className` | `string` | — | 重なり順（`z-index`）を変える場合など |
+
+そのほか `<div>` の Props をすべて渡せます（`children` は受け付けません）。`ref` はスクリムの `<div>` を指します。
+
+色は `Background/Scrim` トークン（ライト `#00000094` / ダーク `#000000b8`）です。
+
+## アクセシビリティ
+
+- スクリムは支援技術からは隠されています（`aria-hidden="true"`）
+- 背景のクリックはマウス操作の補助です。前面のコンポーネント側で、`Esc` キーや閉じるボタンなどキーボードで閉じる手段を必ず用意してください
+- スクリム自体はフォーカスの閉じ込めやスクロールの固定を行いません。これらは前面のコンポーネントが担当します（Modal は対応済み）
+- フェードのアニメーションは、OS の「視差効果を減らす」設定が有効なときはほぼ瞬時になります
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-scrim--docs)
+- [Modal](/components/modal/)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/scrim.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

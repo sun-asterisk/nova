@@ -1,0 +1,7 @@
+# External-consumer fixtures are independent third-party-style apps
+# (test/consumers/README.md); `pnpm format` must not rewrite them. The
+# repo-owned harness (run.mjs, harness/) is still formatted.
+test/consumers/**
+!test/consumers/run.mjs
+!test/consumers/harness/
+!test/consumers/harness/**

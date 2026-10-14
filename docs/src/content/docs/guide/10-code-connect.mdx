@@ -1,0 +1,164 @@
+---
+title: Figma Code Connect
+description: Figma の Dev Mode / Figma MCP に Sun の実際の React コードを表示させる仕組みと、その運用方法
+tags: [engineer, designer]
+type: guide
+audience: engineer
+difficulty: intermediate
+sidebar:
+  order: 10
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## Code Connect とは
+
+Code Connect は、Figma の各コンポーネントに「対応する React コンポーネントはこれ」というマッピングを登録する仕組みです（**コード → Figma** の向き）。
+
+登録すると、Figma の **Dev Mode** と **Figma MCP**（Claude Code などから Figma を読むときの `get_design_context`）が返すコードが変わります。
+
+**登録前** — Figma から自動生成されたコード:
+
+```tsx
+<div className="flex items-center gap-2 px-3 py-2 bg-[#434343] rounded-lg">
+  <span className="text-white text-sm font-medium">送信</span>
+</div>
+```
+
+**登録後** — Sun の実際のコンポーネント:
+
+```tsx
+import { Button } from '@sun-asterisk/nova';
+
+<Button variant="primary" size="medium">送信</Button>
+```
+
+デザインから実装するときに Button などを手書きで作り直さずに済み、デザインシステムのコンポーネントがそのまま使われるようになります。
+
+## 対応状況（1.0.0 時点）
+
+### マッピング済み
+
+マッピング定義は `src/components/<name>/<Name>.figma.ts` にあります（アイコンを除き 25 ファイル）。
+
+| Figma のコンポーネント | 出力されるコード | 定義ファイル |
+|---|---|---|
+| Avatar | `Avatar`（Size / Type / Status / Ring） | `Avatar.figma.ts` |
+| Badge | `Badge` | `Badge.figma.ts` |
+| Button | `Button` | `Button.figma.ts` |
+| Icon Button | `Button iconOnly` | `IconButton.figma.ts` |
+| Checkbox | `Checkbox`（ラベルが ON のときは `<label>` 付き） | `Checkbox.figma.ts` |
+| Date Picker（パネル） | `DatePicker`（Style → `mode`、Actions / Today / Clear → `actions`） | `DatePicker.figma.ts` |
+| Divider / Horizontal | `Divider` | `Divider.figma.ts` |
+| Divider / Vertical | `Divider orientation="vertical"` | `DividerVertical.figma.ts` |
+| Menu Item | `DropdownMenuItem`（Option は `DropdownMenuCheckboxItem`、Danger は `destructive`） | `DropdownMenu.figma.ts` |
+| Group Header（メニュー） | `DropdownMenuLabel` / `DropdownMenuSeparator` | `DropdownMenuGroupHeader.figma.ts` |
+| Link | `Link` | `Link.figma.ts` |
+| Modal | `Modal` 一式（`ModalContent` / `ModalHeader` など。Status Icon は `status`） | `Modal.figma.ts` |
+| Progress Bar | `ProgressBar`（`value` と `aria-label` は仮の値） | `ProgressBar.figma.ts` |
+| Radio | `RadioGroupItem` | `RadioGroup.figma.ts` |
+| Scrim | `Scrim` | `Scrim.figma.ts` |
+| Scrollbar / Vertical | `Scrollbar` | `Scrollbar.figma.ts` |
+| Scrollbar / Horizontal | `Scrollbar` | `ScrollbarHorizontal.figma.ts` |
+| Snackbar | `showSnackbar()`（Status Icon → `variant`、Progress Bar → `progress`） | `Snackbar.figma.ts` |
+| Spinner | `Spinner`（Size / Inverse） | `Spinner.figma.ts` |
+| Status Icon | `StatusIcon`（Status / Inverse） | `StatusIcon.figma.ts` |
+| Switch | `Switch` | `Switch.figma.ts` |
+| Tab | `TabsTrigger`（アイコン・バッジも出力） | `Tabs.figma.ts` |
+| Text Area | `TextareaField` | `TextareaField.figma.ts` |
+| Text Field | `TextField` | `TextField.figma.ts` |
+| Tooltip | `TooltipContent` | `Tooltip.figma.ts` |
+| アイコン（全 61 種 + `Icon / Empty`） | `IconPencil` などのアイコンコンポーネント | `icons/Icon*.figma.ts`（`pnpm run figma:icons` で生成） |
+
+アイコンもマッピングされているため、Button の Prefix / Suffix Icon、Icon Button のアイコン、TextField の Prefix / Suffix Icon（`startAdornment` / `endAdornment`）、Tab のアイコンも、`<IconPencil />` のような実際のコードとして出力されます。Figma の空のプレースホルダー `Icon / Empty` は何も出力しません。
+
+### マッピングなし
+
+| コンポーネント | 状況 |
+|---|---|
+| Calendar | 専用のマッピングはありません。Figma の Date Picker パネルは `DatePicker` にマッピングされています |
+| Input / Textarea | 意図的に対象外。Figma の Text Field / Text Area は `TextField` / `TextareaField` にマッピングされ、それらが内部で `Input` / `Textarea` を使っています |
+
+### Figma の状態とコードの対応
+
+- Figma の **Hover / Focus / Active** は CSS の疑似クラスで実装しているため、コードには出力されません。props として出力されるのは **Disabled** など、実際に props で切り替える状態だけです。
+- コードに対応する props がない Figma のプロパティは出力されません。
+
+## ホワイトラベル運用（Figma ファイルを複製して使う場合）
+
+マッピング定義ファイル（`src/components/<name>/<Name>.figma.ts`）に書かれている Figma の URL は、fileKey 部分が **`fSzxt8wKkXsn8fmxkPBUr2` で固定**です。この fileKey は差し替え用の目印で、実際の登録先は publish の時点で決まります。
+
+- **fileKey:** `figma.config.json` の `documentUrlSubstitutions` が、publish の時点で URL の fileKey 部分だけを `.env`（CI ではリポジトリの Variable）の `FIGMA_FILE_KEY` に差し替えます
+- **node ID:** 正式ファイル **Nova｜Master** のコンポーネントの node ID です（例: Checkbox `17503:9619`、Radio `17503:9702`、Avatar `16593:8749`）。Nova｜Master と、それを複製したファイルに対して有効です
+
+```json
+"documentUrlSubstitutions": {
+  "https://www.figma.com/design/fSzxt8wKkXsn8fmxkPBUr2": "https://www.figma.com/design/$FIGMA_FILE_KEY"
+}
+```
+
+<Aside type="danger">
+`*.figma.ts` の URL を手で書き換えないでください。コンポーネント数 × プロダクト数の編集が発生し、canonical 側の更新を取り込むたびにコンフリクトします。
+</Aside>
+
+<Aside type="caution" title="node ID が一致するのは「本当に複製したファイル」同士だけ">
+この方式は、Figma ファイルを複製しても node ID が保存されることを前提にしています。複製関係にない別のファイルでは node ID が一致せず、`node not found in file` で検証に失敗します（実際に、複製ではないファイルで一部のマッピングが失敗した例があります）。
+新しいファイルに向けるときは、必ず `pnpm run code-connect:check` をそのファイルに対して実行し、失敗がないことを確認してください。
+</Aside>
+
+### 複製先での手順
+
+1. Figma ファイルを複製し、複製先のコンポーネントを**チームライブラリに publish** する（これを忘れると紐付きません）
+2. `.env` を設定する
+
+   ```bash
+   FIGMA_FILE_KEY=<複製先の fileKey>
+   FIGMA_ACCESS_TOKEN=<Figma の Personal access token>
+   ```
+
+   トークンは Figma の **Settings → Security → Personal access tokens** で発行します。
+3. 確認してから publish する
+
+   ```bash
+   pnpm run code-connect:check     # 登録先の fileKey とノードの存在を確認（書き込みはしない）
+   pnpm run code-connect:publish   # 実際に登録する
+   ```
+
+4. 複製先の Dev Mode で Button のインスタンスを選択し、`<Button variant="primary" size="medium">` が表示されれば成功です。
+
+## コマンド
+
+| コマンド | 内容 |
+|---|---|
+| `pnpm run typecheck:figma` | `*.figma.ts` の型チェック |
+| `pnpm run code-connect:check` | dry-run。Figma には書き込まないが、ノードの存在を Figma に問い合わせて検証するため **`FIGMA_ACCESS_TOKEN` が必要** |
+| `pnpm run code-connect:build` | `typecheck:figma` + `code-connect:check` |
+| `pnpm run code-connect:publish` | Figma に登録する（`FIGMA_ACCESS_TOKEN` が必要） |
+| `pnpm run figma:icons` | アイコンの `*.figma.ts` を Figma から生成する |
+
+<Aside type="caution">
+`code-connect:publish` は登録先ファイルのチームライブラリに書き込み、利用者全員の Dev Mode にすぐ反映されます。手動で実行する前にチームに確認してください。
+</Aside>
+
+## CI による自動 publish
+
+master への push（PR のマージ）で `src/components/**/*.figma.ts` か `figma.config.json` が変わると、GitHub Actions（`.github/workflows/code-connect-deploy.yml`）が**変更されたマッピングだけ**を 1 ファイルずつ publish します。1 ファイルずつ実行するのは、1 回の CLI 実行に壊れたファイルが 1 つでも含まれると、同時に指定した他のファイルも登録されなくなるためです。
+
+- つまり、**`*.figma.ts` を変更する PR をマージすることが publish の承認**になります。レビューはその前提で行ってください。
+- このワークフローには、リポジトリの Secret `FIGMA_ACCESS_TOKEN` と Variable `FIGMA_FILE_KEY` の設定が必要です。
+
+## マッピングを追加・変更するとき
+
+詳細なルールはリポジトリの `.claude/rules/figma-code-connect.md` にあります。主なものは次のとおりです。
+
+- **形式は parserless template**（`.figma.ts` + `figma.code`）。`.figma.tsx` + `figma.connect()` は使わない
+- 生成の元データは Figma MCP の `get_code_connect_suggestions` → `get_context_for_code_connect` から取る
+- `getEnum` には Figma の variant の値を**すべて**列挙する（漏れると `undefined` が出力される）
+- コード側に存在しない props を作らない
+- アイコンなどのネストしたインスタンスは `getInstanceSwap()` / `findInstance()` + `executeTemplate()` で解決し、レイヤー名から決め打ちしない
+- トグルが OFF のときに存在しない値は、三項演算子などで必ずガードしてから埋め込む
+- boolean の `false` 側を省略してよいのは、コンポーネントの既定値が `false` のときだけ
+- プロパティ名・値は Figma と完全一致させる（Figma 側の誤記もそのまま。例: Checkbox の State が `Desabled`）
+- コンポーネントの props を変えたら、対応する `.figma.ts` も同じ変更で見直す
+
+`*.figma.ts` はライブラリの成果物には含まれません（`tsconfig.app.json` / `tsconfig.build.json` / `vite.config.ts` で除外済み）。

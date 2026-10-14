@@ -1,0 +1,41 @@
+---
+title: Badge
+description: バッジは、要素に小さなラベルを付加して情報の補足や状態の通知を行うコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">バッジは、要素に小さなラベルを付加して情報の補足や状態の通知を行うコンポーネントです。未読メッセージ数やタグの表示、状態の識別などに使用されます。</p>
+
+![Badge のバリエーション一覧](/assets/components/badge/showcase.png)
+
+## ガイドライン
+
+### 配置
+
+バッジは、関連する要素の視認性や意味を補完するため、要素の近くかつ一貫した位置に配置します。
+親要素に対して相対的な配置の制約を定義してください。
+
+![未読メッセージ・通信状況・アイコンなど、要素に対するバッジの配置例](/assets/components/badge/g2-1.png)
+
+### 文字数の制限
+
+Countの場合、表示される桁数が多くなると数字が読みづらくなったり、レイアウトが著しく崩れる可能性があります。
+最大値を考慮して最小限に留め、冗長な情報を避けましょう。
+
+![10+ / 99+ / 999+ のカウント表示例](/assets/components/badge/g2-2.png)
+
+## デザイン仕様
+
+### サイズ
+
+バッジのサイズは、親要素のサイズに比例させます。
+
+![バッジのサイズのレッドライン仕様](/assets/components/badge/g3-1.png)
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-badge--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Badge フレームからの引用です。</Aside>

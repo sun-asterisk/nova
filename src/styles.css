@@ -1,0 +1,122 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "../scripts/global.css";
+
+/*
+ * Keep Tailwind's automatic source detection out of the external-consumer
+ * fixtures (test/consumers/**, see test/consumers/README.md). Those apps use
+ * real utility class names in their own sources (e.g. the Tailwind-extension
+ * section of vite-react19-tailwind), and detection is not limited to src/:
+ * without this line, moving the fixtures into the repo grew dist/index.css by
+ * 601 bytes of utilities no library component uses (measured 2026-09-29:
+ * sha256 b6f7fe83… → 5cedc549…). With it, dist/ is byte-identical to the
+ * pre-fixture build.
+ */
+@source not "../test/consumers";
+
+/*
+ * Spinner's rotation (src/components/spinner). Deliberately NOT Tailwind's
+ * built-in `animate-spin` (`spin 1s linear infinite`, 360°) — Figma's own
+ * spec calls for a 358° sweep (2° short of a full turn, so the loop seam
+ * doesn't read as a momentary freeze) with a specific ease-in-out curve,
+ * not a linear one. The -90deg/268deg range bakes in rotating the arc's
+ * default 3-o'clock start to Figma's 12-o'clock start (268 = -90 + 358),
+ * so no separate static offset is needed. See docs/components/spinner.md.
+ */
+@theme {
+  --animate-spinner-rotate: spinner-rotate 1s cubic-bezier(0.5, 0.2, 0.5, 0.8) infinite;
+}
+
+@keyframes spinner-rotate {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(268deg);
+  }
+}
+
+/*
+ * Global reduced-motion foundation (Phase X Foundation Capability Audit,
+ * §10.5 / P0.2) — recommended twice in docs/architecture/
+ * component-system-capabilities.md §3.13 and previously unimplemented.
+ * Every current CSS *animation* in this library (Modal/Snackbar/
+ * DropdownMenu/DatePickerPopover/Tooltip's `animate-in`/`animate-out`
+ * enter-exit effects via `tw-animate-css`, and Spinner's own continuous
+ * `spinner-rotate`) collapses to near-instant, once, under the user's OS
+ * `prefers-reduced-motion: reduce` preference — with zero JavaScript, zero
+ * new dependency, and zero per-component `motion-reduce:` classes required
+ * going forward (existing ones, e.g. on Spinner/ProgressBar, remain
+ * harmless belt-and-suspenders, not required).
+ *
+ * Deliberately scoped to `animation-*` only, NOT `transition-*`:
+ *
+ * - `0.01ms` (not `0`/`none`) is the standard technique specifically so
+ *   `animationend`/`transitionend` still fire — Radix's `Presence` (which
+ *   every Sun overlay's enter/exit lifecycle depends on) listens for that
+ *   event to actually unmount; setting a duration of exactly `0` or
+ *   `animation: none` would mean the event never fires and the exiting
+ *   element would stay mounted forever.
+ * - `transition-*` is intentionally NOT touched here. Snackbar's own
+ *   auto-dismiss countdown (`src/components/snackbar/ProgressBar.tsx`) uses
+ *   an inline `style.transition = 'width {duration}ms linear'` as its ACTUAL
+ *   timing mechanism, not decorative motion — collapsing `transition-duration`
+ *   globally would make every Snackbar auto-dismiss almost instantly for
+ *   reduced-motion users, which is a functional regression (less time to
+ *   read/act on it), not an accessibility improvement. Ordinary hover/focus
+ *   color `transition-*` utilities used elsewhere are unaffected either way,
+ *   consistent with common a11y guidance that `prefers-reduced-motion`
+ *   targets movement/transform-style animation, not simple color fades.
+ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Native `color-scheme` (Phase X Foundation Capability Audit §10.4/P1.4) —
+ * ThemeProvider reads `prefers-color-scheme` to resolve `system` mode and
+ * writes `data-theme`, but never told the browser itself which native
+ * color scheme is active. `color-scheme` is a separate signal browser-native
+ * UI (scrollbars, form-control chrome, text-selection highlight in some
+ * browsers) consumes independently of the app's own CSS variables —
+ * confirmed missing via `grep` across src/components/themeProvider/* and
+ * this file before this addition. `next-themes` exposes the equivalent as
+ * its `enableColorScheme` prop.
+ *
+ * Deliberately CSS-only — no ThemeProvider.tsx/ThemeScript.ts change. The
+ * selectors exactly mirror scripts/global.css's own dark-mode bridge
+ * (`@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) }`
+ * for the no-JS/system-only case, `[data-theme="dark"]` for the JS-managed
+ * case), so `color-scheme` always tracks the same condition every other
+ * dark-mode CSS variable in this library already tracks — including
+ * `ThemeProvider`'s `scoped` mode: `[data-theme]` is intentionally NOT
+ * restricted to `:root`, since a scoped wrapper `<div>` also carries the
+ * attribute, and `color-scheme` is inherited — an explicit `[data-theme=
+ * "light"]` rule is required (not just the `:root` default) so a scoped
+ * light region nested inside a dark host page correctly overrides the
+ * inherited `dark` value from its ancestor, rather than silently keeping
+ * the host's native form-control/scrollbar coloring.
+ */
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+  }
+}
+
+[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+}

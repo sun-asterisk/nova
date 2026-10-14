@@ -1,0 +1,83 @@
+name: Code Connect Deploy
+
+# Publishes the Figma Code Connect mappings (src/components/**/*.figma.ts) that
+# changed in the latest release commit to the public Nova Figma file, so Dev
+# Mode shows real @sun-asterisk/nova code. Each mapping is published on its own,
+# so one failing mapping does not block the others.
+#
+# Requires repo secret FIGMA_ACCESS_TOKEN and repo variable FIGMA_FILE_KEY
+# (the public Nova Figma file).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/components/**/*.figma.ts'
+      - 'figma.config.json'
+
+concurrency:
+  group: code-connect-deploy
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          # Need the previous commit to diff against — a shallow (depth 1)
+          # checkout has no parent to compare with.
+          fetch-depth: 2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Detect changed .figma.ts files
+        id: changed
+        run: |
+          # HEAD~1 follows the first parent, so for a merge commit this is
+          # master's tip before the merge — i.e. the full diff the push
+          # introduced, regardless of how many commits were inside the PR.
+          FILES=$(git diff --name-only --diff-filter=ACMR HEAD~1 HEAD -- 'src/components/**/*.figma.ts')
+          {
+            echo 'files<<EOF'
+            echo "$FILES"
+            echo EOF
+          } >> "$GITHUB_OUTPUT"
+          if [ -z "$FILES" ]; then
+            echo "No .figma.ts files changed (only figma.config.json did) — nothing to publish."
+          else
+            echo "Changed .figma.ts files:"
+            echo "$FILES"
+          fi
+
+      - name: Publish each changed mapping independently
+        if: steps.changed.outputs.files != ''
+        env:
+          FIGMA_FILE_KEY: ${{ vars.FIGMA_FILE_KEY }}
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+        run: |
+          set +e
+          overall=0
+          while IFS= read -r file; do
+            [ -z "$file" ] && continue
+            echo "::group::Publishing $file"
+            node scripts/code-connect-publish.mjs -f "$file"
+            status=$?
+            if [ $status -ne 0 ]; then
+              echo "::error file=$file::Failed to publish this Code Connect mapping (exit $status) — see the log above for the reason (parse/typecheck error, or a Figma-side validation failure such as a node that does not exist in the target Figma file)."
+              overall=1
+            fi
+            echo "::endgroup::"
+          done <<< "${{ steps.changed.outputs.files }}"
+          exit $overall

@@ -1,0 +1,68 @@
+---
+title: Switch
+description: Switch は、ON/OFF の二択を切り替えるためのインタラクティブコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">Switch は、ON/OFF の二択を切り替えるためのインタラクティブコンポーネントです。主に設定画面やユーザー環境の制御（有効・無効やテーマの切り替えなど）、操作が即時に反映されるシーンで使用します。</p>
+
+![Switch のバリエーション一覧](/assets/components/switch/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+Switchは、ユーザーが値を変更した瞬間に追加の確認手順なしで即座にシステムに反映される場合に使用します。保存ボタンや適用ボタンを必要とする場合は、スイッチではなくチェックボックスの使用を検討してください。
+
+ユーザーにとって、より安全、またはより一般的に選択されるであろう状態をデフォルト（初期状態）に設定します。
+
+![即時反映される通知設定での Do の例](/assets/components/switch/g2-1.png)
+
+**Do** 切り替えた結果がすぐに反映されるケースで使用する
+
+![保存ボタンを伴う通知設定での Don't の例](/assets/components/switch/g2-2.png)
+
+**Don't** 保存が必要な状態では、Switchはユーザーに「即時反映される」という期待を裏切る可能性がある
+
+### 種類と使い分け
+
+- **Medium**
+  最も標準的なサイズ。設定画面など、ほとんどの場面でこのサイズを使用します。
+- **Large**
+  モバイルデバイスでの主要な設定項目や、ユーザーに特に注目してほしい重要な切り替えに使用します。
+
+### ラベルと配置
+
+Switchが何をコントロールするのかを明確にするため、必ずラベルを付けます。ラベルのテキストは「通知」「ダークモード」のように、具体的かつ簡潔な名詞にし、「通知をオンにする」のような動詞句は避けます。
+
+ラベルの配置はSwitchの左側を推奨します。リスト形式の設定項目では、ラベルの左揃え・Switch の右揃えで整列させてください。
+
+![名詞ラベルを使用した Do の例](/assets/components/switch/g2-3.png)
+
+**Do** ラベルに具体的かつ簡潔な名詞を使用する
+
+![動詞句ラベルを使用した Don't の例](/assets/components/switch/g2-4.png)
+
+**Don't** ラベルに動詞句を使用する
+
+## デザイン仕様
+
+### サイズ
+
+トラックは固定サイズ、ハンドルはホバー時にわずかに横方向へ拡張し、ドロップシャドウが付与されます。
+
+![Medium / Large のサイズのレッドライン仕様](/assets/components/switch/g3-1.png)
+
+### タップ領域
+
+見た目のサイズとは別に、トグルスイッチ全体に最小 44×44px のタップ領域を確保します。
+
+![Medium / Large のタップ領域の仕様](/assets/components/switch/g3-2.png)
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-switch--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Switch フレームからの引用です。</Aside>

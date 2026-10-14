@@ -1,0 +1,166 @@
+---
+title: インストールと基本の使い方
+description: React プロジェクトに @sun-asterisk/nova を導入する手順
+tags: [engineer]
+type: guide
+audience: engineer
+difficulty: basic
+sidebar:
+  order: 8
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+Nova の React コンポーネントは、npm パッケージ `@sun-asterisk/nova` として npm で公開しています。
+
+## 動作要件
+
+| 項目 | 要件 |
+|---|---|
+| React / React DOM | 18 または 19 |
+| TypeScript | 5 以上を推奨（型定義同梱） |
+| Tailwind CSS | **任意**（v4 以上）。コンポーネントの表示には不要です |
+
+コンポーネントのスタイルはコンパイル済みのスタイルシートで提供されるため、Tailwind を使っていないプロジェクトでもそのまま動作します（Vite / Next.js / React Router で動作確認済み）。
+
+## インストール
+
+```bash
+pnpm add @sun-asterisk/nova
+# または
+npm install @sun-asterisk/nova
+```
+
+
+## スタイルシートの読み込み（必須）
+
+アプリのエントリポイント（Vite なら `main.tsx`、Next.js ならルートの `app/layout.tsx`）で、**一度だけ**スタイルシートを読み込みます。
+
+```ts
+import '@sun-asterisk/nova/styles';
+```
+
+<Aside type="caution">
+CSS は自動では注入されません。この import を忘れるとコンポーネントがスタイルなしで表示されます。
+`/styles.css` という同じ内容の別名もあります。
+</Aside>
+
+`/styles` にはすべてのデザイントークン（CSS 変数）も含まれているため、自前の CSS からトークンを使う場合も追加の import は不要です。
+
+## 基本の使い方
+
+```tsx
+import {
+  Button,
+  TextField,
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from '@sun-asterisk/nova';
+
+export function App() {
+  return (
+    // Tooltip にはアプリのルート付近に TooltipProvider が 1 つ必要です
+    <TooltipProvider>
+      <TextField label="メールアドレス" placeholder="name@example.com" />
+
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <Button variant="primary">保存</Button>
+        </TooltipTrigger>
+        <TooltipContent>変更内容を保存します</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}
+```
+
+各コンポーネントの props や動作は [Storybook](/storybook-view/) で確認できます。
+
+## ルート import とサブパス import
+
+パッケージルートからの import も、コンポーネントごとのサブパスからの import も、どちらも tree-shaking されます（例: ルートから `Button` だけを import した場合のバンドルは約 11 kB）。両者は**同じモジュールインスタンス**を指すので、混在させても問題ありません。
+
+```tsx
+// どちらでも可
+import { Button } from '@sun-asterisk/nova';
+import { Button } from '@sun-asterisk/nova/button';
+```
+
+利用できるサブパス:
+
+| 種別 | サブパス |
+|---|---|
+| コンポーネント | `/avatar` `/badge` `/button` `/checkbox` `/date-picker` `/divider` `/dropdown-menu` `/input` `/link` `/modal` `/progress-bar` `/radio-group` `/scrim` `/scrollbar` `/snackbar` `/spinner` `/status-icon` `/switch` `/tab` `/text-field` `/textarea` `/textarea-field` `/tooltip` |
+| その他 | `/icons`（アイコン一式）`/theme-provider` `/cn`（className 結合ヘルパー） |
+| CSS | `/styles`（`/styles.css`）`/global.css` `/branded-fonts.css` |
+
+`Calendar` は `/date-picker` から import します。
+
+## Next.js（App Router）
+
+ルートレイアウトでスタイルシートを読み込みます。Server Component のファイルから読み込んで問題ありません。
+
+```tsx
+// app/layout.tsx
+import '@sun-asterisk/nova/styles';
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="ja">
+      <body>{children}</body>
+    </html>
+  );
+}
+```
+
+- **パッケージルートもすべてのサブパスも、Server Component から import できます**（Next.js 16 の実ビルドで確認済み）。
+- `Modal` / `DatePicker`（`Calendar` を含む）/ `Tabs` / `ThemeProvider` は自身で `'use client'` 境界を持っているため、利用側で `'use client'` を書かなくても import だけで壊れることはありません。`Tabs` は Server Component からそのまま描画できます。
+- `Badge` / `Divider` / `StatusIcon` / `Spinner` / `Link` / アイコン / `cn`、およびイベントハンドラを持たない `Button` は、クライアント JS なしで Server Component から描画できます。`Avatar` と `ProgressBar` は Radix ベースのため client island として描画されます。
+- イベントハンドラや state を使う箇所は、通常どおり利用側の Client Component（`'use client'`）に置いてください。
+- App Router / Pages Router のどちらでも利用できます。
+
+ダークモードの設定は [テーマとカスタマイズ](/guide/09-theming/) を参照してください。
+
+## ルーターのリンク
+
+`Link` は `asChild` に対応しているので、各ルーターのリンクコンポーネントに Sun のスタイルを適用できます。
+
+```tsx
+<Link asChild><NavLink to="/trips">Trips</NavLink></Link>      {/* React Router */}
+<Link asChild><NextLink href="/trips">Trips</NextLink></Link>  {/* Next.js */}
+```
+
+## TypeScript
+
+型定義を同梱しています。パッケージルートとすべてのサブパスで、`moduleResolution` が `bundler` / `node16`・`nodenext`（ESM・CJS）/ `node10` のいずれでも型が解決されます。CSS のサブパスも TypeScript 6 の `noUncheckedSideEffectImports` で型チェックが通ります。
+
+```tsx
+import type { ButtonProps, TooltipProps } from '@sun-asterisk/nova';
+```
+
+## Tailwind CSS と組み合わせる（任意）
+
+自分のコードでもデザイントークンを Tailwind v4 のユーティリティ（`bg-sds-surface-primary`、`p-sds-200` など）として使いたい場合は、Tailwind のエントリ CSS でトークン定義を読み込みます。
+
+```css
+@import "tailwindcss";
+@import "@sun-asterisk/nova/global.css";
+```
+
+`/global.css` は Tailwind v4 の `@theme` / `@utility` 構文で書かれたトークン定義です。Tailwind のビルドを通さないと効果がないため、`.tsx` から import するのではなく、上記のように CSS から `@import` してください。
+
+## ブランドフォント（任意）
+
+既定のフォントは OS ネイティブのフォント（`system-ui`）です。ブランドフォントの Noto Sans JP（欧文・和文とも）を使いたい場合は、次のファイルを追加で読み込みます。
+
+```ts
+import '@sun-asterisk/nova/branded-fonts.css';
+```
+
+コンポーネント側で `font-family` を指定したり、`<link>` で別途フォントを読み込んだりする必要はありません。
+
+<Aside type="caution" title="Figma との違い（欧文フォント）">
+Figma ライブラリの Typography の Typeface 欄と、一部のテキストスタイル（Badge・DatePicker・Tab・DropdownMenu などで使われる Label/En 系）には、欧文フォントとして Inter が残っています。実装では Inter を使いません（既定は `system-ui`、ブランドフォントは欧文・和文とも Noto Sans JP）。Dev Mode の CSS 欄に `font-family: Inter` と表示されても、コードに書き写さないでください。Figma 側は今後の更新で Noto Sans JP に揃えます。
+</Aside>

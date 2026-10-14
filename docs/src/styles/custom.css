@@ -1,0 +1,246 @@
+/* Sun* Design System Nova docs — LP (https://nova.sun-asterisk.com/) のトンマナ適用。
+ *  - ロゴ・ファビコン・ヒーロー背景 (public/images/hero-bg-red.svg) は LP の実アセット
+ *  - 白ベース + 淡いコーラルのグラデーションウォッシュ
+ *  - 文字: Noto Sans JP（欧文・和文とも。Inter は使わない）。見出しは Bold + ややワイドな字間
+ *  - アクセント: Sun Red #e62305 / ソフトピンク #fff4f2 / テキスト #333333
+ *  - 角丸: 8〜16px、カードは白 + 弱ボーダー #e7e7e7 + ソフトシャドウ
+ */
+
+/* Noto Sans JP は Google Fonts から読み込む（フォントファイルは同梱しない — 容量とライセンス表示のため） */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+:root {
+  --sl-font: 'Noto Sans JP', sans-serif;
+
+  /* ダークモード (LP は光地ベースなので、赤アクセントを保ちつつ落ち着いたダークに) */
+  --sl-color-accent-low: #56100a;
+  --sl-color-accent: #e62305;
+  --sl-color-accent-high: #f8b1a5;
+  --sl-color-white: #ffffff;
+  --sl-color-gray-1: #f2f2f2;
+  --sl-color-gray-2: #d5d5d5;
+  --sl-color-gray-3: #ababab;
+  --sl-color-gray-4: #5a5a5a;
+  --sl-color-gray-5: #434343;
+  --sl-color-gray-6: #232323;
+  --sl-color-black: #171717;
+}
+
+/* ライトモード = LP の基調 */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #fff4f2; /* Background/Emphasis */
+  --sl-color-accent: #e62305; /* Surface/Emphasis (Sun Red) */
+  --sl-color-accent-high: #a51a02;
+  --sl-color-white: #1c1c1c; /* 最強調テキスト (Neutral/900) */
+  --sl-color-gray-1: #333333; /* LP --color-text-primary */
+  --sl-color-gray-2: #434343;
+  --sl-color-gray-3: #5a5a5a; /* LP --color-text-secondary */
+  --sl-color-gray-4: #ababab; /* LP Grey3 */
+  --sl-color-gray-5: #e7e7e7; /* Border/Weak */
+  --sl-color-gray-6: #f7f7f7;
+  --sl-color-gray-7: #fafafa;
+  --sl-color-black: #ffffff; /* ページ背景 */
+}
+
+/* ── 見出し: JP Bold + ワイド字間 (LP H1: letterSpacing 3/48 ≈ 0.06em) ── */
+.sl-markdown-content h1,
+.sl-markdown-content h2,
+.sl-markdown-content h3,
+.hero h1 {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+.hero h1 {
+  color: var(--sl-color-white);
+  line-height: 1.4;
+}
+.hero .tagline {
+  color: var(--sl-color-gray-3);
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+}
+
+/* ── ヒーロー/トップ: LP と同じ赤のグラデーション背景 (bg / Red) を右上に敷く ── */
+[data-has-hero] .page {
+  background:
+    url('/images/hero-bg-red.svg') no-repeat right -28rem top -14rem / 96rem auto,
+    linear-gradient(160deg, rgba(255, 244, 242, 0.9) 0%, transparent 42%),
+    var(--sl-color-black);
+}
+:root[data-theme='dark'][data-has-hero] .page { /* data-has-hero は <html> 自体に付く */
+  background:
+    radial-gradient(56rem 36rem at 88% -4%, rgba(230, 35, 5, 0.16), transparent 68%),
+    radial-gradient(44rem 30rem at -8% 42%, rgba(230, 35, 5, 0.08), transparent 70%),
+    var(--sl-color-black);
+}
+
+/* LP ヒーロー: 左寄せの大きな日本語コピー (Noto Sans JP Bold)。
+ * Starlight 既定は画像用の 7fr 4fr グリッド + copy 幅 50ch で、日本語の見出しが細切れに折り返すため 1 カラムに広げる */
+.hero {
+  grid-template-columns: 100%;
+  text-align: start;
+}
+.hero .stack,
+.hero .copy {
+  align-items: flex-start;
+  max-width: 64rem;
+}
+.hero h1 {
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: clamp(1.75rem, 5.2vw, 4.6rem);
+  letter-spacing: 0.04em;
+  line-height: 1.35;
+  word-break: keep-all; /* 「作らない。」のような語の途中で折り返さない */
+  overflow-wrap: anywhere; /* それでも幅が足りない画面では折り返してはみ出しを防ぐ */
+  color: var(--sl-color-gray-1);
+}
+:root[data-theme='dark'] .hero h1 {
+  color: var(--sl-color-white);
+}
+.hero .tagline {
+  max-width: 40rem;
+}
+
+/* LP のセクション見出し上の英字ラベル (例: "ABOUT NOVA") */
+.nova-eyebrow {
+  margin-bottom: -0.5rem;
+  font-size: var(--sl-text-sm);
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--sl-color-gray-4);
+}
+
+/* ── ヘッダー: 白地 + 弱ボーダー (LP Header) ── */
+header.header {
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  background-color: color-mix(in srgb, var(--sl-color-black) 88%, transparent);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+.site-title {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--sl-color-white); /* LP のロゴは黒 (ライト時)。アクセント色にしない */
+}
+/* Nova ロゴ (LP と同じ PNG、黒)。LP ヘッダーと同じ高さ 26px。ダークでは白に反転する */
+.site-title img {
+  height: 26px;
+  width: auto;
+}
+:root[data-theme='dark'] .site-title img {
+  filter: invert(1);
+}
+
+/* ── ボタン: LP CTA (赤 / 角丸8 / Bold) ── */
+.sl-link-button {
+  border-radius: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+.sl-link-button.primary {
+  box-shadow: 0 4px 14px rgba(230, 35, 5, 0.25);
+}
+
+/* ── カード: 角丸16 / 白地 / 弱ボーダー / ソフトシャドウ (LP カード) ── */
+.card {
+  border-radius: 1rem;
+  border-color: var(--sl-color-gray-5);
+  background: var(--sl-color-black);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+.card .icon {
+  color: var(--sl-color-accent);
+  border-color: color-mix(in srgb, var(--sl-color-accent) 25%, transparent);
+  background: var(--sl-color-accent-low);
+  border-radius: 0.5rem;
+}
+:root[data-theme='dark'] .card .icon {
+  background: color-mix(in srgb, var(--sl-color-accent) 18%, transparent);
+}
+.card .title {
+  letter-spacing: 0.03em;
+}
+
+/* ── サイドバー/コンテンツの細部 ── */
+.sidebar-content a[aria-current='page'] {
+  font-weight: 700;
+}
+.sl-markdown-content a:not(:where(.not-content *)) {
+  color: var(--sl-color-accent);
+}
+.sl-markdown-content a:not(:where(.not-content *)):hover {
+  color: var(--sl-color-accent-high);
+}
+
+/* ── コンポーネント一覧ギャラリー ── */
+.comp-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.comp-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* グリッド行内でカード高さを揃える */
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 1rem;
+  overflow: hidden;
+  text-decoration: none;
+  background: var(--sl-color-black);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+}
+.comp-card:hover {
+  border-color: var(--sl-color-accent);
+  box-shadow: 0 6px 18px rgba(230, 35, 5, 0.12);
+  transform: translateY(-2px);
+}
+.comp-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10.5rem; /* サムネイルの高さを全カードで固定 */
+  flex: none;
+  background: #f7f7f8;
+  border-bottom: 1px solid var(--sl-color-gray-5);
+  padding: 1rem 1.25rem;
+}
+.comp-thumb img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.comp-meta { display: flex; flex-direction: column; gap: 0.25rem; padding: 0.9rem 1rem 1rem; }
+.comp-name { font-weight: 700; color: var(--sl-color-white); letter-spacing: 0.02em; }
+.comp-desc {
+  font-size: var(--sl-text-xs);
+  color: var(--sl-color-gray-3);
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ── コンポーネント詳細ページ ── */
+.comp-lead {
+  font-size: var(--sl-text-lg);
+  color: var(--sl-color-gray-2);
+  line-height: 1.8;
+}
+.sl-markdown-content img {
+  border: 1px solid var(--sl-color-gray-5);
+  border-radius: 0.75rem;
+  background: #fff;
+}
+.comp-thumb-fallback {
+  font-size: var(--sl-text-xl);
+  font-weight: 700;
+  color: var(--sl-color-gray-3);
+}
+/* 英字ラベルと直後の見出しを近づける (Starlight は h2 を .sl-heading-wrapper で包む) */
+.sl-markdown-content .nova-eyebrow + :is(h2, .sl-heading-wrapper) {
+  margin-top: 0.25rem;
+}

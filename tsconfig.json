@@ -1,0 +1,23 @@
+{
+  // WARNING: this is a solution-style config ("files": [] + "references"
+  // only). Running `tsc --noEmit -p .` (or plain `tsc -p .`) against THIS
+  // file silently type-checks ZERO files and exits 0 — it is not an error,
+  // just a no-op, so it looks like a clean pass. This bit a real session
+  // (2026-09-08): every "typecheck clean" reported during a long DatePicker/
+  // Scrollbar audit was a false positive until `pnpm run typecheck` finally
+  // surfaced real compile errors that had been present the whole time.
+  //
+  // Use `pnpm run typecheck` (runs `tsc --noEmit -p tsconfig.app.json && tsc
+  // --noEmit -p tsconfig.build.json`) to actually type-check this project.
+  // `tsc -b .` also works (respects the references below) but checks
+  // tsconfig.node.json too, which `pnpm run typecheck` deliberately skips.
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }, { "path": "./tsconfig.build.json" }],
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

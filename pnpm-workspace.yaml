@@ -1,0 +1,30 @@
+packages:
+  - '.'
+  - 'docs'
+
+# ビルドスクリプト実行を許可する依存 (pnpm 11 の supply-chain 保護)
+allowBuilds:
+  '@bundled-es-modules/glob': true
+  '@swc/core': true
+  esbuild: true
+  msw: true
+  sharp: true
+  style-dictionary: true
+  workerd: true
+
+# tough-cookie 6.0.2 は公開直後で minimumReleaseAge に抵触するため実績ある 6.0.1 に固定
+overrides:
+  tough-cookie: 6.0.1
+  # wrangler's miniflare pins undici 7.29.0 exactly (GHSA advisories fixed in
+  # 7.29.1, published 2026-09-04). A newer wrangler that pulls 7.29.1 exists but
+  # was <1 day old on 2026-09-30, inside this repo's Dependabot cooldown — so
+  # patch-override instead. Remove once wrangler's own range resolves >=7.29.1.
+  'undici@7.29.0': 7.29.1
+  # Security fixes (Dependabot, 2026-10-13): transitive deps whose parents still
+  # resolve to a vulnerable version. Remove each once the parent resolves to the
+  # patched version on its own.
+  'shell-quote@<1.11.0': ^1.11.0 # GHSA-pqg4-j6r4-53mv (@changesets/cli → launch-editor)
+  'source-map-js@<1.2.2': ^1.2.2 # GHSA-68fv-2mgg-jv7q (postcss, @tailwindcss/node)
+  'sharp@<0.35.5': ^0.35.5 # GHSA-wq5f-xc86-pv6w (wrangler → miniflare, astro)
+  'http-cache-semantics@<=4.2.0': ^4.3.0 # GHSA-ch52-4w7c-c8xp (astro)
+  'postcss-selector-parser@<7.1.6': ^7.1.6 # GHSA-rj75-hqrm-r3gf (expressive-code → postcss-nested)

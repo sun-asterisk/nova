@@ -1,0 +1,51 @@
+---
+title: Radio Button
+description: ラジオボタンは、複数の選択肢から1つだけ選べる項目を提示するコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">ラジオボタンは、複数の選択肢から1つだけ選べる項目を提示するコンポーネントです。選択肢が相互に排他的である場合に使用します。</p>
+
+![Radio Button のバリエーション一覧](/assets/components/radio-button/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+ラジオボタンは選択肢のテキストの左側に配置します。各選択肢間には、視認性を確保するための適切な余白を設けてください。
+
+選択肢は、1つのグループに対して2～5個理想的です。最も重要または頻繁に選ばれる選択肢を先頭に配置しましょう。
+選択肢が6個以上になる場合は、ドロップダウンメニューへの切り替えを検討してください。
+
+**Do** — ひとつのみ選択可能なケース
+
+![Do の例：ひとつのみ選択可能なケース](/assets/components/radio-button/g2-1.png)
+
+**Don't** — 複数回答ができるような質問への使用
+
+![Don't の例：複数回答ができるような質問への使用](/assets/components/radio-button/g2-2.png)
+
+### 初期値の設定
+
+ラジオボタンの初期値は、全選択肢が未選択の状態から始めることも許容されます。
+初期値を設定する場合は、ユーザーが最も頻繁に選択する可能性の高いオプションを選びますが、意図しない選択を防ぐためにラベルや補足説明を明確にしましょう。
+
+### アクセシビリティへの配慮
+
+必須項目や任意項目の表示は、視覚に頼らないユーザーにも伝わるよう、「*」など単なる色やアイコンではなく、テキストを含めることを検討してください。
+
+## デザイン仕様
+
+### サイズ
+
+![Radio Button 単体の寸法仕様（ラジオボタンとラベルの間隔）](/assets/components/radio-button/g3-1.png)
+
+![Radio Button グループの寸法仕様（ラベル・サポートテキスト・選択肢・エラーテキストの間隔）](/assets/components/radio-button/g3-2.png)
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-radiogroup--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Radio Button フレームからの引用です。</Aside>

@@ -1,0 +1,9 @@
+/* Storybook's own CSS entry — delegates entirely to the package's real CSS
+   entry so the two can never drift out of sync (Phase 11, M3). This file
+   previously duplicated styles.css's three @import lines by hand and also
+   carried a dead `@custom-variant dark (&:is(.dark *));` left over from the
+   original Vite+Tailwind scaffold template — confirmed unused (zero
+   components use a `dark:`-prefixed Tailwind class anywhere; the real,
+   working dark-mode mechanism is the [data-theme="dark"] attribute system,
+   see scripts/global.css). */
+@import "./styles.css";

@@ -1,0 +1,81 @@
+---
+title: Link
+description: リンクは、別のページや同じページ内の別の場所へ移動するためのテキスト要素です。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">リンクは、別のページや同じページ内の別の場所へ移動するためのテキスト要素です。処理の実行やモーダルの開閉には Button を使用し、ページ遷移にはリンクを使います。</p>
+
+![Link のバリエーション一覧](/assets/components/link/showcase.png)
+
+## 概要
+
+リンクは常に下線付きで表示され、ホバー時は下線が 1px から 2px に太くなります（下線のオフセットはどの状態でも 2px）。色だけでリンクであることを伝えないための意図的なデザインです。
+
+## 種類・バリエーション
+
+- **サイズ** — Large（既定）/ Medium / Small。本文のタイポグラフィに合わせて選びます
+- **アイコン** — ラベルの前（`startAdornment`）または後ろ（`endAdornment`）にアイコンを配置できます。外部リンクには `IconExternalLink` などを後ろに置くと遷移先が伝わりやすくなります。アイコンの色は `icon-link`（無効時は `icon-disable`）です
+- **Disabled** — 無効な `<a>` ではなく、非対話のテキストとして描画されます
+
+## 使い方
+
+```tsx
+import { Link } from '@sun-asterisk/nova/link';
+import { IconExternalLink } from '@sun-asterisk/nova/icons';
+
+<Link href="/settings">設定</Link>
+
+<Link
+  href="https://example.com"
+  target="_blank"
+  rel="noreferrer"
+  endAdornment={<IconExternalLink />}
+>
+  外部サイト
+</Link>
+
+<Link disabled href="/settings">設定（無効）</Link>
+```
+
+### ルーターのリンクと組み合わせる
+
+`asChild` を使うと、React Router や Next.js の Link コンポーネントに Sun のスタイルを適用できます。
+
+```tsx
+import { NavLink } from 'react-router';
+import NextLink from 'next/link';
+
+<Link asChild><NavLink to="/trips">Trips</NavLink></Link>      // React Router
+<Link asChild><NextLink href="/trips">Trips</NextLink></Link>  // Next.js
+```
+
+<Aside type="caution">`asChild` ではクラス名が文字列として結合されるため、`NavLink` の `className={({ isActive }) => …}` のような関数形式とは併用できません。アクティブ状態のスタイルは `NavLink` が付与する `aria-current="page"` で指定してください。</Aside>
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `size` | `'large' \| 'medium' \| 'small'` | `'large'` | サイズ |
+| `disabled` | `boolean` | `false` | 非対話のテキスト（`<span aria-disabled="true">`）として描画 |
+| `startAdornment` | `ReactNode` | — | ラベルの前に置く要素 |
+| `endAdornment` | `ReactNode` | — | ラベルの後ろに置く要素 |
+| `asChild` | `boolean` | `false` | 子要素（ルーターのリンクなど）にスタイルと Props を適用 |
+
+そのほか `href` / `target` / `rel` / `onClick` など `<a>` のネイティブ属性をそのまま渡せます。`disabled` のときは `href` / `onClick` / `target` / `rel` は渡されません。
+
+## アクセシビリティ
+
+- 有効なときは本物の `<a href>` として描画されます。ページ遷移に `<button>` や `<div>` を使わないでください
+- 下線は常に表示され、色だけに頼らずリンクであることを伝えます
+- 周囲の本文とのコントラストは 3:1 以上、背景とのコントラストは 4.5:1 以上を確保しています
+- Medium / Small は、見た目のサイズを変えずにパディングでクリック領域を 24×24px 以上に広げています
+- Disabled のときはフォーカスできず、`Tab` キーでスキップされます
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-link--docs)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/link.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

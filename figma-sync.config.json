@@ -1,0 +1,59 @@
+{
+  "figma": {
+    "fileKey": "$FIGMA_FILE_KEY",
+    "pages": {
+      "components": { "id": "1:3", "sync": true },
+      "foundations": { "id": "1:2", "tokensOnly": true }
+    }
+  },
+  "rules": {
+    "include": ["COMPONENT_SET", "COMPONENT"],
+    "exclude": ["Prototype*", "*Container*"],
+    "topLevelOnly": true,
+    "topLevelOnlyNote": "Only top-level layers on the Components page qualify as main React components. Nested variants (e.g. Icon Button inside Button) are expressed as props/children of the parent React component, not separate components.",
+    "prefixes": {
+      "skip": "[skip]",
+      "force": "[sync]"
+    }
+  },
+  "componentMap": {
+    "Button": "button",
+    "Avatar": "avatar",
+    "Text Field": "textField",
+    "Text Area": "textarea",
+    "Checkbox": "checkbox",
+    "Radio Button": "radioGroup",
+    "Tab": "tab",
+    "Badge": "badge",
+    "Divider": "divider",
+    "Switch": "switch",
+    "Tooltip": "tooltip",
+    "Snackbar": "snackbar",
+    "Modal": "modal",
+    "Scrim": "scrim",
+    "Date Picker": "datePicker",
+    "Scrollbar": "scrollbar",
+    "Dropdown Menu": "dropdownMenu",
+    "Table": "table",
+    "Link": "link",
+    "Spinner": "spinner",
+    "Progress Bar": "progressBar",
+    "Status Icon": "statusIcon"
+  },
+  "snapshot": {
+    "dir": ".figma-sync/snapshots",
+    "detail": "structure+styles"
+  },
+  "codeGen": {
+    "componentDir": "src/components",
+    "styleSystem": "tailwind-variants",
+    "cssFramework": "tailwindcss-v4",
+    "headlessUI": "radix-ui",
+    "filePattern": {
+      "component": "<Name>.tsx",
+      "styles": "<Name>.styles.ts",
+      "stories": "<Name>.stories.tsx",
+      "index": "index.ts"
+    }
+  }
+}

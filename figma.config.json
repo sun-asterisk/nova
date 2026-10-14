@@ -1,0 +1,18 @@
+{
+  "codeConnect": {
+    "parser": "react",
+    "include": ["src/components/**/*.figma.ts"],
+    "exclude": ["dist/**", "node_modules/**", "**/*.stories.tsx", "**/*.test.tsx"],
+
+    "_comment_documentUrlSubstitutions": [
+      "各 *.figma.ts の URL は canonical ファイル (fSzxt8wKkXsn8fmxkPBUr2) を指す。",
+      "Figma ファイルを複製しても node ID は保存されるため、fileKey 部分だけを",
+      "自分のプロダクトのファイルに差し替えれば全コンポーネントのマッピングが移る。",
+      "$FIGMA_FILE_KEY は publish 時に scripts/code-connect-publish.mjs が .env から解決する。",
+      "*.figma.ts 側の URL は絶対に手で書き換えないこと。"
+    ],
+    "documentUrlSubstitutions": {
+      "https://www.figma.com/design/fSzxt8wKkXsn8fmxkPBUr2": "https://www.figma.com/design/$FIGMA_FILE_KEY"
+    }
+  }
+}

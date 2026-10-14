@@ -1,0 +1,72 @@
+---
+title: Spinner
+description: スピナーは、処理の実行中であることを示す回転するインジケーターです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">スピナーは、処理の実行中であることを示す回転するインジケーターです。保存や認証など、待ち時間や進捗が読めない処理の実行中に使います。</p>
+
+![Spinner のバリエーション一覧](/assets/components/spinner/showcase.png)
+
+## 概要
+
+進捗の割合が計測できる処理には、スピナーではなく [ProgressBar](/components/progress-bar/) を使用してください。
+
+スピナーは「ファイルを保存しています」のような状態テキストと並べて使うのが基本です。テキストは Spinner の Props ではなく、隣に要素を置いて組み合わせます。
+
+## 種類・バリエーション
+
+- **サイズ**
+  - **Small（16px・既定）** — Button や Text Field の内部など、他の要素に埋め込む場合
+  - **Medium（24px）** — テキストと並べて表示する場合
+  - **Large（40px）** — カードや画面全体の読み込み中に表示する場合
+- **Inverse** — 濃い色の面やオーバーレイの上では Inverse を有効にします
+
+円弧は全周の33%で、12時を起点に時計回りに1秒でループします。
+
+## 使い方
+
+```tsx
+import { Spinner } from '@sun-asterisk/nova/spinner';
+
+// テキストと並べる
+<div className="flex items-center gap-2">
+  <Spinner size="medium" label="保存中" />
+  <span>ファイルを保存しています</span>
+</div>
+
+// カードの上にオーバーレイ
+<div className="relative">
+  <Card />
+  <div className="absolute inset-0 flex items-center justify-center bg-sds-background-scrim">
+    <Spinner size="large" inverse label="読み込み中" />
+  </div>
+</div>
+```
+
+<Aside type="tip">処理がすぐに終わる場合に画面がちらつかないよう、スピナーは表示したら最低 500ms は表示し続けることを推奨します。表示・非表示のタイミングは利用側で制御してください。</Aside>
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `size` | `'small' \| 'medium' \| 'large'` | `'small'` | サイズ |
+| `inverse` | `boolean` | `false` | 濃い色の面の上で使う配色 |
+| `label` | `string` | `'Loading'` | 読み上げ用のテキスト（画面には表示されません） |
+
+そのほか `<div>` のネイティブ属性を渡せます（`children` は受け取りません）。
+
+## アクセシビリティ
+
+- `role="status"` と `aria-live="polite"` を持ち、`label` のテキストで処理中であることを読み上げます。日本語のサービスでは `label` を日本語にしてください
+- 処理が完了したことの通知は、利用側で別途行ってください
+- `prefers-reduced-motion: reduce` が有効な環境では回転アニメーションを抑制します
+- 円弧と背景のコントラストは 3:1 以上を確保しています
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-spinner--docs)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/spinner.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

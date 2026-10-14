@@ -1,0 +1,720 @@
+@theme inline {
+  --color-sds-black-alpha-100: #00000014;
+  --color-sds-black-alpha-200: #00000021;
+  --color-sds-black-alpha-25: #00000008;
+  --color-sds-black-alpha-300: #00000033;
+  --color-sds-black-alpha-400: #0000004d;
+  --color-sds-black-alpha-50: #0000000d;
+  --color-sds-black-alpha-500: #0000006e;
+  --color-sds-black-alpha-600: #00000094;
+  --color-sds-black-alpha-700: #000000b8;
+  --color-sds-black-alpha-800: #000000d4;
+  --color-sds-black-alpha-900: #000000eb;
+  --color-sds-black: #000000;
+  --color-sds-blue-100: #c3ebf7;
+  --color-sds-blue-200: #8ed8f5;
+  --color-sds-blue-300: #52b9f0;
+  --color-sds-blue-400: #0d9aec;
+  --color-sds-blue-50: #eaf7fe;
+  --color-sds-blue-500: #007cd7;
+  --color-sds-blue-600: #0464be;
+  --color-sds-blue-700: #0053a4;
+  --color-sds-blue-800: #003f88;
+  --color-sds-blue-900: #002c6a;
+  --color-sds-brand-sun-dark-red: #ad0c00;
+  --color-sds-brand-sun-gold: #b69256;
+  --color-sds-brand-sun-gray: #f7f7f7;
+  --color-sds-brand-sun-red: #ff2200;
+  --color-sds-brand-sun-white: #ffffff;
+  --color-sds-brand-sun-yellow: #fdba05;
+  --color-sds-gray-100: #e3e7ef;
+  --color-sds-gray-200: #cdd6e3;
+  --color-sds-gray-25: #f9fafb;
+  --color-sds-gray-300: #b3bed0;
+  --color-sds-gray-400: #8795ab;
+  --color-sds-gray-50: #f0f2f5;
+  --color-sds-gray-500: #69768b;
+  --color-sds-gray-600: #4e5a6e;
+  --color-sds-gray-700: #384356;
+  --color-sds-gray-800: #293344;
+  --color-sds-gray-900: #091d2f;
+  --color-sds-green-100: #dcf8d2;
+  --color-sds-green-200: #b4f3a3;
+  --color-sds-green-300: #80e474;
+  --color-sds-green-400: #4fcb58;
+  --color-sds-green-50: #f1fdef;
+  --color-sds-green-500: #2aa847;
+  --color-sds-green-600: #0a8739;
+  --color-sds-green-700: #007430;
+  --color-sds-green-800: #035e27;
+  --color-sds-green-900: #07441e;
+  --color-sds-neutral-100: #e7e7e7;
+  --color-sds-neutral-200: #d5d5d5;
+  --color-sds-neutral-25: #fafafa;
+  --color-sds-neutral-300: #bdbdbd;
+  --color-sds-neutral-400: #959595;
+  --color-sds-neutral-50: #f2f2f2;
+  --color-sds-neutral-500: #757575;
+  --color-sds-neutral-600: #5a5a5a;
+  --color-sds-neutral-700: #434343;
+  --color-sds-neutral-800: #333333;
+  --color-sds-neutral-900: #1c1c1c;
+  --color-sds-orange-100: #fdebca;
+  --color-sds-orange-200: #fad18a;
+  --color-sds-orange-300: #f9ac4b;
+  --color-sds-orange-400: #f08627;
+  --color-sds-orange-50: #fef6e6;
+  --color-sds-orange-500: #df6600;
+  --color-sds-orange-600: #ba5017;
+  --color-sds-orange-700: #983e1d;
+  --color-sds-orange-800: #74301b;
+  --color-sds-orange-900: #5b220d;
+  --color-sds-purple-100: #f5d8f8;
+  --color-sds-purple-200: #e6b5f4;
+  --color-sds-purple-300: #d18df0;
+  --color-sds-purple-400: #b76ae6;
+  --color-sds-purple-50: #fef5fd;
+  --color-sds-purple-500: #9a4ad6;
+  --color-sds-purple-600: #803bbc;
+  --color-sds-purple-700: #643098;
+  --color-sds-purple-800: #4d2a77;
+  --color-sds-purple-900: #361f50;
+  --color-sds-red-100: #fedbd5;
+  --color-sds-red-200: #fdb5a8;
+  --color-sds-red-300: #fd8c77;
+  --color-sds-red-400: #fc593f;
+  --color-sds-red-50: #fff4f2;
+  --color-sds-red-500: #dd2305;
+  --color-sds-red-600: #c50e03;
+  --color-sds-red-700: #a50206;
+  --color-sds-red-800: #85010f;
+  --color-sds-red-900: #660614;
+  --color-sds-white-alpha-100: #ffffff14;
+  --color-sds-white-alpha-200: #ffffff21;
+  --color-sds-white-alpha-25: #ffffff08;
+  --color-sds-white-alpha-300: #ffffff33;
+  --color-sds-white-alpha-400: #ffffff4d;
+  --color-sds-white-alpha-50: #ffffff0d;
+  --color-sds-white-alpha-500: #ffffff6e;
+  --color-sds-white-alpha-600: #ffffff94;
+  --color-sds-white-alpha-700: #ffffffb8;
+  --color-sds-white-alpha-800: #ffffffd4;
+  --color-sds-white-alpha-900: #ffffffeb;
+  --color-sds-white: #ffffff;
+  --color-sds-yellow-100: #fef6b9;
+  --color-sds-yellow-200: #feec83;
+  --color-sds-yellow-300: #f9d956;
+  --color-sds-yellow-400: #eebb24;
+  --color-sds-yellow-50: #fbfaeb;
+  --color-sds-yellow-500: #dda200;
+  --color-sds-yellow-600: #b7791f;
+  --color-sds-yellow-700: #975a16;
+  --color-sds-yellow-800: #724317;
+  --color-sds-yellow-900: #513210;
+  --spacing-sds-100: 0.5rem;
+  --spacing-sds-1000: 5rem;
+  --spacing-sds-150: 0.75rem;
+  --spacing-sds-200: 1rem;
+  --spacing-sds-25: 0.125rem;
+  --spacing-sds-300: 1.5rem;
+  --spacing-sds-400: 2rem;
+  --spacing-sds-50: 0.25rem;
+  --spacing-sds-500: 2.5rem;
+  --spacing-sds-600: 3rem;
+  --spacing-sds-800: 4rem;
+  --radius-sds-0: 0rem;
+  --radius-sds-100: 0.25rem;
+  --radius-sds-200: 0.5rem;
+  --radius-sds-300: 0.75rem;
+  --radius-sds-400: 1rem;
+  --radius-sds-50: 0.125rem;
+  --radius-sds-600: 1.5rem;
+  --radius-sds-full: 62.4375rem;
+  --shadow-sds-level-1: 0px 1px 4px 1px #00000026, 0px 1px 2px 0px #00000033;
+  --shadow-sds-level-2: 0px 2px 6px 2px #00000026, 0px 1px 2px 0px #00000033;
+  --shadow-sds-level-3: 0px 3px 8px 3px #00000026, 1px 1px 3px 0px #00000033;
+  --shadow-sds-level-4: 1px 4px 10px 4px #00000026, 0px 2px 4px 0px #00000033;
+  --shadow-sds-level-5: 2px 7px 16px 4px #00000026, 0px 4px 6px 0px #00000033;
+  --font-family-sds-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-size-sds-body-l: 1rem;
+  --font-size-sds-body-m: 0.875rem;
+  --font-size-sds-body-s: 0.75rem;
+  --font-size-sds-heading-desktop-h1: 2.25rem;
+  --font-size-sds-heading-desktop-h2: 2rem;
+  --font-size-sds-heading-desktop-h3: 1.5rem;
+  --font-size-sds-heading-mobile-h1: 1.75rem;
+  --font-size-sds-heading-mobile-h2: 1.5rem;
+  --font-size-sds-heading-mobile-h3: 1.25rem;
+  --font-size-sds-label-l-bold: 1rem;
+  --font-size-sds-label-l-regular: 1rem;
+  --font-size-sds-label-m-bold: 0.875rem;
+  --font-size-sds-label-m-regular: 0.875rem;
+  --font-size-sds-label-s-bold: 0.75rem;
+  --font-size-sds-label-s-regular: 0.75rem;
+  --font-size-sds-title-l: 1.5rem;
+  --font-size-sds-title-m: 1.25rem;
+  --font-size-sds-title-s: 1.125rem;
+  --font-weight-sds-body-l: 400;
+  --font-weight-sds-body-m: 400;
+  --font-weight-sds-body-s: 400;
+  --font-weight-sds-heading-desktop-h1: 700;
+  --font-weight-sds-heading-desktop-h2: 700;
+  --font-weight-sds-heading-desktop-h3: 700;
+  --font-weight-sds-heading-mobile-h1: 700;
+  --font-weight-sds-heading-mobile-h2: 700;
+  --font-weight-sds-heading-mobile-h3: 700;
+  --font-weight-sds-label-l-bold: 700;
+  --font-weight-sds-label-l-regular: 400;
+  --font-weight-sds-label-m-bold: 700;
+  --font-weight-sds-label-m-regular: 400;
+  --font-weight-sds-label-s-bold: 700;
+  --font-weight-sds-label-s-regular: 400;
+  --font-weight-sds-title-l: 700;
+  --font-weight-sds-title-m: 700;
+  --font-weight-sds-title-s: 700;
+  --line-height-sds-body-l: 1.6rem;
+  --line-height-sds-body-m: 1.4rem;
+  --line-height-sds-body-s: 1.3125rem;
+  --line-height-sds-heading-desktop-h1: 3.15rem;
+  --line-height-sds-heading-desktop-h2: 2.8rem;
+  --line-height-sds-heading-desktop-h3: 2.1rem;
+  --line-height-sds-heading-mobile-h1: 2.45rem;
+  --line-height-sds-heading-mobile-h2: 2.1rem;
+  --line-height-sds-heading-mobile-h3: 1.75rem;
+  --line-height-sds-label-l-bold: 1rem;
+  --line-height-sds-label-l-regular: 1rem;
+  --line-height-sds-label-m-bold: 0.875rem;
+  --line-height-sds-label-m-regular: 0.875rem;
+  --line-height-sds-label-s-bold: 0.75rem;
+  --line-height-sds-label-s-regular: 0.75rem;
+  --line-height-sds-title-l: 2.25rem;
+  --line-height-sds-title-m: 1.875rem;
+  --line-height-sds-title-s: 1.8rem;
+}
+
+/* Public semantic colors — the re-brand override surface. `static` (not
+   `inline`) so utilities compile to var(--color-sds-*) and every var is
+   always emitted. See scripts/build-tokens.mjs and
+   docs/components/theme-provider.md §10. */
+@theme static {
+  --color-sds-background-base: var(--color-sds-background-base--ref);
+  --color-sds-background-caution: var(--color-sds-background-caution--ref);
+  --color-sds-background-container-inverse: var(--color-sds-background-container-inverse--ref);
+  --color-sds-background-container: var(--color-sds-background-container--ref);
+  --color-sds-background-danger: var(--color-sds-background-danger--ref);
+  --color-sds-background-emphasis: var(--color-sds-background-emphasis--ref);
+  --color-sds-background-info: var(--color-sds-background-info--ref);
+  --color-sds-background-scrim: var(--color-sds-background-scrim--ref);
+  --color-sds-background-success: var(--color-sds-background-success--ref);
+  --color-sds-border-basic: var(--color-sds-border-basic--ref);
+  --color-sds-border-caution: var(--color-sds-border-caution--ref);
+  --color-sds-border-danger: var(--color-sds-border-danger--ref);
+  --color-sds-border-disable: var(--color-sds-border-disable--ref);
+  --color-sds-border-emphasis: var(--color-sds-border-emphasis--ref);
+  --color-sds-border-focus: var(--color-sds-border-focus--ref);
+  --color-sds-border-info: var(--color-sds-border-info--ref);
+  --color-sds-border-strong: var(--color-sds-border-strong--ref);
+  --color-sds-border-success: var(--color-sds-border-success--ref);
+  --color-sds-border-weak: var(--color-sds-border-weak--ref);
+  --color-sds-icon-caution-inverse: var(--color-sds-icon-caution-inverse--ref);
+  --color-sds-icon-caution: var(--color-sds-icon-caution--ref);
+  --color-sds-icon-danger-inverse: var(--color-sds-icon-danger-inverse--ref);
+  --color-sds-icon-danger: var(--color-sds-icon-danger--ref);
+  --color-sds-icon-disable: var(--color-sds-icon-disable--ref);
+  --color-sds-icon-emphasis: var(--color-sds-icon-emphasis--ref);
+  --color-sds-icon-info-inverse: var(--color-sds-icon-info-inverse--ref);
+  --color-sds-icon-info: var(--color-sds-icon-info--ref);
+  --color-sds-icon-link: var(--color-sds-icon-link--ref);
+  --color-sds-icon-on-surface-inverse-disable: var(--color-sds-icon-on-surface-inverse-disable--ref);
+  --color-sds-icon-on-surface-inverse: var(--color-sds-icon-on-surface-inverse--ref);
+  --color-sds-icon-on-surface: var(--color-sds-icon-on-surface--ref);
+  --color-sds-icon-primary-hover: var(--color-sds-icon-primary-hover--ref);
+  --color-sds-icon-primary-inverse: var(--color-sds-icon-primary-inverse--ref);
+  --color-sds-icon-primary: var(--color-sds-icon-primary--ref);
+  --color-sds-icon-secondary-hover: var(--color-sds-icon-secondary-hover--ref);
+  --color-sds-icon-secondary-inverse: var(--color-sds-icon-secondary-inverse--ref);
+  --color-sds-icon-secondary: var(--color-sds-icon-secondary--ref);
+  --color-sds-icon-success-inverse: var(--color-sds-icon-success-inverse--ref);
+  --color-sds-icon-success: var(--color-sds-icon-success--ref);
+  --color-sds-surface-base: var(--color-sds-surface-base--ref);
+  --color-sds-surface-caution: var(--color-sds-surface-caution--ref);
+  --color-sds-surface-danger: var(--color-sds-surface-danger--ref);
+  --color-sds-surface-disabled-strong: var(--color-sds-surface-disabled-strong--ref);
+  --color-sds-surface-disabled: var(--color-sds-surface-disabled--ref);
+  --color-sds-surface-emphasis-active: var(--color-sds-surface-emphasis-active--ref);
+  --color-sds-surface-emphasis-hover: var(--color-sds-surface-emphasis-hover--ref);
+  --color-sds-surface-emphasis: var(--color-sds-surface-emphasis--ref);
+  --color-sds-surface-info: var(--color-sds-surface-info--ref);
+  --color-sds-surface-primary-active: var(--color-sds-surface-primary-active--ref);
+  --color-sds-surface-primary-hover: var(--color-sds-surface-primary-hover--ref);
+  --color-sds-surface-primary: var(--color-sds-surface-primary--ref);
+  --color-sds-surface-secondary-active: var(--color-sds-surface-secondary-active--ref);
+  --color-sds-surface-secondary-hover: var(--color-sds-surface-secondary-hover--ref);
+  --color-sds-surface-secondary: var(--color-sds-surface-secondary--ref);
+  --color-sds-surface-subtle-active-inverse: var(--color-sds-surface-subtle-active-inverse--ref);
+  --color-sds-surface-subtle-active: var(--color-sds-surface-subtle-active--ref);
+  --color-sds-surface-subtle-hover-inverse: var(--color-sds-surface-subtle-hover-inverse--ref);
+  --color-sds-surface-subtle-hover: var(--color-sds-surface-subtle-hover--ref);
+  --color-sds-surface-subtle-inverse: var(--color-sds-surface-subtle-inverse--ref);
+  --color-sds-surface-subtle: var(--color-sds-surface-subtle--ref);
+  --color-sds-surface-success: var(--color-sds-surface-success--ref);
+  --color-sds-text-caution: var(--color-sds-text-caution--ref);
+  --color-sds-text-danger: var(--color-sds-text-danger--ref);
+  --color-sds-text-disable: var(--color-sds-text-disable--ref);
+  --color-sds-text-emphasis: var(--color-sds-text-emphasis--ref);
+  --color-sds-text-info: var(--color-sds-text-info--ref);
+  --color-sds-text-link: var(--color-sds-text-link--ref);
+  --color-sds-text-on-surface-inverse: var(--color-sds-text-on-surface-inverse--ref);
+  --color-sds-text-on-surface: var(--color-sds-text-on-surface--ref);
+  --color-sds-text-placeholder: var(--color-sds-text-placeholder--ref);
+  --color-sds-text-primary-inverse: var(--color-sds-text-primary-inverse--ref);
+  --color-sds-text-primary: var(--color-sds-text-primary--ref);
+  --color-sds-text-secondary: var(--color-sds-text-secondary--ref);
+  --color-sds-text-success: var(--color-sds-text-success--ref);
+}
+
+@utility typo-body-l {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-body-l);
+  line-height: var(--line-height-sds-body-l);
+  font-weight: var(--font-weight-sds-body-l);
+}
+
+@utility typo-body-m {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-body-m);
+  line-height: var(--line-height-sds-body-m);
+  font-weight: var(--font-weight-sds-body-m);
+}
+
+@utility typo-body-s {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-body-s);
+  line-height: var(--line-height-sds-body-s);
+  font-weight: var(--font-weight-sds-body-s);
+}
+
+@utility typo-heading-desktop-h1 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-desktop-h1);
+  line-height: var(--line-height-sds-heading-desktop-h1);
+  font-weight: var(--font-weight-sds-heading-desktop-h1);
+}
+
+@utility typo-heading-desktop-h2 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-desktop-h2);
+  line-height: var(--line-height-sds-heading-desktop-h2);
+  font-weight: var(--font-weight-sds-heading-desktop-h2);
+}
+
+@utility typo-heading-desktop-h3 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-desktop-h3);
+  line-height: var(--line-height-sds-heading-desktop-h3);
+  font-weight: var(--font-weight-sds-heading-desktop-h3);
+}
+
+@utility typo-heading-mobile-h1 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-mobile-h1);
+  line-height: var(--line-height-sds-heading-mobile-h1);
+  font-weight: var(--font-weight-sds-heading-mobile-h1);
+}
+
+@utility typo-heading-mobile-h2 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-mobile-h2);
+  line-height: var(--line-height-sds-heading-mobile-h2);
+  font-weight: var(--font-weight-sds-heading-mobile-h2);
+}
+
+@utility typo-heading-mobile-h3 {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-heading-mobile-h3);
+  line-height: var(--line-height-sds-heading-mobile-h3);
+  font-weight: var(--font-weight-sds-heading-mobile-h3);
+}
+
+@utility typo-label-l-bold {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-l-bold);
+  line-height: var(--line-height-sds-label-l-bold);
+  font-weight: var(--font-weight-sds-label-l-bold);
+}
+
+@utility typo-label-l-regular {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-l-regular);
+  line-height: var(--line-height-sds-label-l-regular);
+  font-weight: var(--font-weight-sds-label-l-regular);
+}
+
+@utility typo-label-m-bold {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-m-bold);
+  line-height: var(--line-height-sds-label-m-bold);
+  font-weight: var(--font-weight-sds-label-m-bold);
+}
+
+@utility typo-label-m-regular {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-m-regular);
+  line-height: var(--line-height-sds-label-m-regular);
+  font-weight: var(--font-weight-sds-label-m-regular);
+}
+
+@utility typo-label-s-bold {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-s-bold);
+  line-height: var(--line-height-sds-label-s-bold);
+  font-weight: var(--font-weight-sds-label-s-bold);
+}
+
+@utility typo-label-s-regular {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-label-s-regular);
+  line-height: var(--line-height-sds-label-s-regular);
+  font-weight: var(--font-weight-sds-label-s-regular);
+}
+
+@utility typo-title-l {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-title-l);
+  line-height: var(--line-height-sds-title-l);
+  font-weight: var(--font-weight-sds-title-l);
+}
+
+@utility typo-title-m {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-title-m);
+  line-height: var(--line-height-sds-title-m);
+  font-weight: var(--font-weight-sds-title-m);
+}
+
+@utility typo-title-s {
+  font-family: var(--font-family-sds-sans);
+  font-size: var(--font-size-sds-title-s);
+  line-height: var(--line-height-sds-title-s);
+  font-weight: var(--font-weight-sds-title-s);
+}
+
+/* ---- Light theme (default). Internal --ref layer only; see buildThemeBlocks()
+   in scripts/build-tokens.mjs. ---- */
+:root,
+[data-theme="light"] {
+  --color-sds-background-base--ref: var(--color-sds-white);
+  --color-sds-background-caution--ref: var(--color-sds-yellow-50);
+  --color-sds-background-container--ref: var(--color-sds-neutral-25);
+  --color-sds-background-container-inverse--ref: var(--color-sds-neutral-800);
+  --color-sds-background-danger--ref: var(--color-sds-red-100);
+  --color-sds-background-emphasis--ref: var(--color-sds-red-50);
+  --color-sds-background-info--ref: var(--color-sds-blue-50);
+  --color-sds-background-scrim--ref: var(--color-sds-black-alpha-600);
+  --color-sds-background-success--ref: var(--color-sds-green-50);
+  --color-sds-border-basic--ref: var(--color-sds-neutral-300);
+  --color-sds-border-caution--ref: var(--color-sds-yellow-700);
+  --color-sds-border-danger--ref: var(--color-sds-red-600);
+  --color-sds-border-disable--ref: var(--color-sds-neutral-100);
+  --color-sds-border-emphasis--ref: var(--color-sds-red-500);
+  --color-sds-border-focus--ref: var(--color-sds-blue-600);
+  --color-sds-border-info--ref: var(--color-sds-blue-700);
+  --color-sds-border-strong--ref: var(--color-sds-neutral-800);
+  --color-sds-border-success--ref: var(--color-sds-green-700);
+  --color-sds-border-weak--ref: var(--color-sds-neutral-100);
+  --color-sds-icon-caution--ref: var(--color-sds-yellow-600);
+  --color-sds-icon-caution-inverse--ref: var(--color-sds-yellow-400);
+  --color-sds-icon-danger--ref: var(--color-sds-red-500);
+  --color-sds-icon-danger-inverse--ref: var(--color-sds-red-400);
+  --color-sds-icon-disable--ref: var(--color-sds-neutral-400);
+  --color-sds-icon-emphasis--ref: var(--color-sds-red-500);
+  --color-sds-icon-info--ref: var(--color-sds-blue-600);
+  --color-sds-icon-info-inverse--ref: var(--color-sds-blue-400);
+  --color-sds-icon-link--ref: var(--color-sds-blue-600);
+  --color-sds-icon-on-surface--ref: var(--color-sds-white);
+  --color-sds-icon-on-surface-inverse--ref: var(--color-sds-neutral-800);
+  --color-sds-icon-on-surface-inverse-disable--ref: var(--color-sds-neutral-600);
+  --color-sds-icon-primary--ref: var(--color-sds-neutral-800);
+  --color-sds-icon-primary-hover--ref: var(--color-sds-neutral-700);
+  --color-sds-icon-primary-inverse--ref: var(--color-sds-neutral-100);
+  --color-sds-icon-secondary--ref: var(--color-sds-neutral-600);
+  --color-sds-icon-secondary-hover--ref: var(--color-sds-neutral-500);
+  --color-sds-icon-secondary-inverse--ref: var(--color-sds-neutral-300);
+  --color-sds-icon-success--ref: var(--color-sds-green-500);
+  --color-sds-icon-success-inverse--ref: var(--color-sds-green-400);
+  --color-sds-surface-base--ref: var(--color-sds-white);
+  --color-sds-surface-caution--ref: var(--color-sds-yellow-600);
+  --color-sds-surface-danger--ref: var(--color-sds-red-500);
+  --color-sds-surface-disabled--ref: var(--color-sds-neutral-50);
+  --color-sds-surface-disabled-strong--ref: var(--color-sds-neutral-200);
+  --color-sds-surface-emphasis--ref: var(--color-sds-red-500);
+  --color-sds-surface-emphasis-active--ref: var(--color-sds-red-600);
+  --color-sds-surface-emphasis-hover--ref: var(--color-sds-red-400);
+  --color-sds-surface-info--ref: var(--color-sds-blue-500);
+  --color-sds-surface-primary--ref: var(--color-sds-neutral-700);
+  --color-sds-surface-primary-active--ref: var(--color-sds-neutral-900);
+  --color-sds-surface-primary-hover--ref: var(--color-sds-neutral-600);
+  --color-sds-surface-secondary--ref: var(--color-sds-gray-300);
+  --color-sds-surface-secondary-active--ref: var(--color-sds-gray-400);
+  --color-sds-surface-secondary-hover--ref: var(--color-sds-gray-100);
+  --color-sds-surface-subtle--ref: var(--color-sds-black-alpha-100);
+  --color-sds-surface-subtle-active--ref: var(--color-sds-black-alpha-400);
+  --color-sds-surface-subtle-active-inverse--ref: var(--color-sds-white-alpha-100);
+  --color-sds-surface-subtle-hover--ref: var(--color-sds-black-alpha-50);
+  --color-sds-surface-subtle-hover-inverse--ref: var(--color-sds-white-alpha-300);
+  --color-sds-surface-subtle-inverse--ref: var(--color-sds-white-alpha-200);
+  --color-sds-surface-success--ref: var(--color-sds-green-500);
+  --color-sds-text-caution--ref: var(--color-sds-yellow-700);
+  --color-sds-text-danger--ref: var(--color-sds-red-600);
+  --color-sds-text-disable--ref: var(--color-sds-neutral-400);
+  --color-sds-text-emphasis--ref: var(--color-sds-red-500);
+  --color-sds-text-info--ref: var(--color-sds-blue-700);
+  --color-sds-text-link--ref: var(--color-sds-blue-600);
+  --color-sds-text-on-surface--ref: var(--color-sds-white);
+  --color-sds-text-on-surface-inverse--ref: var(--color-sds-neutral-800);
+  --color-sds-text-placeholder--ref: var(--color-sds-neutral-500);
+  --color-sds-text-primary--ref: var(--color-sds-neutral-800);
+  --color-sds-text-primary-inverse--ref: var(--color-sds-white);
+  --color-sds-text-secondary--ref: var(--color-sds-neutral-600);
+  --color-sds-text-success--ref: var(--color-sds-green-700);
+}
+
+/* ---- Dark mode (from scripts/figma-variables.json, written by
+   `pnpm run figma:pull`). Overrides only
+   the semantic color sds- variables above; primitives never change by
+   theme. An explicit [data-theme] always wins over the OS preference, and
+   [data-theme="dark"] applies on nested/scoped elements too. ---- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-sds-background-base--ref: var(--color-sds-neutral-900);
+    --color-sds-background-caution--ref: var(--color-sds-yellow-900);
+    --color-sds-background-container--ref: var(--color-sds-neutral-800);
+    --color-sds-background-container-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-background-danger--ref: var(--color-sds-red-800);
+    --color-sds-background-emphasis--ref: var(--color-sds-red-900);
+    --color-sds-background-info--ref: var(--color-sds-blue-900);
+    --color-sds-background-scrim--ref: var(--color-sds-black-alpha-700);
+    --color-sds-background-success--ref: var(--color-sds-green-900);
+    --color-sds-border-basic--ref: var(--color-sds-neutral-500);
+    --color-sds-border-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-border-danger--ref: var(--color-sds-red-400);
+    --color-sds-border-disable--ref: var(--color-sds-neutral-800);
+    --color-sds-border-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-border-focus--ref: var(--color-sds-blue-400);
+    --color-sds-border-info--ref: var(--color-sds-blue-400);
+    --color-sds-border-strong--ref: var(--color-sds-neutral-200);
+    --color-sds-border-success--ref: var(--color-sds-green-400);
+    --color-sds-border-weak--ref: var(--color-sds-neutral-800);
+    --color-sds-icon-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-icon-caution-inverse--ref: var(--color-sds-yellow-600);
+    --color-sds-icon-danger--ref: var(--color-sds-red-400);
+    --color-sds-icon-danger-inverse--ref: var(--color-sds-red-600);
+    --color-sds-icon-disable--ref: var(--color-sds-neutral-500);
+    --color-sds-icon-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-icon-info--ref: var(--color-sds-blue-400);
+    --color-sds-icon-info-inverse--ref: var(--color-sds-blue-600);
+    --color-sds-icon-link--ref: var(--color-sds-blue-300);
+    --color-sds-icon-on-surface--ref: var(--color-sds-neutral-900);
+    --color-sds-icon-on-surface-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-icon-on-surface-inverse-disable--ref: var(--color-sds-neutral-400);
+    --color-sds-icon-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-icon-primary-hover--ref: var(--color-sds-neutral-200);
+    --color-sds-icon-primary-inverse--ref: var(--color-sds-neutral-800);
+    --color-sds-icon-secondary--ref: var(--color-sds-neutral-300);
+    --color-sds-icon-secondary-hover--ref: var(--color-sds-neutral-400);
+    --color-sds-icon-secondary-inverse--ref: var(--color-sds-neutral-600);
+    --color-sds-icon-success--ref: var(--color-sds-green-400);
+    --color-sds-icon-success-inverse--ref: var(--color-sds-green-600);
+    --color-sds-surface-base--ref: var(--color-sds-neutral-900);
+    --color-sds-surface-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-surface-danger--ref: var(--color-sds-red-400);
+    --color-sds-surface-disabled--ref: var(--color-sds-neutral-800);
+    --color-sds-surface-disabled-strong--ref: var(--color-sds-neutral-700);
+    --color-sds-surface-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-surface-emphasis-active--ref: var(--color-sds-red-500);
+    --color-sds-surface-emphasis-hover--ref: var(--color-sds-red-300);
+    --color-sds-surface-info--ref: var(--color-sds-blue-400);
+    --color-sds-surface-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-surface-primary-active--ref: var(--color-sds-neutral-300);
+    --color-sds-surface-primary-hover--ref: var(--color-sds-neutral-200);
+    --color-sds-surface-secondary--ref: var(--color-sds-gray-700);
+    --color-sds-surface-secondary-active--ref: var(--color-sds-gray-800);
+    --color-sds-surface-secondary-hover--ref: var(--color-sds-gray-600);
+    --color-sds-surface-subtle--ref: var(--color-sds-white-alpha-100);
+    --color-sds-surface-subtle-active--ref: var(--color-sds-white-alpha-400);
+    --color-sds-surface-subtle-active-inverse--ref: var(--color-sds-black-alpha-100);
+    --color-sds-surface-subtle-hover--ref: var(--color-sds-white-alpha-50);
+    --color-sds-surface-subtle-hover-inverse--ref: var(--color-sds-black-alpha-300);
+    --color-sds-surface-subtle-inverse--ref: var(--color-sds-black-alpha-200);
+    --color-sds-surface-success--ref: var(--color-sds-green-400);
+    --color-sds-text-caution--ref: var(--color-sds-yellow-300);
+    --color-sds-text-danger--ref: var(--color-sds-red-300);
+    --color-sds-text-disable--ref: var(--color-sds-neutral-500);
+    --color-sds-text-emphasis--ref: var(--color-sds-red-300);
+    --color-sds-text-info--ref: var(--color-sds-blue-300);
+    --color-sds-text-link--ref: var(--color-sds-blue-300);
+    --color-sds-text-on-surface--ref: var(--color-sds-neutral-900);
+    --color-sds-text-on-surface-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-text-placeholder--ref: var(--color-sds-neutral-400);
+    --color-sds-text-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-text-primary-inverse--ref: var(--color-sds-neutral-900);
+    --color-sds-text-secondary--ref: var(--color-sds-neutral-300);
+    --color-sds-text-success--ref: var(--color-sds-green-300);
+  }
+}
+[data-theme="dark"] {
+    --color-sds-background-base--ref: var(--color-sds-neutral-900);
+    --color-sds-background-caution--ref: var(--color-sds-yellow-900);
+    --color-sds-background-container--ref: var(--color-sds-neutral-800);
+    --color-sds-background-container-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-background-danger--ref: var(--color-sds-red-800);
+    --color-sds-background-emphasis--ref: var(--color-sds-red-900);
+    --color-sds-background-info--ref: var(--color-sds-blue-900);
+    --color-sds-background-scrim--ref: var(--color-sds-black-alpha-700);
+    --color-sds-background-success--ref: var(--color-sds-green-900);
+    --color-sds-border-basic--ref: var(--color-sds-neutral-500);
+    --color-sds-border-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-border-danger--ref: var(--color-sds-red-400);
+    --color-sds-border-disable--ref: var(--color-sds-neutral-800);
+    --color-sds-border-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-border-focus--ref: var(--color-sds-blue-400);
+    --color-sds-border-info--ref: var(--color-sds-blue-400);
+    --color-sds-border-strong--ref: var(--color-sds-neutral-200);
+    --color-sds-border-success--ref: var(--color-sds-green-400);
+    --color-sds-border-weak--ref: var(--color-sds-neutral-800);
+    --color-sds-icon-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-icon-caution-inverse--ref: var(--color-sds-yellow-600);
+    --color-sds-icon-danger--ref: var(--color-sds-red-400);
+    --color-sds-icon-danger-inverse--ref: var(--color-sds-red-600);
+    --color-sds-icon-disable--ref: var(--color-sds-neutral-500);
+    --color-sds-icon-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-icon-info--ref: var(--color-sds-blue-400);
+    --color-sds-icon-info-inverse--ref: var(--color-sds-blue-600);
+    --color-sds-icon-link--ref: var(--color-sds-blue-300);
+    --color-sds-icon-on-surface--ref: var(--color-sds-neutral-900);
+    --color-sds-icon-on-surface-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-icon-on-surface-inverse-disable--ref: var(--color-sds-neutral-400);
+    --color-sds-icon-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-icon-primary-hover--ref: var(--color-sds-neutral-200);
+    --color-sds-icon-primary-inverse--ref: var(--color-sds-neutral-800);
+    --color-sds-icon-secondary--ref: var(--color-sds-neutral-300);
+    --color-sds-icon-secondary-hover--ref: var(--color-sds-neutral-400);
+    --color-sds-icon-secondary-inverse--ref: var(--color-sds-neutral-600);
+    --color-sds-icon-success--ref: var(--color-sds-green-400);
+    --color-sds-icon-success-inverse--ref: var(--color-sds-green-600);
+    --color-sds-surface-base--ref: var(--color-sds-neutral-900);
+    --color-sds-surface-caution--ref: var(--color-sds-yellow-400);
+    --color-sds-surface-danger--ref: var(--color-sds-red-400);
+    --color-sds-surface-disabled--ref: var(--color-sds-neutral-800);
+    --color-sds-surface-disabled-strong--ref: var(--color-sds-neutral-700);
+    --color-sds-surface-emphasis--ref: var(--color-sds-red-400);
+    --color-sds-surface-emphasis-active--ref: var(--color-sds-red-500);
+    --color-sds-surface-emphasis-hover--ref: var(--color-sds-red-300);
+    --color-sds-surface-info--ref: var(--color-sds-blue-400);
+    --color-sds-surface-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-surface-primary-active--ref: var(--color-sds-neutral-300);
+    --color-sds-surface-primary-hover--ref: var(--color-sds-neutral-200);
+    --color-sds-surface-secondary--ref: var(--color-sds-gray-700);
+    --color-sds-surface-secondary-active--ref: var(--color-sds-gray-800);
+    --color-sds-surface-secondary-hover--ref: var(--color-sds-gray-600);
+    --color-sds-surface-subtle--ref: var(--color-sds-white-alpha-100);
+    --color-sds-surface-subtle-active--ref: var(--color-sds-white-alpha-400);
+    --color-sds-surface-subtle-active-inverse--ref: var(--color-sds-black-alpha-100);
+    --color-sds-surface-subtle-hover--ref: var(--color-sds-white-alpha-50);
+    --color-sds-surface-subtle-hover-inverse--ref: var(--color-sds-black-alpha-300);
+    --color-sds-surface-subtle-inverse--ref: var(--color-sds-black-alpha-200);
+    --color-sds-surface-success--ref: var(--color-sds-green-400);
+    --color-sds-text-caution--ref: var(--color-sds-yellow-300);
+    --color-sds-text-danger--ref: var(--color-sds-red-300);
+    --color-sds-text-disable--ref: var(--color-sds-neutral-500);
+    --color-sds-text-emphasis--ref: var(--color-sds-red-300);
+    --color-sds-text-info--ref: var(--color-sds-blue-300);
+    --color-sds-text-link--ref: var(--color-sds-blue-300);
+    --color-sds-text-on-surface--ref: var(--color-sds-neutral-900);
+    --color-sds-text-on-surface-inverse--ref: var(--color-sds-neutral-100);
+    --color-sds-text-placeholder--ref: var(--color-sds-neutral-400);
+    --color-sds-text-primary--ref: var(--color-sds-neutral-100);
+    --color-sds-text-primary-inverse--ref: var(--color-sds-neutral-900);
+    --color-sds-text-secondary--ref: var(--color-sds-neutral-300);
+    --color-sds-text-success--ref: var(--color-sds-green-300);
+}
+
+/* ---- Re-resolve the public semantic vars at every theme boundary so nested /
+   scoped [data-theme] regions (and anything portaled into them) get their
+   own theme, not the root's already-resolved value. Specificity 0. ---- */
+:where([data-theme]) {
+  --color-sds-background-base: var(--color-sds-background-base--ref);
+  --color-sds-background-caution: var(--color-sds-background-caution--ref);
+  --color-sds-background-container: var(--color-sds-background-container--ref);
+  --color-sds-background-container-inverse: var(--color-sds-background-container-inverse--ref);
+  --color-sds-background-danger: var(--color-sds-background-danger--ref);
+  --color-sds-background-emphasis: var(--color-sds-background-emphasis--ref);
+  --color-sds-background-info: var(--color-sds-background-info--ref);
+  --color-sds-background-scrim: var(--color-sds-background-scrim--ref);
+  --color-sds-background-success: var(--color-sds-background-success--ref);
+  --color-sds-border-basic: var(--color-sds-border-basic--ref);
+  --color-sds-border-caution: var(--color-sds-border-caution--ref);
+  --color-sds-border-danger: var(--color-sds-border-danger--ref);
+  --color-sds-border-disable: var(--color-sds-border-disable--ref);
+  --color-sds-border-emphasis: var(--color-sds-border-emphasis--ref);
+  --color-sds-border-focus: var(--color-sds-border-focus--ref);
+  --color-sds-border-info: var(--color-sds-border-info--ref);
+  --color-sds-border-strong: var(--color-sds-border-strong--ref);
+  --color-sds-border-success: var(--color-sds-border-success--ref);
+  --color-sds-border-weak: var(--color-sds-border-weak--ref);
+  --color-sds-icon-caution: var(--color-sds-icon-caution--ref);
+  --color-sds-icon-caution-inverse: var(--color-sds-icon-caution-inverse--ref);
+  --color-sds-icon-danger: var(--color-sds-icon-danger--ref);
+  --color-sds-icon-danger-inverse: var(--color-sds-icon-danger-inverse--ref);
+  --color-sds-icon-disable: var(--color-sds-icon-disable--ref);
+  --color-sds-icon-emphasis: var(--color-sds-icon-emphasis--ref);
+  --color-sds-icon-info: var(--color-sds-icon-info--ref);
+  --color-sds-icon-info-inverse: var(--color-sds-icon-info-inverse--ref);
+  --color-sds-icon-link: var(--color-sds-icon-link--ref);
+  --color-sds-icon-on-surface: var(--color-sds-icon-on-surface--ref);
+  --color-sds-icon-on-surface-inverse: var(--color-sds-icon-on-surface-inverse--ref);
+  --color-sds-icon-on-surface-inverse-disable: var(--color-sds-icon-on-surface-inverse-disable--ref);
+  --color-sds-icon-primary: var(--color-sds-icon-primary--ref);
+  --color-sds-icon-primary-hover: var(--color-sds-icon-primary-hover--ref);
+  --color-sds-icon-primary-inverse: var(--color-sds-icon-primary-inverse--ref);
+  --color-sds-icon-secondary: var(--color-sds-icon-secondary--ref);
+  --color-sds-icon-secondary-hover: var(--color-sds-icon-secondary-hover--ref);
+  --color-sds-icon-secondary-inverse: var(--color-sds-icon-secondary-inverse--ref);
+  --color-sds-icon-success: var(--color-sds-icon-success--ref);
+  --color-sds-icon-success-inverse: var(--color-sds-icon-success-inverse--ref);
+  --color-sds-surface-base: var(--color-sds-surface-base--ref);
+  --color-sds-surface-caution: var(--color-sds-surface-caution--ref);
+  --color-sds-surface-danger: var(--color-sds-surface-danger--ref);
+  --color-sds-surface-disabled: var(--color-sds-surface-disabled--ref);
+  --color-sds-surface-disabled-strong: var(--color-sds-surface-disabled-strong--ref);
+  --color-sds-surface-emphasis: var(--color-sds-surface-emphasis--ref);
+  --color-sds-surface-emphasis-active: var(--color-sds-surface-emphasis-active--ref);
+  --color-sds-surface-emphasis-hover: var(--color-sds-surface-emphasis-hover--ref);
+  --color-sds-surface-info: var(--color-sds-surface-info--ref);
+  --color-sds-surface-primary: var(--color-sds-surface-primary--ref);
+  --color-sds-surface-primary-active: var(--color-sds-surface-primary-active--ref);
+  --color-sds-surface-primary-hover: var(--color-sds-surface-primary-hover--ref);
+  --color-sds-surface-secondary: var(--color-sds-surface-secondary--ref);
+  --color-sds-surface-secondary-active: var(--color-sds-surface-secondary-active--ref);
+  --color-sds-surface-secondary-hover: var(--color-sds-surface-secondary-hover--ref);
+  --color-sds-surface-subtle: var(--color-sds-surface-subtle--ref);
+  --color-sds-surface-subtle-active: var(--color-sds-surface-subtle-active--ref);
+  --color-sds-surface-subtle-active-inverse: var(--color-sds-surface-subtle-active-inverse--ref);
+  --color-sds-surface-subtle-hover: var(--color-sds-surface-subtle-hover--ref);
+  --color-sds-surface-subtle-hover-inverse: var(--color-sds-surface-subtle-hover-inverse--ref);
+  --color-sds-surface-subtle-inverse: var(--color-sds-surface-subtle-inverse--ref);
+  --color-sds-surface-success: var(--color-sds-surface-success--ref);
+  --color-sds-text-caution: var(--color-sds-text-caution--ref);
+  --color-sds-text-danger: var(--color-sds-text-danger--ref);
+  --color-sds-text-disable: var(--color-sds-text-disable--ref);
+  --color-sds-text-emphasis: var(--color-sds-text-emphasis--ref);
+  --color-sds-text-info: var(--color-sds-text-info--ref);
+  --color-sds-text-link: var(--color-sds-text-link--ref);
+  --color-sds-text-on-surface: var(--color-sds-text-on-surface--ref);
+  --color-sds-text-on-surface-inverse: var(--color-sds-text-on-surface-inverse--ref);
+  --color-sds-text-placeholder: var(--color-sds-text-placeholder--ref);
+  --color-sds-text-primary: var(--color-sds-text-primary--ref);
+  --color-sds-text-primary-inverse: var(--color-sds-text-primary-inverse--ref);
+  --color-sds-text-secondary: var(--color-sds-text-secondary--ref);
+  --color-sds-text-success: var(--color-sds-text-success--ref);
+}

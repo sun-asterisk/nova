@@ -1,0 +1,46 @@
+---
+title: Checkbox
+description: チェックボックスは、複数の選択肢から1つ以上を選べる場合や、単一の選択肢を有効または無効にする場合に使用します。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">チェックボックスは、複数の選択肢から1つ以上を選べる場合や、単一の選択肢を有効または無効にする場合に使用します。ユーザーが1つの選択肢しか選べない場合は、ラジオボタンを検討してください。</p>
+
+![Checkbox のバリエーション一覧](/assets/components/checkbox/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+チェックボックスは選択肢のテキストの左側に配置します。各選択肢間には、視認性を確保するための適切な余白を設けてください。
+
+選択肢は、1つのグループに対して3～7個理想的です。最も重要または頻繁に選ばれる選択肢を先頭に配置しましょう。
+選択肢が多い場合は、「すべて選択」「すべて解除」のオプションを提供すると、ユーザーが効率的に操作でき、利便性が向上します。
+
+**Do** — 複数選択可能なケース
+
+![Do の例：複数選択可能なケース](/assets/components/checkbox/g2-1.png)
+
+**Don't** — 単一の回答しかできない質問への使用
+
+![Don't の例：単一の回答しかできない質問への使用](/assets/components/checkbox/g2-2.png)
+
+### アクセシビリティへの配慮
+
+必須項目や任意項目の表示は、視覚に頼らないユーザーにも伝わるよう、「*」など単なる色やアイコンではなく、テキストを含めることを検討してください。
+
+## デザイン仕様
+
+### サイズ
+
+![Checkbox 単体の寸法仕様（チェックボックスとラベルの間隔）](/assets/components/checkbox/g3-1.png)
+
+![Checkbox グループの寸法仕様（ラベル・サポートテキスト・選択肢・エラーテキストの間隔）](/assets/components/checkbox/g3-2.png)
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-checkbox--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Checkbox フレームからの引用です。</Aside>

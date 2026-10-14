@@ -1,0 +1,536 @@
+{
+  "name": "@sun-asterisk/nova",
+  "private": false,
+  "version": "1.0.0",
+  "description": "Sun design system - A React component library built with TypeScript and Tailwind CSS.",
+  "author": "Sun Asterisk",
+  "license": "MIT",
+  "packageManager": "pnpm@10.7.1",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sun-asterisk/nova.git"
+  },
+  "homepage": "https://nova.sun-asterisk.com",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "type": "module",
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/types/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/types/index.d.cts",
+        "default": "./dist/cjs/index.cjs"
+      }
+    },
+    "./styles": {
+      "types": "./dist/types/styles.d.cts",
+      "default": "./dist/index.css"
+    },
+    "./styles.css": {
+      "types": "./dist/types/styles.d.cts",
+      "default": "./dist/index.css"
+    },
+    "./global.css": {
+      "types": "./dist/types/styles.d.cts",
+      "default": "./dist/global.css"
+    },
+    "./branded-fonts.css": {
+      "types": "./dist/types/styles.d.cts",
+      "default": "./dist/branded-fonts.css"
+    },
+    "./avatar": {
+      "import": {
+        "types": "./dist/types/components/avatar/index.d.ts",
+        "default": "./dist/esm/components/avatar/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/avatar/index.d.cts",
+        "default": "./dist/cjs/components/avatar/index.cjs"
+      }
+    },
+    "./button": {
+      "import": {
+        "types": "./dist/types/components/button/index.d.ts",
+        "default": "./dist/esm/components/button/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/button/index.d.cts",
+        "default": "./dist/cjs/components/button/index.cjs"
+      }
+    },
+    "./input": {
+      "import": {
+        "types": "./dist/types/components/input/index.d.ts",
+        "default": "./dist/esm/components/input/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/input/index.d.cts",
+        "default": "./dist/cjs/components/input/index.cjs"
+      }
+    },
+    "./text-field": {
+      "import": {
+        "types": "./dist/types/components/textField/index.d.ts",
+        "default": "./dist/esm/components/textField/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/textField/index.d.cts",
+        "default": "./dist/cjs/components/textField/index.cjs"
+      }
+    },
+    "./textarea": {
+      "import": {
+        "types": "./dist/types/components/textarea/index.d.ts",
+        "default": "./dist/esm/components/textarea/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/textarea/index.d.cts",
+        "default": "./dist/cjs/components/textarea/index.cjs"
+      }
+    },
+    "./textarea-field": {
+      "import": {
+        "types": "./dist/types/components/textareaField/index.d.ts",
+        "default": "./dist/esm/components/textareaField/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/textareaField/index.d.cts",
+        "default": "./dist/cjs/components/textareaField/index.cjs"
+      }
+    },
+    "./radio-group": {
+      "import": {
+        "types": "./dist/types/components/radioGroup/index.d.ts",
+        "default": "./dist/esm/components/radioGroup/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/radioGroup/index.d.cts",
+        "default": "./dist/cjs/components/radioGroup/index.cjs"
+      }
+    },
+    "./badge": {
+      "import": {
+        "types": "./dist/types/components/badge/index.d.ts",
+        "default": "./dist/esm/components/badge/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/badge/index.d.cts",
+        "default": "./dist/cjs/components/badge/index.cjs"
+      }
+    },
+    "./divider": {
+      "import": {
+        "types": "./dist/types/components/divider/index.d.ts",
+        "default": "./dist/esm/components/divider/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/divider/index.d.cts",
+        "default": "./dist/cjs/components/divider/index.cjs"
+      }
+    },
+    "./switch": {
+      "import": {
+        "types": "./dist/types/components/switch/index.d.ts",
+        "default": "./dist/esm/components/switch/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/switch/index.d.cts",
+        "default": "./dist/cjs/components/switch/index.cjs"
+      }
+    },
+    "./checkbox": {
+      "import": {
+        "types": "./dist/types/components/checkbox/index.d.ts",
+        "default": "./dist/esm/components/checkbox/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/checkbox/index.d.cts",
+        "default": "./dist/cjs/components/checkbox/index.cjs"
+      }
+    },
+    "./tooltip": {
+      "import": {
+        "types": "./dist/types/components/tooltip/index.d.ts",
+        "default": "./dist/esm/components/tooltip/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/tooltip/index.d.cts",
+        "default": "./dist/cjs/components/tooltip/index.cjs"
+      }
+    },
+    "./tab": {
+      "import": {
+        "types": "./dist/types/components/tab/index.d.ts",
+        "default": "./dist/esm/components/tab/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/tab/index.d.cts",
+        "default": "./dist/cjs/components/tab/index.cjs"
+      }
+    },
+    "./snackbar": {
+      "import": {
+        "types": "./dist/types/components/snackbar/index.d.ts",
+        "default": "./dist/esm/components/snackbar/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/snackbar/index.d.cts",
+        "default": "./dist/cjs/components/snackbar/index.cjs"
+      }
+    },
+    "./scrim": {
+      "import": {
+        "types": "./dist/types/components/scrim/index.d.ts",
+        "default": "./dist/esm/components/scrim/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/scrim/index.d.cts",
+        "default": "./dist/cjs/components/scrim/index.cjs"
+      }
+    },
+    "./modal": {
+      "import": {
+        "types": "./dist/types/components/modal/index.d.ts",
+        "default": "./dist/esm/components/modal/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/modal/index.d.cts",
+        "default": "./dist/cjs/components/modal/index.cjs"
+      }
+    },
+    "./date-picker": {
+      "import": {
+        "types": "./dist/types/components/datePicker/index.d.ts",
+        "default": "./dist/esm/components/datePicker/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/datePicker/index.d.cts",
+        "default": "./dist/cjs/components/datePicker/index.cjs"
+      }
+    },
+    "./scrollbar": {
+      "import": {
+        "types": "./dist/types/components/scrollbar/index.d.ts",
+        "default": "./dist/esm/components/scrollbar/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/scrollbar/index.d.cts",
+        "default": "./dist/cjs/components/scrollbar/index.cjs"
+      }
+    },
+    "./dropdown-menu": {
+      "import": {
+        "types": "./dist/types/components/dropdownMenu/index.d.ts",
+        "default": "./dist/esm/components/dropdownMenu/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/dropdownMenu/index.d.cts",
+        "default": "./dist/cjs/components/dropdownMenu/index.cjs"
+      }
+    },
+    "./theme-provider": {
+      "import": {
+        "types": "./dist/types/components/themeProvider/index.d.ts",
+        "default": "./dist/esm/components/themeProvider/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/themeProvider/index.d.cts",
+        "default": "./dist/cjs/components/themeProvider/index.cjs"
+      }
+    },
+    "./icons": {
+      "import": {
+        "types": "./dist/types/components/icons/index.d.ts",
+        "default": "./dist/esm/components/icons/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/icons/index.d.cts",
+        "default": "./dist/cjs/components/icons/index.cjs"
+      }
+    },
+    "./link": {
+      "import": {
+        "types": "./dist/types/components/link/index.d.ts",
+        "default": "./dist/esm/components/link/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/link/index.d.cts",
+        "default": "./dist/cjs/components/link/index.cjs"
+      }
+    },
+    "./spinner": {
+      "import": {
+        "types": "./dist/types/components/spinner/index.d.ts",
+        "default": "./dist/esm/components/spinner/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/spinner/index.d.cts",
+        "default": "./dist/cjs/components/spinner/index.cjs"
+      }
+    },
+    "./progress-bar": {
+      "import": {
+        "types": "./dist/types/components/progressBar/index.d.ts",
+        "default": "./dist/esm/components/progressBar/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/progressBar/index.d.cts",
+        "default": "./dist/cjs/components/progressBar/index.cjs"
+      }
+    },
+    "./status-icon": {
+      "import": {
+        "types": "./dist/types/components/statusIcon/index.d.ts",
+        "default": "./dist/esm/components/statusIcon/index.js"
+      },
+      "require": {
+        "types": "./dist/types/components/statusIcon/index.d.cts",
+        "default": "./dist/cjs/components/statusIcon/index.cjs"
+      }
+    },
+    "./cn": {
+      "import": {
+        "types": "./dist/types/utils/style.d.ts",
+        "default": "./dist/esm/utils/cn.js"
+      },
+      "require": {
+        "types": "./dist/types/utils/style.d.cts",
+        "default": "./dist/cjs/utils/cn.cjs"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "avatar": [
+        "./dist/types/components/avatar/index.d.ts"
+      ],
+      "button": [
+        "./dist/types/components/button/index.d.ts"
+      ],
+      "input": [
+        "./dist/types/components/input/index.d.ts"
+      ],
+      "text-field": [
+        "./dist/types/components/textField/index.d.ts"
+      ],
+      "textarea": [
+        "./dist/types/components/textarea/index.d.ts"
+      ],
+      "textarea-field": [
+        "./dist/types/components/textareaField/index.d.ts"
+      ],
+      "radio-group": [
+        "./dist/types/components/radioGroup/index.d.ts"
+      ],
+      "badge": [
+        "./dist/types/components/badge/index.d.ts"
+      ],
+      "divider": [
+        "./dist/types/components/divider/index.d.ts"
+      ],
+      "switch": [
+        "./dist/types/components/switch/index.d.ts"
+      ],
+      "checkbox": [
+        "./dist/types/components/checkbox/index.d.ts"
+      ],
+      "tooltip": [
+        "./dist/types/components/tooltip/index.d.ts"
+      ],
+      "tab": [
+        "./dist/types/components/tab/index.d.ts"
+      ],
+      "snackbar": [
+        "./dist/types/components/snackbar/index.d.ts"
+      ],
+      "modal": [
+        "./dist/types/components/modal/index.d.ts"
+      ],
+      "scrim": [
+        "./dist/types/components/scrim/index.d.ts"
+      ],
+      "date-picker": [
+        "./dist/types/components/datePicker/index.d.ts"
+      ],
+      "scrollbar": [
+        "./dist/types/components/scrollbar/index.d.ts"
+      ],
+      "dropdown-menu": [
+        "./dist/types/components/dropdownMenu/index.d.ts"
+      ],
+      "theme-provider": [
+        "./dist/types/components/themeProvider/index.d.ts"
+      ],
+      "icons": [
+        "./dist/types/components/icons/index.d.ts"
+      ],
+      "link": [
+        "./dist/types/components/link/index.d.ts"
+      ],
+      "spinner": [
+        "./dist/types/components/spinner/index.d.ts"
+      ],
+      "progress-bar": [
+        "./dist/types/components/progressBar/index.d.ts"
+      ],
+      "status-icon": [
+        "./dist/types/components/statusIcon/index.d.ts"
+      ],
+      "cn": [
+        "./dist/types/utils/style.d.ts"
+      ],
+      "styles": [
+        "./dist/types/styles.d.ts"
+      ],
+      "styles.css": [
+        "./dist/types/styles.d.ts"
+      ],
+      "global.css": [
+        "./dist/types/styles.d.ts"
+      ],
+      "branded-fonts.css": [
+        "./dist/types/styles.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "*.css"
+  ],
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "design-system",
+    "typescript",
+    "tailwindcss",
+    "radix-ui"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:watch": "vite build --watch",
+    "prepublishOnly": "npm run build",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "build:tokens": "node scripts/build-tokens.mjs",
+    "figma:pull": "node scripts/fetch-figma-tokens.mjs",
+    "figma:theme-check": "node scripts/figma/component-theme-check.mjs",
+    "figma:icons": "node scripts/figma/generate-icon-code-connect.mjs",
+    "tokens:sync": "node scripts/sync-tokens.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.build.json",
+    "package:check": "npm pack --dry-run",
+    "test": "node scripts/quality/run-vitest-safe.mjs -- run --project unit --project storybook --project storybook-dark",
+    "test:watch": "vitest --project unit --project storybook --project storybook-dark",
+    "test:unit": "node scripts/quality/run-vitest-safe.mjs -- run --project unit",
+    "test:storybook": "node scripts/quality/run-vitest-safe.mjs -- run --project storybook",
+    "test:storybook:dark": "node scripts/quality/run-vitest-safe.mjs -- run --project storybook-dark",
+    "test:api": "vitest run --project api",
+    "test:package": "node scripts/quality/verify-package.mjs && node scripts/quality/verify-treeshaking.mjs",
+    "test:tokens": "node scripts/quality/verify-tokens.mjs",
+    "test:foundation": "node scripts/quality/verify-motion-and-theme.mjs",
+    "test:full": "pnpm typecheck && eslint src/components src/utils test scripts/quality vite.config.ts && pnpm test:api && pnpm test:unit && pnpm test:storybook && pnpm test:storybook:dark && pnpm test:tokens && pnpm build && pnpm build-storybook && pnpm test:package && pnpm test:foundation",
+    "docs:dev": "pnpm -C docs dev",
+    "docs:build": "pnpm -C docs build",
+    "build:storybook": "STORYBOOK_BASE_PATH=/storybook/ storybook build -o docs/public/storybook",
+    "build:all": "pnpm build:storybook && pnpm docs:build",
+    "deploy:docs": "wrangler deploy --config docs/wrangler.jsonc",
+    "typecheck:figma": "tsc -p tsconfig.figma.json --noEmit",
+    "code-connect:check": "node scripts/code-connect-publish.mjs --dry-run",
+    "code-connect:build": "pnpm run typecheck:figma && pnpm run code-connect:check",
+    "code-connect:publish": "node scripts/code-connect-publish.mjs"
+  },
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "tailwindcss": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "tailwindcss": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@radix-ui/react-checkbox": "^1.3.11",
+    "@radix-ui/react-dialog": "^1.1.23",
+    "@radix-ui/react-dropdown-menu": "^2.1.24",
+    "@radix-ui/react-radio-group": "^1.4.7",
+    "@radix-ui/react-slot": "^1.3.3",
+    "@radix-ui/react-switch": "^1.3.7",
+    "@radix-ui/react-tabs": "^1.1.21",
+    "@radix-ui/react-tooltip": "^1.2.16",
+    "clsx": "^2.1.1",
+    "date-fns": "^4.1.0",
+    "lucide-react": "^1.44.0",
+    "radix-ui": "^1.6.7",
+    "react-day-picker": "^10.0.1",
+    "react-icons": "^5.5.0",
+    "sonner": "^2.0.8",
+    "tailwind-merge": "^3.7.0",
+    "tailwind-variants": "^3.3.1"
+  },
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.18.5",
+    "@changesets/changelog-github": "^1.0.1",
+    "@changesets/cli": "^3.0.3",
+    "@chromatic-com/storybook": "^5.3.0",
+    "@eslint/js": "^9.39.5",
+    "@figma/code-connect": "^2.0.1",
+    "@storybook/addon-a11y": "^10.5.10",
+    "@storybook/addon-docs": "^10.5.10",
+    "@storybook/addon-vitest": "^10.5.10",
+    "@storybook/react": "^10.5.10",
+    "@storybook/react-vite": "^10.5.10",
+    "@tailwindcss/vite": "^4.3.3",
+    "@testing-library/jest-dom": "^7",
+    "@testing-library/react": "^16",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@typescript-eslint/eslint-plugin": "^8.70.0",
+    "@vanilla-extract/css": "^1.21.2",
+    "@vanilla-extract/vite-plugin": "^5.2.6",
+    "@vitejs/plugin-react-swc": "^4.3.3",
+    "@vitest/browser": "^4.1.11",
+    "@vitest/browser-playwright": "^4.1.11",
+    "@vitest/coverage-v8": "^4.1.11",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.35.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.4",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.6",
+    "eslint-plugin-storybook": "^10.6.0",
+    "globals": "^17.12.0",
+    "playwright": "^1.63.0",
+    "prettier": "^3.9.6",
+    "react": "^19.3.0",
+    "react-datepicker": "^9.1.0",
+    "react-dom": "^19.3.0",
+    "storybook": "^10.5.10",
+    "style-dictionary": "^5.5.3",
+    "tailwindcss": "^4.3.3",
+    "tw-animate-css": "^1.4.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.70.0",
+    "vite": "^7.1.6",
+    "vite-plugin-dts": "^5.1.0",
+    "vitest": "^4.1.11",
+    "wrangler": "^4.131.2"
+  }
+}

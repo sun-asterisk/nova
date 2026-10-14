@@ -1,0 +1,69 @@
+---
+title: ProgressBar
+description: プログレスバーは、処理の進捗を割合で示すインジケーターです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">プログレスバーは、処理の進捗を割合で示すインジケーターです。アップロードなど、完了までの割合が判明している処理に使います。</p>
+
+![ProgressBar のバリエーション一覧](/assets/components/progress-bar/showcase.png)
+
+## 概要
+
+完了時期が分からない待機には、プログレスバーではなく [Spinner](/components/spinner/) を使用してください。実際の割合がまだ分からないうちに 0% のまま表示したり、実測から外れた推定値で進めたりしないでください。
+
+割合の数値を表示する場合は、バーとは別の要素として右側に固定幅で配置し、桁数が変わってもレイアウトがずれないようにします。
+
+## 種類・バリエーション
+
+- **サイズ** — Small（高さ 4px・既定）/ Medium（6px）/ Large（8px）
+- **Inverse** — 濃い色の面の上では Inverse を有効にします
+
+## 使い方
+
+```tsx
+import { ProgressBar } from '@sun-asterisk/nova/progress-bar';
+
+<ProgressBar value={42} aria-label="ファイルをアップロード中" />
+
+// 数値を併記する
+<div className="flex items-center gap-2">
+  <ProgressBar value={74} className="flex-1" aria-label="読み込み中" />
+  <span className="typo-label-s text-sds-text-secondary text-right w-[32px]">74%</span>
+</div>
+
+// 読み上げテキストを変える
+<ProgressBar
+  value={18}
+  max={40}
+  getValueLabel={(value, max) => `${max}枚中${value}枚`}
+  aria-label="画像を読み込み中"
+/>
+```
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `value` | `number` | （必須） | 現在の値。`0`〜`max` の範囲に丸められます |
+| `max` | `number` | `100` | 最大値。不正な値の場合は 100 になります |
+| `size` | `'small' \| 'medium' \| 'large'` | `'small'` | サイズ |
+| `inverse` | `boolean` | `false` | 濃い色の面の上で使う配色 |
+| `getValueLabel` | `(value, max) => string` | `"NN%"` | 読み上げる値のテキスト |
+
+そのほか Radix `Progress.Root` の Props を渡せます。
+
+## アクセシビリティ
+
+- **`aria-label` または `aria-labelledby` は必須です。** 何の進捗か（「ファイルをアップロード中」など）を伝える名前が必要です。値（「42%」）は自動で読み上げられますが、名前は自動では付きません
+- `role="progressbar"` と `aria-valuenow` / `aria-valuemin` / `aria-valuemax` / `aria-valuetext` が自動で付与されます
+- 進捗を色や長さだけで伝えないでください。割合が判断に必要な場面では数値を併記します
+- 値が頻繁に更新されると読み上げが過剰になるため、`aria-live` は付けていません。完了の通知は利用側で行ってください
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-progressbar--docs)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/progressBar.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

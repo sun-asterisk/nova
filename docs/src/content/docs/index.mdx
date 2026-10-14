@@ -1,0 +1,40 @@
+---
+title: Sun* Design System Nova
+description: 1,000以上のプロダクト開発で培った、プロダクトを前進させるデザインシステム「Nova」のドキュメント
+template: splash
+hero:
+  title: ゼロから作らない。<br />アイデアがすぐ形に。
+  tagline: 1,000以上のプロダクト開発で培った、プロダクトを前進させるデザインシステム「Nova」のドキュメントです。Figma ライブラリのガイドから React コンポーネントの使い方まで、ここにまとめています。
+  actions:
+    - text: ガイドを読む
+      link: /guide/01-overview/
+      icon: open-book
+    - text: コンポーネントを見る
+      link: /components/
+      icon: puzzle
+      variant: minimal
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<p class="nova-eyebrow">Contents</p>
+
+## コンテンツ
+
+<CardGrid>
+  <Card title="コンポーネントライブラリ" icon="puzzle">
+    実装済みの React コンポーネントのガイドラインと使い方です。[見る →](/components/)
+  </Card>
+  <Card title="Storybook" icon="laptop">
+    全コンポーネントを実際に操作して確認できます。[開く →](/storybook-view/)
+  </Card>
+  <Card title="デザイナー向けガイド" icon="open-book">
+    Figma ライブラリのファイル構成、基本ルール、プロジェクト導入手順をまとめています。[読む →](/guide/01-overview/)
+  </Card>
+  <Card title="エンジニア向けガイド" icon="seti:react">
+    npm パッケージの導入、テーマとリブランド、Code Connect、フォーム連携を解説しています。[読む →](/guide/08-installation/)
+  </Card>
+  <Card title="更新情報" icon="list-format">
+    Figma ライブラリと React パッケージのリリースノートです。最新は React パッケージ 1.0.0（2026-10-14）・Figma ライブラリ 1.0.0（2026-10-09）。[見る →](/updates/react-1-0-0/)
+  </Card>
+</CardGrid>

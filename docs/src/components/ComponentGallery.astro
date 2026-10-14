@@ -1,0 +1,41 @@
+---
+// コンポーネント一覧ギャラリー。
+// src/content/docs/components/*.mdx の frontmatter (title/description) を自動収集し、
+// /assets/components/<slug>/showcase.png をサムネイルにしたカードグリッドを描画する。
+// サムネイルが無いページは壊れた画像ではなくコンポーネント名のプレースホルダーを出す。
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
+import { getCollection } from 'astro:content';
+
+const pages = (await getCollection('docs'))
+	.filter((e) => e.id.startsWith('components/') && e.id !== 'components/index')
+	.sort((a, b) => a.data.title.localeCompare(b.data.title, 'en'));
+
+const slugOf = (id: string) => id.replace(/^components\//, '').replace(/\.mdx?$/, '');
+const hasThumb = (slug: string) =>
+	// ビルド時の import.meta.url は出力チャンクを指すので、プロジェクトルート (docs/) 基準で解決する
+	existsSync(resolve(process.cwd(), `public/assets/components/${slug}/showcase.png`));
+---
+
+<div class="comp-gallery not-content">
+	{
+		pages.map((p) => {
+			const slug = slugOf(p.id);
+			return (
+				<a class="comp-card" href={`/components/${slug}/`}>
+					<span class="comp-thumb">
+						{hasThumb(slug) ? (
+							<img src={`/assets/components/${slug}/showcase.png`} alt={`${p.data.title} のバリエーション`} loading="lazy" />
+						) : (
+							<span class="comp-thumb-fallback" aria-hidden="true">{p.data.title}</span>
+						)}
+					</span>
+					<span class="comp-meta">
+						<span class="comp-name">{p.data.title}</span>
+						<span class="comp-desc">{p.data.description}</span>
+					</span>
+				</a>
+			);
+		})
+	}
+</div>

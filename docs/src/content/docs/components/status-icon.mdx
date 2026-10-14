@@ -1,0 +1,58 @@
+---
+title: StatusIcon
+description: ステータスアイコンは、情報の種類や処理の結果を、決まったアイコンと色の組み合わせで示すアイコンです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">ステータスアイコンは、情報の種類や処理の結果を、決まったアイコンと色の組み合わせで示すアイコンです。通知や結果表示で、情報の種類を色と形で伝えるときに使います。</p>
+
+![StatusIcon のバリエーション一覧](/assets/components/status-icon/showcase.png)
+
+## 概要
+
+任意のアイコンを置きたい場合は、StatusIcon ではなく [Icons](/components/icons/) を直接使用してください。StatusIcon はステータスごとに形と色が固定されています。
+
+## 種類・バリエーション
+
+- **ステータス** — Info / Success / Caution / Danger / Loading の5種類。Loading は [Spinner](/components/spinner/)（Medium を 20px に縮小したもの）を表示します
+- **Inverse** — 濃い色の面の上では Inverse を有効にします
+
+サイズは 24px 固定です。[Snackbar](/components/snackbar/) のステータスアイコンにも、このコンポーネント（Inverse）が使われています。
+
+## 使い方
+
+```tsx
+import { StatusIcon } from '@sun-asterisk/nova/status-icon';
+
+// テキストと並べる（アイコンは装飾扱い）
+<div className="flex items-center gap-2">
+  <StatusIcon status="success" />
+  <span>保存しました</span>
+</div>
+
+// アイコンだけで状態を伝える場合はラベルを付ける
+<StatusIcon status="danger" aria-label="エラー" />
+```
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `status` | `'info' \| 'success' \| 'caution' \| 'danger' \| 'loading'` | （必須） | 表示するステータス |
+| `inverse` | `boolean` | `false` | 濃い色の面の上で使う配色 |
+
+そのほか `<span>` のネイティブ属性を渡せます（`children` は受け取りません）。
+
+## アクセシビリティ
+
+- 既定では装飾扱い（`aria-hidden="true"`）です。意味を伝えるテキストを隣に表示して使ってください
+- アイコンだけで状態を伝える場合は `aria-label`（または `aria-labelledby`）を指定してください。自動的に `role="img"` になり、ラベルが読み上げられます
+- 各ステータスは色だけでなくアイコンの形も異なるため、色に頼らず区別できます
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-statusicon--docs)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/statusIcon.md`）をもとに作成しています。Figma からの引用ではありません。なお Figma 側のドキュメントにはアクセシビリティの記載がまだなく、上記はリポジトリのアクセシビリティルールに基づく実装方針です。</Aside>

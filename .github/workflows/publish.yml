@@ -1,0 +1,33 @@
+name: Publish to npm
+
+# Publishes @sun-asterisk/nova to npm. Run by hand (Actions → Publish to npm →
+# Run workflow) after a release commit has landed on main and CI is green.
+# Publishing a shared library is a deliberate human step, not automatic on push.
+#
+# Requires repo secret NPM_TOKEN (an npm automation token with publish rights
+# on the @sun-asterisk scope).
+on:
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write # npm provenance
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+      - run: pnpm build
+      - run: pnpm test:package
+      - name: Publish
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

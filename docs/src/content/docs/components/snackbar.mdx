@@ -1,0 +1,151 @@
+---
+title: Snackbar
+description: Snackbarは、ユーザーが実行した操作に対するフィードバックやシステムからの通知をユーザーに伝えるコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">Snackbarは、ユーザーが実行した操作に対するフィードバックやシステムからの通知をユーザーに伝えるコンポーネントです。画面に一時的に表示され、ユーザーの操作フローを妨げることなくプロセスの結果を通知します。</p>
+
+![Snackbar のバリエーション一覧](/assets/components/snackbar/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+Snackbarは、ユーザーが行った操作の結果を遅延なく画面に表示することで、行動と結果のつながりを明確にする役割や、システムからの通知を伝える役割を担います。
+
+メッセージは瞬時に理解できるよう、1行から2行で表示することを推奨します。冗長な説明は避け、一つの明確な情報のみを伝えてください。情報の粒度に応じて階層表示や状況を詳細に伝えることも可能ですが、その場合はタイトルとメッセージを合わせて最大4行までに収めるようにしてください。
+また、いずれの場合もタイトルの末尾に句点「。」は含めないでください。
+
+原則として画面の右下に配置し、主要なアクションやコンテンツを覆わないようにします。
+
+### 構成要素
+
+Snackbarは、以下の要素を柔軟に組み合わせて構築されます。用途に応じて適切に使い分けてください。
+
+- **ステータス（推奨）**
+  - 情報（Information）
+  - 成功（Success）
+  - 警告（Warning）
+  - エラー（Error）
+- **コンテンツ（必須）**
+  - タイトル
+  - 補足メッセージ
+- **アクション**
+  - アクションボタン（最大2つ）
+  - 閉じるボタン（推奨）
+- **インジケーター**
+  - プログレスバー
+
+<Aside type="tip" title="アクションボタンのルール">
+2つのボタンを配置する場合、プライマリアクション（推奨される操作）を右側に、セカンダリアクションを左側に配置します。「完全に削除」のような破壊的アクションは配置しなでください。
+</Aside>
+
+![構成要素の組み合わせ例（通常メッセージ／アイコン付き／アクション付き／インジケーター付き／タイトル付き）](/assets/components/snackbar/g2-1.png)
+
+### エラー通知での使用について
+
+警告などのエラーアイコンを伴うSnackbarは、ユーザーの即時対応を必要としない低優先度のエラーに限定して使用します。
+ユーザーの操作をブロックしてでも伝える必要のある重大なエラーには、必ずダイアログやアラートを使用してください。
+
+**Do** 他の操作を続けられる軽微なエラー
+
+![Do: 他の操作を続けられる軽微なエラーの例](/assets/components/snackbar/g2-2.png)
+
+**Don't** ユーザーの即時対応を必要とする重大なエラー
+
+![Don't: ユーザーの即時対応を必要とする重大なエラーの例](/assets/components/snackbar/g2-3.png)
+
+### 表示と制御
+
+- **表示時間**
+  - メッセージの長さに応じて4秒から8秒の間で調整します。アクションが含まれる場合は長めに設定してください。
+  - プログレスバー付きの場合は、タスクが完了するまで表示し、完了時に自動的に「成功」のSnackbarに切り替わります。
+- **非表示の条件**
+  - 自動タイムアウト
+  - アクションボタンのクリック
+  - 閉じるボタンのクリック
+  - スワイプ操作（モバイル）
+- **スタッキングと表示数**
+  - 複数のSnackbarが同時にトリガーされた場合、新しい通知が上に追加される形で縦に積み重ねて表示されます。
+  - 一度に画面に表示できるSnackbarの最大数は、3件とします。上限を超えた場合、最も古くから表示されているSnackbarを即座に非表示にし、新しいSnackbarをスタックの一番上に追加します。
+- **ホバー時の制御**
+  - マウスカーソルがSnackbarの上に乗っている間は、タイムアウトによる非表示を一時停止します。
+
+**Do** 下から上にきれいに整列してスタックされている
+
+![Do: 下から上にきれいに整列してスタックされている例](/assets/components/snackbar/g2-4.png)
+
+**Don't** 互いに重なり合って、情報が読めなくなっている
+
+![Don't: 互いに重なり合って情報が読めなくなっている例](/assets/components/snackbar/g2-5.png)
+
+## デザイン仕様
+
+### サイズ
+
+Snackbarの横幅は、複数スタックされたときを考慮して**固定**、高さは**コンテンツに応じて可変**します。
+
+![Snackbar のサイズ仕様（横幅 400 固定・高さ可変、各要素の余白）](/assets/components/snackbar/g3-1.png)
+
+### 視覚的なバランスと配置
+
+ステータスアイコンと閉じるボタンは、主要なテキスト行（1行目）と垂直方向の中央が揃うように配置されます。
+そのため、アイコン自体のサイズに対して、それらを配置するコンテナ領域は、上下により広い高さを確保するように設計されています。
+
+同様に、プログレスバーを配置する場合も、直線的な形状がその下の余白を詰まって見せる錯覚を生むため、あえてコンポーネント下部にPaddingを設定し、視覚的な均等性を保ちます。
+
+![アイコン・閉じるボタン・プログレスバーのコンテナ寸法仕様](/assets/components/snackbar/g3-2.png)
+
+![画面右下への配置仕様（右・下 40px、スタック間隔 8px）](/assets/components/snackbar/g3-3.png)
+
+### アクションボタン
+
+Snackbar内に配置されるボタンは、「Snackbar Action」として定義されています。
+これは、システム内の標準的なボタンコンポーネントとは意図的に切り離された、Snackbar用の独立したコンポーネントです。
+
+![Snackbar Action の寸法仕様（高さ 32、最小幅 40、左右パディング 8）](/assets/components/snackbar/g3-4.png)
+
+## Components
+
+- Snackbar Action
+- ProgressBar
+
+![Snackbar を構成するサブコンポーネント（Snackbar Action / ProgressBar）](/assets/components/snackbar/g4-1.png)
+
+## React での使い方
+
+アプリのルート付近に `SnackbarContainer` を 1 つ置き、`showSnackbar()` で表示します。
+
+```tsx
+import { SnackbarContainer, showSnackbar } from '@sun-asterisk/nova/snackbar';
+
+// ルートに 1 回だけ
+<SnackbarContainer />
+
+// メッセージだけ（title は省略可能）
+showSnackbar({ variant: 'success', message: 'アカウント情報を更新しました' });
+
+// 処理中 → 完了に切り替える（返り値の id を再利用）
+const id = showSnackbar({ variant: 'loading', message: 'アップロード中…', progress: 0 });
+showSnackbar({ id, variant: 'loading', message: 'アップロード中…', progress: 68 });
+showSnackbar({ id, variant: 'success', message: 'アップロードが完了しました' });
+```
+
+| オプション | 既定値 | 説明 |
+|---|---|---|
+| `variant` | `'info'` | `info` / `success` / `warning` / `error` / `loading`。アイコンは [StatusIcon](/components/status-icon/) の Inverse 表示です |
+| `title` / `message` | — | タイトル（省略可能）と本文 |
+| `duration` | `4000` | 自動で閉じるまでのミリ秒。`0` または `false` で自動で閉じません。`loading` は自動で閉じません。ホバー中・フォーカス中・タブが非表示のあいだはタイマーが止まります |
+| `progress` | — | `loading` と組み合わせて使う進捗（0–100）。省略するとプログレスバーは表示しません |
+| `id` | — | 既存の Snackbar の id を渡すと、その Snackbar を置き換えます |
+| `position` | `'bottom-right'` | 表示位置 |
+| `closable` / `actions` | — | 閉じるボタンの表示、アクションボタン |
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-snackbar--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Snackbar フレームからの引用です。「React での使い方」は React 実装とコンポーネント仕様書（`docs/components/snackbar.md`）をもとにしています。</Aside>

@@ -1,0 +1,161 @@
+---
+title: Date Picker
+description: Date Pickerは、ユーザーが特定の日付または日付の範囲を選択するための入力コンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">Date Pickerは、ユーザーが特定の日付または日付の範囲を選択するための入力コンポーネントです。曜日や期間を可視化し、ユーザーが日付情報を直感的に把握・操作できるようにします。</p>
+
+![Date Picker のバリエーション一覧](/assets/components/date-picker/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+Date Pickerは、カレンダー内の「年・月・日・曜日」の階層構造を視覚的に整理し、ユーザーが現在選択している日付や今日の日付、選択可能な範囲を瞬時に把握できるようにします。
+
+カレンダーからの直感的なクリック選択を基本としつつ、慣れたユーザーのためのキーボード直接入力も提供し、あらゆる利用シーンで効率的な入力をサポートします。
+
+### 種類と使い分け
+
+Date Pickerには「Single」と「Range 」の2種類があります。
+
+- **Single（単一日付選択）** — 予定や期限の設定など、特定の日付を1つだけ選択します。 基本的に1ヶ月分のカレンダーを表示します。
+- **Range（期間選択）** — 開始日と終了日の2つの日付を選択し、その間を期間とします。開始と終了の関係性を視覚化しやすくするため、2ヶ月分のカレンダーを表示します。 （例：ホテルの予約、タスク期間）
+
+**Do** — 近い未来の日付を選択に使用する
+
+![Do の例：お届け希望日の入力に Date Picker を使用している](/assets/components/date-picker/g2-1.png)
+
+**Don't** — 遠い過去や未来など、年単位の移動が必要な日付選択に使用する
+
+![Don't の例：生年月日の入力に Date Picker を使用している](/assets/components/date-picker/g2-2.png)
+
+### 配置とレイアウト
+
+Date Pickerは、トリガーとなる入力フィールドの直下 (Bottom) に配置し、入力フィールドの左端揃えを基本とします。
+
+画面下部に十分なスペースがない場合、自動的に上方向 (Top) に反転して表示、画面右端でスペースが足りない場合は、右端揃え に切り替えます。
+
+![入力フィールドの直下に左端揃えで配置された 2ヶ月表示の Date Picker](/assets/components/date-picker/g2-3.png)
+
+### 表示と制御
+
+#### ナビゲーション
+
+- **月送り** — [\<] [\>] ボタンで1ヶ月ずつ移動します。2ヶ月表示の場合は、両方の月が1ヶ月ずつずれます
+
+#### アクション（オプション）
+
+- **今日（Single）（オプション）** — カレンダーを今月に移動し、今日の日付を選択状態にします。
+- **今日（Range）（オプション）**
+  - カレンダーを今月に移動し、「今日」を新しい開始日として設定します。
+  - 終了日はクリアし、ユーザーの次のクリック（終了日選択）を待つ状態にします。
+- **適用** — 日付が未選択、または不完全な状態では非活性とし、必要な日付が正しく選択されている状態で活性化します。
+- **クリア（オプション）** — 何も選択・入力されていない初期状態では非活性とし、日付が1つでも選択・入力されている状態で活性化します。
+- **キャンセル** — スペースの節約とアクションの明確化のため、フッターに「キャンセル」ボタンは配置しません。ユーザーはポップオーバーの外側をクリックするか、Escキーを押すことで選択を破棄して閉じることができます。
+
+![アクションあり / アクションなし それぞれの 1ヶ月・2ヶ月表示](/assets/components/date-picker/g2-4.png)
+
+### 日付のスタイル
+
+Todayスタイルが、Selected や Range Start など他のスタイルと重なる場合は、それらのスタイル（Selected等）を優先して適用します。
+
+![日付スタイルの優先順位（高 → 低）](/assets/components/date-picker/g2-5.png)
+
+### 期間選択の制御フロー
+
+#### 基本フロー
+
+- **1回目のクリック** — その日付を「開始日」として設定します。開始日がハイライトされ、マウスカーソルの動きに合わせて、開始日からカーソル位置までを In Rangeスタイル として表示します。
+- **2回目のクリック** — その日付を「終了日」として設定し、期間を確定します。カレンダーは「適用」ボタン待ち状態になります。
+
+![1回目のクリック → 選択中 → 2回目のクリック の状態遷移](/assets/components/date-picker/g2-6.png)
+
+#### 確定後の再編集
+
+- **開始日フィールドをクリック** — 「開始日」の再選択モードになります。
+  - 新しい開始日が現在の終了日より「前」の場合、開始日のみ更新し、期間を再計算して確定します。
+  - 新しい開始日が現在の終了日より「後」の場合、終了日をクリアし、「終了日選択待ち」状態に移行します。
+- **終了日フィールドをクリック** — 「終了日」の再選択モードになります。
+  - 新しい終了日が現在の開始日より「後」の場合、終了日のみ更新し、期間を再計算して確定します。
+  - 新しい終了日が現在の開始日より「前」の場合、それを「新しい開始日」としてセットし、「終了日選択待ち」状態に移行します。
+
+#### 例外的な操作
+
+- **開始日より「過去」の日付を選択した場合** — ユーザーが開始日を間違えた（修正したい）と判断し、2回目にクリックした過去の日付を「新しい開始日」として上書き設定します。終了日は未設定の状態に戻り、再び「2回目のクリック待ち」となります。
+- **開始日と「同じ」日付を選択した場合** — その日付を終了日としても設定し、「1日だけの期間 (開始日＝終了日)」として期間を確定します。
+
+**Do** — 開始日より過去の日付は新しい開始日として上書き設定する
+
+![Do の例：開始日より過去の日付を新しい開始日として上書き設定している](/assets/components/date-picker/g2-7.png)
+
+**Don't** — 開始日より過去の日付のカーソル位置まで In Range スタイルを適用する
+
+![Don't の例：開始日より過去の日付のカーソル位置まで In Range スタイルを適用している](/assets/components/date-picker/g2-8.png)
+
+## デザイン仕様
+
+### サイズ
+
+![1ヶ月表示（DatePicker Actions = False / True）のレッドライン仕様](/assets/components/date-picker/g3-1.png)
+
+![2ヶ月表示（DatePicker Actions = False / True）のレッドライン仕様](/assets/components/date-picker/g3-2.png)
+
+### 配置
+
+![入力フィールドと Date Picker の間隔仕様](/assets/components/date-picker/g3-3.png)
+
+## Components
+
+### Day
+
+![Day コンポーネントのスタイル（Default / Today / Select / Blank / RangeStart / InRange / RangeEnd）と状態（Enabled / Hover / Disabled / Focus）の一覧](/assets/components/date-picker/g4-1.png)
+
+## React での使い方
+
+```tsx
+import { DatePicker, type DatePickerValue } from '@sun-asterisk/nova/date-picker';
+
+// 単一の日付（ラベルは入力欄に紐づく）
+<label htmlFor="due">期限</label>
+<DatePicker id="due" defaultValue={new Date()} onValueChange={(date) => save(date)} />
+
+// 期間（開始日 − 終了日の 2 つの入力欄。aria-label はグループの名前になる）
+const [range, setRange] = useState<DatePickerValue>();
+<DatePicker mode="range" aria-label="宿泊期間" value={range} onValueChange={setRange} minDate={new Date()} />
+```
+
+**入力欄**
+
+- 入力欄をクリックするとカレンダーが開きます。カレンダーボタン（読み上げ名は `openCalendarLabel`、既定 `カレンダーを開く`）からも開けます。`↓` キーでカレンダー内に移動します
+- 入力した日付は `Enter` またはフォーカスが外れた時点で確定します（適用ボタンは不要）。受け付ける形式は `2025年11月15日`、`2025/11/15`、`2025-11-15`、`20251115`、または `formatLocale` の数字の並び順です。不正な日付や範囲外の日付は元に戻ります
+- Range では `startDateLabel` / `endDateLabel`（既定 `開始日` / `終了日`）がそれぞれの入力欄のプレースホルダーになります。`placeholder`（既定 `日付を選択`）は Single 専用です
+
+**主な Props**
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `mode` | `'single' \| 'range'` | `'single'` | 選択モード |
+| `value` / `defaultValue` | `DatePickerValue` | — | 値。`value` を渡すと（`undefined` でも）制御モードになります |
+| `onValueChange` | `(value) => void` | — | 値が確定したときに呼ばれます |
+| `actions` | `boolean \| { today?; clear?; apply? }` | `true` | フッターの「今日」「クリア」「適用」ボタン。`false` でフッターなし（日付を選んだ時点で確定） |
+| `numberOfMonths` | `number` | Single: `1` / Range: `2` | 並べて表示する月数 |
+| `minDate` / `maxDate` | `Date` | — | 選択できる範囲 |
+| `formatLocale` | `string` | `'ja-JP'` | 入力欄の表示形式と、入力した日付の読み取り順 |
+| `disabled` | `boolean` | `false` | 無効状態 |
+| `container` | `Element` | `document.body` | カレンダーのポップオーバーを描画する先 |
+| `calendarLabel` | `string` | `'日付選択カレンダー'` | ポップオーバー（`role="dialog"`）の名前 |
+| `todayLabel` / `clearLabel` / `applyLabel` | `string` | `'今日'` / `'クリア'` / `'適用'` | ボタンのラベル |
+| `id` / `aria-label` / `aria-labelledby` / `aria-describedby` / `aria-invalid` | — | — | 入力欄に付きます（Range では `id` は開始日の入力欄、`aria-label` / `aria-labelledby` は 2 つの入力欄を囲むグループ、`aria-describedby` / `aria-invalid` は両方の入力欄）。`aria-invalid` を付けるとエラーの枠線になります |
+
+`ref` は入力欄（Range では開始日の入力欄）を指します。カレンダーを常に表示したい場合は [Calendar](/components/calendar/) を使います。
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-datepicker--docs)
+- [Calendar](/components/calendar/)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Date Picker フレームからの引用です。「React での使い方」は React 実装とコンポーネント仕様書（`docs/components/datePicker.md`）をもとにしています。</Aside>

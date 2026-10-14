@@ -1,0 +1,176 @@
+---
+title: Dropdown Menu
+description: Dropdown Menuは、ボタンやアイコンなどのトリガー要素をクリックした際に、一時的に表示されるアクションやオプションのリストです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">Dropdown Menuは、ボタンやアイコンなどのトリガー要素をクリックした際に、一時的に表示されるアクションやオプションのリストです。ユーザーに複数の操作コマンドを提示したり、表示設定の切り替えを行わせたりするために使用されます。</p>
+
+![Dropdown Menu のバリエーション一覧](/assets/components/dropdown-menu/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+Dropdown Menuは、必要な時だけ表示され、選択後は速やかに消えることで、画面のスペースを節約します。関連するアクションをグループ化することで、ユーザーが迷わず操作を見つけられるように整理してください。
+
+メニューの内容は、トリガーとなる要素（ボタンやアイコン）の文脈に直接関連している必要があります。
+
+フォーム内でデータを入力・選択するためのコンポーネント（都道府県選択など）ではありません。それらには Select コンポーネントを使用してください。
+
+**Do** アクションやオプションのリストに使用する ／ **Don't** フォーム内のデータ入力や選択に使用する
+
+![Do: アクションやオプションのリストに使用する / Don't: フォーム内のデータ入力や選択に使用する](/assets/components/dropdown-menu/g2-1.png)
+
+### 種類と機能
+
+Dropdown Menuは、含まれるアイテムの機能によって以下の2つの役割（またはその組み合わせ）を持ちます。
+
+- **アクションメニュー**
+  - 「編集」「削除」「複製」などのコマンドを実行します。アイテムをクリックすると、アクションが実行され、メニューは即座に閉じます。
+- **オプションメニュー**
+  - 設定を切り替えたり、複数のオプションをオン/オフできます。アイテムをクリックすると、値（状態）のみが切り替わります。連続して操作できるようにするため、メニューは閉じません。
+
+![アクションメニューとオプションメニューの例](/assets/components/dropdown-menu/g2-2.png)
+
+### 構造化とグルーピング
+
+メニュー項目が多くなる場合、項目の整理方法として「グルーピング」と「ネスト」を使い分けます。
+
+- **グルーピング**
+  - 関連するアイテムを並べ、間にディバイダーを挟んで区切りったり、必要に応じてグループ見出しを付け、セクションの意図を明確にしましょう。
+- **ネスト（デスクトップのみ）**
+  - 親となるアイテムから、子階層のメニューを横方向に展開させます。階層が深くなると操作難易度が上がるため、極力2階層までで完結させる努力をしてください。
+  - スマートフォンなどのタッチデバイスでは、画面幅の制約や指での操作性を考慮し、ドリルダウン形式やボトムシートの使用を検討してください。
+
+![グルーピングとネストの例](/assets/components/dropdown-menu/g2-3.png)
+
+### 構成要素
+
+メニューアイテムには、以下の要素を含めることができます。
+
+- **ラベル（必須）**
+- アイコン
+- オプションコントロール
+- 展開インジケーター
+- ショートカットキー
+- 説明文
+- Destructiveスタイル
+
+アイコンとオプションコントロールは互いに排他的です。
+また、展開インジケーターとショートカットキーも同時には使用しません。
+
+![メニューアイテムの構成要素（アイコン／展開インジケーター／ショートカットキー／オプションコントロール／説明文）](/assets/components/dropdown-menu/g2-4.png)
+
+### 配置とレイアウト
+
+**配置**
+
+- **基本位置**
+  - トリガー要素の**直下**に配置します。
+- **アライメント**
+  - 原則、トリガーの左端に合わせた**左揃え**をデフォルトとします。
+    ヘッダーのプロフィールアイコンや、リスト右端のメニューなど、デザイン意図として右端基準で配置したい場合は**右揃え**を適用します。
+
+**衝突回避**
+
+- **水平方向**
+  - メニューが画面の右端（または左端）からはみ出す場合、アライメントの基準点を維持するのではなく、画面内に収まるようにメニュー全体を**横方向にスライド**させます。
+  - 画面端から一定の余白を確保した位置を行き止まり（限界値）とし、それ以上外側には配置しません。トリガーとのアライメントよりも、メニュー全体が表示されることを優先します。
+- **垂直方向**
+  - 画面下部にスペースがなくメニューが入り切らない場合、自動的に**上方向**に反転して表示します。
+- **サブメニューの配置**
+  - 親アイテムの**右横**に配置し、上端を親アイテムと揃えます。画面右端にスペースがない場合は左横に展開します。
+
+![配置とアライメント・衝突回避の例（左揃え／右揃え／横方向のスライド）](/assets/components/dropdown-menu/g2-5.png)
+
+### 表示と制御
+
+トリガーとなる要素（ボタンやアイコン）をクリックで開閉します。Hover での開閉は誤操作の原因となるため使用しません。
+
+サブメニューは、親アイテムへの Hover またはクリックで展開します。
+
+- **閉じる条件**
+  - メニュー外の領域をクリックした時。
+  - 「アクションアイテム」をクリックした時。
+  - Esc キーを押した時。
+  - トリガーを再度クリックした時。
+
+※ チェックボックスなどの「選択アイテム」をクリックした場合や、サブメニューを持つ親アイテムをクリックした場合は、メニューを閉じません。
+
+## デザイン仕様
+
+### メニューアイテム
+
+#### アイテムのサイズ
+
+アイテムの高さは内容に応じて可変とし、アイテム内の構成要素は、すべて垂直方向の中央揃えで配置します。
+
+メニューの高さを一定に保つため、説明文は原則1行とし、収まらない場合は末尾を「…」で省略します。
+
+![メニューアイテムの寸法仕様（Min-height 36px、内部余白、説明文のフォントサイズ）](/assets/components/dropdown-menu/g3-1.png)
+
+#### 角丸の適用
+
+Hover・ Active時の背景色領域にのみ角丸を適用します。
+
+![Hover / Active 時の角丸仕様（Border Radius: S）](/assets/components/dropdown-menu/g3-2.png)
+
+#### 区切り線と見出し
+
+![区切り線と見出しの仕様（区切り & 見出し／区切りのみ／見出しのみ）](/assets/components/dropdown-menu/g3-3.png)
+
+### メニューコンテナ
+
+#### 幅
+
+メニューの幅は中身のコンテンツに合わせて、最小幅から最大幅の範囲で決定されますが、トリガーとなる要素にメニュー幅を合わせることも可能です。
+
+#### 高さ
+
+メニューの高さは、アイテムの数に応じて決定されます。
+リストが長くなる場合は、アイテム15.5個分を目安に最大高さを設定し、それ以上はスクロールとします。
+
+#### 画面内への収まり
+
+最大の高さに関わらず、画面の上下端から 16px の余白を確保できる高さを上限とし、画面の高さが足りない場合は自動的に高さが縮小されます。
+
+![メニューコンテナの寸法仕様（幅・高さ・サブメニューの配置、Elevation Lv.2）](/assets/components/dropdown-menu/g3-4.png)
+
+## Components
+
+- Menu Item
+- Group Header
+
+![Dropdown Menu を構成するサブコンポーネント（Menu Item / Group Header）](/assets/components/dropdown-menu/g4-1.png)
+
+## React での使い方
+
+```tsx
+import {
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
+  DropdownMenuCheckboxItem, DropdownMenuSeparator, DropdownMenuLabel,
+} from '@sun-asterisk/nova/dropdown-menu';
+
+<DropdownMenu>
+  <DropdownMenuTrigger asChild><Button variant="secondary">表示</Button></DropdownMenuTrigger>
+  <DropdownMenuContent>
+    <DropdownMenuLabel>列</DropdownMenuLabel>
+    <DropdownMenuCheckboxItem checked={showName} onCheckedChange={setShowName}>名前</DropdownMenuCheckboxItem>
+    <DropdownMenuCheckboxItem checked={showDate} onCheckedChange={setShowDate}>更新日</DropdownMenuCheckboxItem>
+    <DropdownMenuSeparator />
+    <DropdownMenuItem onSelect={reset}>初期状態に戻す</DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+```
+
+- **選択項目はメニューを閉じません** — Figma のガイドラインどおり、`DropdownMenuCheckboxItem` / `DropdownMenuRadioItem` を選んでもメニューは開いたままなので、続けて複数の項目を切り替えられます。閉じたい場合は `DropdownMenu` の `open` を制御し、`onSelect` で `false` にしてください
+- アクション項目（`DropdownMenuItem`）は、これまでどおり選択するとメニューを閉じます
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-dropdownmenu--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Dropdown Menu フレームからの引用です。「React での使い方」は React 実装とコンポーネント仕様書（`docs/components/dropdownMenu.md`）をもとにしています。</Aside>

@@ -1,0 +1,59 @@
+---
+title: Text Area
+description: テキストエリアは、ユーザーが複数行のテキストを入力するためのコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">テキストエリアは、ユーザーが複数行のテキストを入力するためのコンポーネントです。フィードバック、コメント、説明文、長文の入力などに適しています。</p>
+
+![Text Area のバリエーション一覧](/assets/components/text-area/showcase.png)
+
+## ガイドライン
+
+### 設計の原則
+
+ラベルの表示や視認性およびテキストのルールなどといったテキストフィールドと共通する設計の考え方については、テキストフィールドのガイドラインにならい、一貫性を保つようにしてください。
+
+テキストエリアは、入力される想定テキスト量に応じて適切な高さを設定し、必要に応じて自動で高さを拡張できるようにします。
+
+#### 高さを固定
+
+画面レイアウトを崩さず、他の要素とのバランスを保ちたい場合
+
+![高さを固定したテキストエリアの例](/assets/components/text-area/g2-1.png)
+
+#### 自動で高さを拡張
+
+スクロールせずにできるだけ多くの内容を確認できる方が望ましい場合
+
+![自動で高さを拡張するテキストエリアの例](/assets/components/text-area/g2-2.png)
+
+入力内容がフィールドの高さの最大値を超える場合、スクロールバーの表示を検討し、ユーザーが全体を確認しやすいよう配慮しましょう。
+
+![入力内容が最大値を超えた場合にスクロールバーを表示する例](/assets/components/text-area/g2-3.png)
+
+### 文字数の制限がある場合
+
+入力可能な最大文字数を明示し、必要に応じてカウントを表示します。制限に達した際の挙動（入力不可、エラー表示など）は統一し、一貫したフィードバックを提供することで、ユーザーの認識しやすさを確保します。
+
+![入力可能な文字数を超えた場合のエラー表示とカウント表示の例](/assets/components/text-area/g2-4.png)
+
+## デザイン仕様
+
+### サイズ
+
+![Text Area の最小高さ・余白・サポートテキスト間隔・最大高さの寸法仕様](/assets/components/text-area/g3-1.png)
+
+## Components
+
+### Letter Counter
+
+![Letter Counter（文字数カウント）コンポーネント。Over=False / Over=True の2状態](/assets/components/text-area/g4-1.png)
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-textareafield--docs)
+
+<Aside type="note">本ページの説明文・画像は Figma「Components」ページの Text Area フレームからの引用です。</Aside>

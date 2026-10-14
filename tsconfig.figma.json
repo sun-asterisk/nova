@@ -1,0 +1,12 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.figma.tsbuildinfo",
+    "types": ["@figma/code-connect/figma-types-no-require"],
+    "noEmit": true,
+    "noUnusedLocals": false,
+    "verbatimModuleSyntax": false
+  },
+  "include": ["src/components/**/*.figma.ts"],
+  "exclude": []
+}

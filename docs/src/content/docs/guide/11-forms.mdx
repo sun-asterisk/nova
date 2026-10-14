@@ -1,0 +1,218 @@
+---
+title: フォームとの組み合わせ
+description: React Hook Form などのフォームライブラリと Sun のフォーム系コンポーネントを組み合わせる方法
+tags: [engineer]
+type: guide
+audience: engineer
+difficulty: intermediate
+sidebar:
+  order: 11
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+## 方針: Sun はフォームライブラリではありません
+
+Sun が提供するのは**フィールドのセマンティクス**（ラベル、ID、`aria-*` の関連付け、エラー表示）までです。フォームの状態管理（値の保持、バリデーション、送信）は、React Hook Form・Formik・ネイティブの `<form>` など、アプリ側の仕組みで行ってください。
+
+Sun には React Hook Form 専用のバインディングや、`Controller` を包んだ独自コンポーネントはありません。React Hook Form の標準機能である **`Controller`** でつなぎます。
+
+## なぜ `register` ではなく `Controller` なのか
+
+`register('name')` は、ref で DOM の `<input>` に直接リスナーを付ける方式です。Sun のフォーム系コンポーネント（`TextField` / `TextareaField` / `Checkbox` / `RadioGroup` / `Switch` / `DatePicker`）は、値と変更コールバック（`value` / `onChange`、`checked` / `onCheckedChange`、`value` / `onValueChange`）を持つコンポーネントなので、**すべて `Controller` で接続**します。
+
+## TextField / TextareaField
+
+`TextField` / `TextareaField` は `error` prop を渡すだけで、`aria-invalid` と `aria-describedby`（エラーメッセージへの関連付け）、赤いアイコンとテキストの表示を内部で行います。React Hook Form のエラーメッセージを `error` に渡してください。
+
+```tsx
+import { useForm, Controller } from 'react-hook-form';
+import { TextField } from '@sun-asterisk/nova';
+
+type FormValues = { email: string };
+
+function LoginForm() {
+  const { control, handleSubmit } = useForm<FormValues>();
+
+  return (
+    <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <Controller
+        name="email"
+        control={control}
+        rules={{ required: 'メールアドレスを入力してください' }}
+        render={({ field, fieldState }) => (
+          <TextField label="メールアドレス" {...field} error={fieldState.error?.message} />
+        )}
+      />
+      <button type="submit">送信</button>
+    </form>
+  );
+}
+```
+
+- `field`（`name` / `value` / `onChange` / `onBlur` / `ref`）はそのまま展開して渡せます。
+- `TextField` は ref を内部の `<input>` に転送するので、エラー時に最初の不正なフィールドへフォーカスする React Hook Form の挙動（`shouldFocusError`）も動作します。
+- 補足説明には `supportText` を使います。**エラーメッセージを `supportText` に渡さないでください**。見た目も `aria-invalid` もエラーになりません。
+- `TextareaField` も同じ書き方です。
+
+## Checkbox
+
+`Checkbox` にはラベルやエラーメッセージの表示機能がありません。ラベルは外側に `<label htmlFor>` で付けます。値は `checked` / `onCheckedChange` に対応させるので、`field` をそのまま展開せずに個別に渡してください。
+
+```tsx
+<Controller
+  name="acceptTerms"
+  control={control}
+  rules={{ required: true }}
+  render={({ field, fieldState }) => (
+    <div className="flex items-center gap-2">
+      <Checkbox
+        id="acceptTerms"
+        checked={field.value ?? false}
+        onCheckedChange={field.onChange}
+        onBlur={field.onBlur}
+        ref={field.ref}
+        variant={fieldState.error ? 'error' : 'default'}
+      />
+      <label htmlFor="acceptTerms">利用規約に同意する</label>
+      {fieldState.error && <p className="text-sds-text-danger typo-body-s">同意が必要です</p>}
+    </div>
+  )}
+/>
+```
+
+`variant="error"` を渡すと、`aria-invalid` が自動で付きます。
+
+<Aside type="note">
+例の `text-sds-text-danger` / `typo-body-s` は Sun のトークンのユーティリティクラスです。自分のコードでこれらを使うには、Tailwind v4 で `/global.css` を読み込む必要があります（[インストールと基本の使い方](/guide/08-installation/#tailwind-css-と組み合わせる任意)）。Tailwind を使わない場合は `color: var(--color-sds-text-danger)` のように CSS 変数を使ってください。
+</Aside>
+
+## RadioGroup
+
+React Hook Form ではグループ全体で 1 つの値を扱うので、`RadioGroup` の `value` / `onValueChange` に接続します。グループ全体はネイティブの `<fieldset>` / `<legend>` で囲み、アクセシブルな名前を付けてください。
+
+```tsx
+<Controller
+  name="deliverySpeed"
+  control={control}
+  rules={{ required: '配送方法を選んでください' }}
+  render={({ field, fieldState }) => (
+    <fieldset className="flex flex-col gap-3">
+      <legend>配送方法</legend>
+      <RadioGroup value={field.value} onValueChange={field.onChange} onBlur={field.onBlur}>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="standard" id="speed-standard" variant={fieldState.error ? 'error' : 'default'} />
+          <label htmlFor="speed-standard">通常配送</label>
+        </div>
+        <div className="flex items-center gap-2">
+          <RadioGroupItem value="express" id="speed-express" variant={fieldState.error ? 'error' : 'default'} />
+          <label htmlFor="speed-express">お急ぎ便</label>
+        </div>
+      </RadioGroup>
+      {fieldState.error && <p className="text-sds-text-danger typo-body-s">{fieldState.error.message}</p>}
+    </fieldset>
+  )}
+/>
+```
+
+エラーの見た目は項目ごとのスタイルなので、`variant` はすべての `RadioGroupItem` に渡します。
+
+## Switch
+
+`Switch` にはエラー状態がありません。boolean をそのまま接続します。
+
+```tsx
+<Controller
+  name="notifications"
+  control={control}
+  render={({ field }) => (
+    <Switch
+      checked={field.value ?? false}
+      onCheckedChange={field.onChange}
+      onBlur={field.onBlur}
+      ref={field.ref}
+      aria-label="通知を有効にする"
+    />
+  )}
+/>
+```
+
+## DatePicker
+
+`DatePicker` は `value` / `onValueChange` で接続できます。DatePicker のフィールドは**日付を直接入力できるテキスト入力欄**（`<input>`）とカレンダーボタンで構成されています。
+
+- `id` と `aria-label` / `aria-labelledby` / `aria-describedby` / `aria-invalid` は**入力欄**に適用されるので、外側の `<label htmlFor>` やエラーメッセージと関連付けられます。`aria-invalid` を渡すとエラーの枠線も表示されます
+- `ref` は入力欄（`HTMLInputElement`）を指します。`field.ref` を渡すと、React Hook Form がバリデーションエラー時に入力欄へフォーカスを移せます
+- 入力した日付は **Enter キーを押したとき、または入力欄からフォーカスが外れたとき**に確定し、`onValueChange` が呼ばれます。`2025年11月15日` / `2025/11/15` / `2025-11-15` / `20251115` などの形式を受け付け、不正な値や範囲外の値は元に戻ります
+
+```tsx
+<Controller
+  name="dueDate"
+  control={control}
+  rules={{ required: '期日を選んでください' }}
+  render={({ field, fieldState }) => (
+    <div>
+      <label htmlFor="due">期日</label>
+      <DatePicker
+        ref={field.ref}
+        id="due"
+        value={field.value}
+        onValueChange={field.onChange}
+        aria-invalid={!!fieldState.error}
+        aria-describedby={fieldState.error ? 'due-error' : undefined}
+      />
+      {fieldState.error && (
+        <p id="due-error" className="text-sds-text-danger typo-body-s">{fieldState.error.message}</p>
+      )}
+    </div>
+  )}
+/>
+```
+
+### 期間選択（`mode="range"`）
+
+期間選択では、開始日と終了日の 2 つの入力欄が `role="group"` でまとめられます。
+
+- `aria-label` / `aria-labelledby` は**グループ**の名前になり、`id` は開始日の入力欄に付きます。`aria-describedby` / `aria-invalid` は両方の入力欄に付きます
+- 各入力欄のアクセシブルな名前とプレースホルダーは `startDateLabel` / `endDateLabel`（既定値 `開始日` / `終了日`）です。`placeholder` は単一選択のときだけ使われます
+- 値は `{ from, to }` の形で `onValueChange` に渡されます
+
+```tsx
+<Controller
+  name="period"
+  control={control}
+  render={({ field }) => (
+    <div>
+      <span id="period-label">期間</span>
+      <DatePicker
+        mode="range"
+        ref={field.ref}
+        aria-labelledby="period-label"
+        value={field.value}
+        onValueChange={field.onChange}
+      />
+    </div>
+  )}
+/>
+```
+
+<Aside type="caution" title="既知の制限">
+`DatePicker` には `name` やフォーム送信用の hidden input がありません。JavaScript を使わないネイティブの `<form>` 送信では日付の値は送られないため、React Hook Form などで値を管理してください。また `TextField` と違い、エラーメッセージの表示と `aria-*` の関連付けは上の例のように利用側で行う必要があります。
+</Aside>
+
+## ラベルの多言語化
+
+コンポーネントが内部に持つ文言は props で差し替えられます。
+
+| コンポーネント | props |
+|---|---|
+| DatePicker | `calendarLabel` `placeholder` `openCalendarLabel` `startDateLabel` `endDateLabel` `todayLabel` `clearLabel` `applyLabel` |
+| ModalHeader | `closeLabel`（既定値 `'Close dialog'`） |
+
+## 対象外としているもの
+
+次のものは提供していません（必要性が実証されるまで追加しない方針です）。
+
+- `Controller` を隠した独自のフォームフィールドコンポーネント
+- コンポーネントへのフォーム状態の暗黙的な注入（Ant Design の `Form.Item` のような方式）
+- zod / yup 専用のガイド（React Hook Form の `resolver` でそのまま使えます）

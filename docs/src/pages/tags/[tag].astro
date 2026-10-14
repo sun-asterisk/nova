@@ -1,0 +1,98 @@
+---
+import { getCollection } from 'astro:content';
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+import TagBadges from '../../components/TagBadges.astro';
+
+export async function getStaticPaths() {
+	const tags = ['beginner', 'designer', 'pm', 'engineer', 'qa'] as const;
+	return tags.map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+
+const tagLabels: Record<string, string> = {
+	beginner: '初心者',
+	designer: 'デザイナー',
+	pm: 'PM',
+	engineer: 'エンジニア',
+	qa: 'QA',
+};
+
+const allDocs = await getCollection('docs');
+const taggedDocs = allDocs
+	.filter((doc) => {
+		const tags = (doc.data as Record<string, unknown>).tags as string[] | undefined;
+		if (!tags || !tags.includes(tag!)) return false;
+		return !doc.id.match(/^(en|vi)\//);
+	})
+	.map((doc) => {
+		const data = doc.data as Record<string, unknown>;
+		return {
+			title: data.title as string,
+			description: (data.description as string) || '',
+			tags: (data.tags as string[]) || [],
+			// Astro 5 content layer: entries have `id` (the route path), no `slug`
+			// — reading `slug` produced 52 `href="/undefined/"` links (2026-10-07).
+			slug: doc.id,
+		};
+	});
+
+const label = tagLabels[tag!] || tag;
+---
+
+<StarlightPage
+	frontmatter={{
+		title: `${label}向けのドキュメント`,
+		description: `${label}向けのマニュアルと更新情報の一覧`,
+		tableOfContents: false,
+	}}
+>
+	<p>{taggedDocs.length}件のドキュメントが見つかりました。</p>
+
+	<ul class="doc-list">
+		{taggedDocs.map((doc) => (
+			<li class="doc-item">
+				<a href={`/${doc.slug}/`}>
+					<h3>{doc.title}</h3>
+				</a>
+				{doc.description && <p class="doc-description">{doc.description}</p>}
+				<TagBadges tags={doc.tags} />
+			</li>
+		))}
+	</ul>
+</StarlightPage>
+
+<style>
+	.doc-list {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.doc-item {
+		padding: 1rem;
+		border: 1px solid var(--sl-color-gray-5);
+		border-radius: 0.5rem;
+	}
+
+	.doc-item a {
+		text-decoration: none;
+	}
+
+	.doc-item h3 {
+		margin: 0;
+		color: var(--sl-color-white);
+	}
+
+	.doc-item a:hover h3 {
+		color: var(--sl-color-accent);
+	}
+
+	.doc-description {
+		font-size: var(--sl-text-sm);
+		color: var(--sl-color-gray-3);
+		margin: 0.25rem 0;
+	}
+</style>

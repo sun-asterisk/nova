@@ -1,0 +1,16 @@
+// docs サイト (Astro/Starlight + /storybook/) の Cloudflare Workers デプロイ設定。
+// デプロイ: pnpm build:all && pnpm deploy:docs
+// 認証: CLOUDFLARE_API_TOKEN (devcon/dsneo/.env の CLAUDFLARE_API_TOKEN を export)
+// Basic 認証: auth-worker.js + Secrets (BASIC_USER / BASIC_PASS)。
+//   変更: npx wrangler secret put BASIC_PASS --config docs/wrangler.jsonc
+// ※ この Worker (novads) 以外の Cloudflare リソースには触れない。
+{
+  "name": "novads",
+  "main": "./auth-worker.js",
+  "compatibility_date": "2026-07-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  }
+}

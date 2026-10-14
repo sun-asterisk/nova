@@ -1,0 +1,63 @@
+---
+import StarlightPage from '@astrojs/starlight/components/StarlightPage.astro';
+---
+
+<StarlightPage
+	frontmatter={{
+		title: 'Storybook',
+		description: 'Sun Design System の全コンポーネントを Storybook で操作・確認できます',
+		tableOfContents: false,
+		template: 'splash',
+	}}
+	headings={[]}
+>
+	<div class="storybook-embed">
+		<iframe
+			src="/storybook/"
+			title="Sun Design System - Storybook"
+		></iframe>
+	</div>
+</StarlightPage>
+
+<style>
+	/* ページタイトル（h1）を非表示 */
+	:global(.content-panel:has(#_top)) {
+		display: none;
+	}
+
+	/* コンテンツエリアの余白をすべて除去 */
+	:global(.content-panel:has(.storybook-embed)) {
+		padding: 0;
+	}
+	:global(.content-panel:has(.storybook-embed) .sl-container) {
+		max-width: none;
+		padding: 0;
+	}
+	:global(.sl-markdown-content:has(.storybook-embed)) {
+		padding: 0;
+		margin: 0;
+	}
+	:global(main:has(.storybook-embed)) {
+		padding: 0;
+	}
+	:global(.main-pane:has(.storybook-embed)) {
+		padding: 0;
+	}
+	/* フッター（ページネーション）を非表示 */
+	:global(.content-panel:has(.storybook-embed) ~ .content-panel),
+	:global(footer:has(.pagination-links)) {
+		display: none;
+	}
+
+	.storybook-embed {
+		width: 100%;
+		height: calc(100vh - var(--sl-nav-height, 4rem));
+	}
+
+	.storybook-embed iframe {
+		width: 100%;
+		height: 100%;
+		border: none;
+		display: block;
+	}
+</style>

@@ -1,0 +1,73 @@
+---
+title: Avatar
+description: アバターは、写真・イニシャル・アイコンでユーザーや組織を識別するための円形の表示要素です。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">アバターは、写真・イニシャル・アイコンでユーザーや組織を識別するための円形の表示要素です。それ自体は操作を持たず、相手を見分けるための情報として使います。</p>
+
+![Avatar のバリエーション一覧](/assets/components/avatar/showcase.png)
+
+## 概要
+
+表示内容は **写真 → イニシャル → 汎用アイコン** の優先順で自動的に切り替わります。写真が読み込めない場合はイニシャルに、イニシャルも無い場合は汎用アイコン（`IconUser`）にフォールバックします。表示の種類を指定する `type` のような Props はありません。
+
+アバターは常に円形で表示します。角丸の矩形や楕円にはしないでください。
+
+## 種類・バリエーション
+
+- **サイズ** — XSmall（24px）/ Small（32px）/ Medium（40px）/ Large（56px）/ XLarge（80px）。文中や表のセル内では XSmall、一覧やヘッダーでは用途に応じて大きめのサイズを使います
+- **内容** — 写真 / イニシャル / アイコン。イニシャルは全角1文字、半角2文字までに収めます
+- **Ring** — 複数のアバターを重ねて並べる場合に有効にし、隣接するアバターとの境界を明確にします
+- **ステータス** — Online / Away / Busy / Offline の4種類のドットを右下に表示します。XSmall はステータス非対応です
+
+## 使い方
+
+```tsx
+import { Avatar } from '@sun-asterisk/nova/avatar';
+
+// 写真 → イニシャル → アイコンの順にフォールバック
+<Avatar src={user.photoUrl} alt={user.name} initial="鈴" />
+
+// 重ねて並べる（Ring を有効に）
+<div className="flex -space-x-2">
+  <Avatar ring src={a.photoUrl} alt={a.name} />
+  <Avatar ring src={b.photoUrl} alt={b.name} />
+</div>
+
+// ステータス付き
+<Avatar src={user.photoUrl} alt={user.name} status="online" statusLabel="オンライン" />
+```
+
+クリックできるアバターにしたい場合は、`Button` や `Link` で包んでください。Avatar 自体はインタラクティブになりません。
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `size` | `'xsmall' \| 'small' \| 'medium' \| 'large' \| 'xlarge'` | `'medium'` | サイズ |
+| `src` | `string` | — | 画像 URL。読み込めた場合は `initial` / `icon` より優先 |
+| `alt` | `string` | `''` | アバターのアクセシブルネーム（人や組織の名前） |
+| `initial` | `string` | — | フォールバック用のイニシャル。`icon` より優先 |
+| `icon` | `ReactNode` | `<IconUser />` | フォールバック用のアイコン |
+| `ring` | `boolean` | `false` | 外側に 2px のリングを表示 |
+| `status` | `'online' \| 'away' \| 'busy' \| 'offline'` | — | ステータスドット（XSmall では非表示） |
+| `statusLabel` | `string` | ステータス名（例: `Online`） | ステータスの読み上げテキスト |
+
+そのほか `<span>` のネイティブ属性をそのまま渡せます。
+
+## アクセシビリティ
+
+- アバターは装飾ではなく、相手を見分けるための情報です。名前を隣にテキストで表示しない場合は `alt`（または `aria-label` / `aria-labelledby`）を指定してください。指定すると、写真・イニシャル・アイコンのどれを表示していても全体が `role="img"` の1つの画像として名前付きで読み上げられます
+- ステータスは色だけで伝えません。ドットには必ず読み上げ用のテキストが付き、名前と合わせて「Jane Doe, Online」のように読み上げられます
+- **既知の課題:** イニシャルの文字色は Figma の指定どおり `text-on-surface` です。背景（`surface-secondary`）とのコントラスト比は 1.88:1（ライト）/ 1.71:1（ダーク）で、WCAG 1.4.3 の基準（4.5:1）を満たしていません。Figma 側で配色が修正され次第、追従します（2026-10-07 時点、チームで合意済み）
+- フォールバックのアイコンは `icon-secondary` で表示します
+- 既定ではフォーカスできません。押せるようにする場合はフォーカス表示が必要です（包む側の `Button` / `Link` が提供します）
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-avatar--docs)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/avatar.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

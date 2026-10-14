@@ -1,0 +1,73 @@
+---
+title: Icons
+description: プロダクト内で使用できる標準アイコンセットです。すべてのアイコンを個別の React コンポーネントとして提供しています。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">プロダクト内で使用できる標準アイコンセットです。全 61 種類のアイコンを、それぞれ個別の React コンポーネントとして提供しています。</p>
+
+![Icons の一覧](/assets/components/icons/showcase.png)
+
+## 概要
+
+アイコンは Figma の Icon Master と同じ形状で、パスデータは Figma の SVG 書き出しと一致しています。アイコン自体は固有の色を持たず、周囲のテキスト色（`currentColor`）を継承します。
+
+Figma 上で Button や TextField に入れたアイコンは、Code Connect によって Dev Mode で `<IconPencil />` のような実際のコードとして表示されます。
+
+## 種類・バリエーション
+
+- **標準サイズ** — 24×24px
+- **スタイル** — アウトライン。ガイドラインには選択・強調状態用の Filled スタイルの記載がありますが、Icon Master にはまだ Filled のアイコンがありません
+
+## 使い方
+
+`.../icons` サブパスから必要なアイコンだけを import します。使ったアイコンだけがバンドルに含まれます。
+
+```tsx
+import { IconPlus, IconTrash, IconExternalLink } from '@sun-asterisk/nova/icons';
+
+// 色はテキスト色を継承
+<span className="text-sds-text-danger">
+  <IconTrash />
+</span>
+
+// サイズは width / height か CSS で指定
+<IconPlus width={16} height={16} />
+<IconPlus className="size-4" />
+
+// ボタンの中で使う
+<Button>
+  <IconPlus />
+  追加
+</Button>
+```
+
+`size` や `color` の Props はありません。サイズは `width` / `height` または CSS で、色は親要素のテキスト色で指定します。
+
+## 主な Props
+
+すべてのアイコンが同じ形の Props を持ちます。
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| （SVG の属性） | `SVGProps<SVGSVGElement>` | `width=24` `height=24` `aria-hidden="true"` | `className` / `width` / `height` / `style` などをそのまま渡せます |
+| `ref` | `Ref<SVGSVGElement>` | — | ルートの `<svg>` に転送されます |
+
+## アクセシビリティ
+
+- アイコンは既定で装飾扱い（`aria-hidden="true"`）です。テキストと並べて使う場合はそのままで構いません
+- アイコンだけのボタンなど、アイコンが唯一の手がかりになる場合は、アイコンではなく**親のコントロール**に `aria-label` を付けてください
+
+```tsx
+<Button iconOnly variant="plain" aria-label="削除">
+  <IconTrash />
+</Button>
+```
+
+## 関連リンク
+
+- [Storybook で一覧を見る](/storybook/?path=/story/foundation-icons--gallery)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/icons.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

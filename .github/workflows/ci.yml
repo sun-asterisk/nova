@@ -1,0 +1,33 @@
+name: CI
+
+# Public repo CI. Every commit here is one release exported from Sun*'s
+# internal repository, which runs the full test suite before export; this
+# re-checks that the exported tree builds on its own.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        run: pnpm typecheck
+      - name: Lint
+        run: pnpm exec eslint src/components src/utils test scripts/quality vite.config.ts
+      - name: API type tests
+        run: pnpm test:api
+      - name: Build library
+        run: pnpm build
+      - name: Verify package (exports, types, tree-shaking)
+        run: pnpm test:package
+      - name: Build docs site (Storybook + Astro)
+        run: pnpm build:all

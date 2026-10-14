@@ -1,0 +1,251 @@
+{
+  "metadata": {
+    "fileKey": "pa05CFGbUspaTwuJfg1fXf",
+    "timestamp": "2026-04-06T00:00:00Z",
+    "configHash": "36610f1d"
+  },
+  "components": {
+    "Button": {
+      "figmaId": "2557:1779",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Label": { "type": "TEXT", "default": "ラベル" },
+        "Prefix Icon": { "type": "BOOLEAN", "default": false },
+        "Suffix Icon": { "type": "BOOLEAN", "default": false },
+        "Style": { "type": "VARIANT", "options": ["Primary", "Secondary", "Emphasis", "Plain", "Danger"] },
+        "Size": { "type": "VARIANT", "options": ["Large", "Medium", "Small"] },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Hover", "Active", "Disabled"] }
+      },
+      "variants": {
+        "Style=Primary, Size=Medium, State=Enabled": { "w": 66, "h": 40, "pL": 12, "pR": 12, "pT": 0, "pB": 0, "gap": 4, "radius": 8, "fills": ["#434343"], "strokes": [], "strokeW": 0, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#ffffff" } },
+        "Style=Emphasis, Size=Medium, State=Enabled": { "w": 66, "h": 40, "pL": 12, "pR": 12, "pT": 0, "pB": 0, "gap": 4, "radius": 8, "fills": ["#e62305"], "strokes": [], "strokeW": 0, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#ffffff" } },
+        "Style=Plain, Size=Medium, State=Enabled": { "w": 66, "h": 40, "pL": 12, "pR": 12, "pT": 0, "pB": 0, "gap": 4, "radius": 8, "fills": [], "strokes": [], "strokeW": 0, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } },
+        "Style=Secondary, Size=Medium, State=Enabled": { "w": 66, "h": 40, "pL": 12, "pR": 12, "pT": 0, "pB": 0, "gap": 4, "radius": 8, "fills": ["#ffffff"], "strokes": ["#333333"], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } },
+        "Style=Danger, Size=Medium, State=Enabled": { "w": 66, "h": 40, "pL": 12, "pR": 12, "pT": 0, "pB": 0, "gap": 4, "radius": 8, "fills": ["#ffffff"], "strokes": ["#c50e03"], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#c50e03" } },
+        "Style=Primary, Size=Large, State=Enabled": { "w": 80, "h": 48, "pL": 16, "pR": 16, "pT": 0, "pB": 0, "gap": 8, "radius": 8, "fills": ["#434343"], "strokes": [], "strokeW": 0, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#ffffff" } },
+        "Style=Emphasis, Size=Large, State=Enabled": { "w": 80, "h": 48, "pL": 16, "pR": 16, "pT": 0, "pB": 0, "gap": 8, "radius": 8, "fills": ["#e62305"], "strokes": [], "strokeW": 0, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#ffffff" } },
+        "Style=Plain, Size=Large, State=Enabled": { "w": 80, "h": 48, "pL": 16, "pR": 16, "pT": 0, "pB": 0, "gap": 8, "radius": 8, "fills": [], "strokes": [], "strokeW": 0, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } }
+      }
+    },
+    "Icon Button": {
+      "figmaId": "3700:7301",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "インスタンス": { "type": "INSTANCE_SWAP" },
+        "Style": { "type": "VARIANT", "options": ["Primary", "Secondary", "Emphasis", "Plain", "Danger"] },
+        "Size": { "type": "VARIANT", "options": ["Large", "Medium", "Small"] },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Hover", "Active", "Disabled"] }
+      },
+      "variants": {}
+    },
+    "Text Field": {
+      "figmaId": "610:2971",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Support Text": { "type": "BOOLEAN", "default": true },
+        "Tag": { "type": "BOOLEAN", "default": true },
+        "Prefix Icon": { "type": "BOOLEAN", "default": false },
+        "Suffix Icon": { "type": "BOOLEAN", "default": false },
+        "Title Label": { "type": "TEXT", "default": "ラベル" },
+        "Placeholder Text Label": { "type": "TEXT", "default": "テキストを入力" },
+        "Support Text Label": { "type": "TEXT", "default": "サポートテキストが入ります" },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Filled", "Disabled", "Error"] }
+      },
+      "variants": {
+        "State=Enabled": { "w": 320, "h": 95, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } }
+      }
+    },
+    "Text Area": {
+      "figmaId": "598:2713",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Tag": { "type": "BOOLEAN", "default": true },
+        "Support Text": { "type": "BOOLEAN", "default": true },
+        "Letter Count": { "type": "BOOLEAN", "default": true },
+        "Title Label": { "type": "TEXT", "default": "ラベル" },
+        "Placeholder Text Label": { "type": "TEXT", "default": "テキストを入力" },
+        "Support Text Label": { "type": "TEXT", "default": "サポートテキストが入ります" },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Filled", "Disabled", "Error"] }
+      },
+      "variants": {
+        "State=Enabled": { "w": 320, "h": 153, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Eina 03", "fontStyle": "Bold", "color": "#333333" } }
+      }
+    },
+    "Checkbox": {
+      "figmaId": "2787:2560",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Label text": { "type": "TEXT", "default": "ラベル" },
+        "Label": { "type": "BOOLEAN", "default": true },
+        "Type": { "type": "VARIANT", "options": ["Checked", "Unchecked", "Indeterminate"] },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Desabled", "Error"] }
+      },
+      "variants": {
+        "Type=Checked, State=Enabled": { "w": 74, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#333333" } },
+        "Type=Unchecked, State=Enabled": { "w": 74, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#333333" } },
+        "Type=Indeterminate, State=Enabled": { "w": 74, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#333333" } }
+      }
+    },
+    "Radio Button": {
+      "figmaId": "985:1697",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Show Label": { "type": "BOOLEAN", "default": true },
+        "Label text": { "type": "TEXT", "default": "ラベル" },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Disabled", "Error"] },
+        "Selected": { "type": "VARIANT", "options": ["True", "False"] }
+      },
+      "variants": {
+        "State=Enabled, Selected=True": { "w": 74, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#333333" } },
+        "State=Enabled, Selected=False": { "w": 74, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 8, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 14, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#333333" } }
+      }
+    },
+    "Tab": {
+      "figmaId": "2185:1731",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Text": { "type": "TEXT", "default": "Label" },
+        "Icon": { "type": "BOOLEAN", "default": true },
+        "Badge": { "type": "BOOLEAN", "default": true },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Focus", "Hover", "Active", "Disabled"] }
+      },
+      "variants": {
+        "State=Enabled": { "w": 133, "h": 40, "pL": 16, "pR": 16, "pT": 8, "pB": 8, "gap": 4, "radius": 0, "fills": [], "strokes": ["#bdbdbd"], "text": { "fontSize": 16, "fontFamily": "Eina 03", "fontStyle": "Regular", "color": "#5a5a5a" } }
+      }
+    },
+    "Badge": {
+      "figmaId": "1065:507",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Text": { "type": "TEXT", "default": "99" },
+        "Style": { "type": "VARIANT", "options": ["Count", "Dot", "Label", "Error"] }
+      },
+      "variants": {
+        "Style=Count": { "w": 30, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 12, "fontFamily": "Eina 03", "fontStyle": "Regular", "color": "#ffffff" } },
+        "Style=Dot": { "w": 24, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": null },
+        "Style=Label": { "w": 43, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": { "fontSize": 12, "fontFamily": "Eina 03", "fontStyle": "SemiBold", "color": "#ffffff" } },
+        "Style=Error": { "w": 24, "h": 24, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": null }
+      }
+    },
+    "Divider": {
+      "figmaId": "977:1950",
+      "type": "COMPONENT",
+      "properties": {},
+      "variants": { "standalone": { "w": 400, "h": 1, "radius": 0, "fills": [] } }
+    },
+    "Switch": {
+      "figmaId": "8248:329",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Active": { "type": "VARIANT", "options": ["True", "False"] },
+        "Size": { "type": "VARIANT", "options": ["Large", "Medium"] },
+        "State": { "type": "VARIANT", "options": ["Enabled", "Disabled", "Hover"] }
+      },
+      "variants": {
+        "Active=True, Size=Medium, State=Enabled": { "w": 40, "h": 24, "pL": 2, "pR": 2, "pT": 2, "pB": 2, "gap": 10, "radius": 999, "fills": ["#434343"], "strokes": [], "strokeW": 1, "text": null },
+        "Active=True, Size=Large, State=Enabled": { "w": 52, "h": 32, "pL": 2, "pR": 2, "pT": 2, "pB": 2, "gap": 10, "radius": 999, "fills": ["#434343"], "strokes": [], "strokeW": 1, "text": null },
+        "Active=False, Size=Large, State=Enabled": { "w": 52, "h": 32, "pL": 2, "pR": 2, "pT": 2, "pB": 2, "gap": 10, "radius": 999, "fills": ["#b3bed0"], "strokes": [], "strokeW": 1, "text": null },
+        "Active=False, Size=Medium, State=Enabled": { "w": 40, "h": 24, "pL": 2, "pR": 2, "pT": 2, "pB": 2, "gap": 10, "radius": 999, "fills": ["#b3bed0"], "strokes": [], "strokeW": 1, "text": null }
+      }
+    },
+    "Tooltip": {
+      "figmaId": "9639:4097",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Label": { "type": "TEXT", "default": "ラベル" },
+        "Placement": { "type": "VARIANT", "options": ["Top", "Bottom", "Right", "Left"] }
+      },
+      "variants": {
+        "Placement=Top": { "w": 52, "h": 29, "pL": 8, "pR": 8, "pT": 4, "pB": 4, "gap": 0, "radius": 4, "fills": ["#333333"], "strokes": [], "strokeW": 1, "text": { "fontSize": 12, "fontFamily": "Noto Sans JP", "fontStyle": "Regular", "color": "#ffffff" } }
+      }
+    },
+    "Snackbar": {
+      "figmaId": "7837:3652",
+      "type": "COMPONENT",
+      "properties": {
+        "Description": { "type": "TEXT", "default": "メッセージ" },
+        "Status Icon": { "type": "BOOLEAN", "default": true },
+        "Action 1": { "type": "BOOLEAN", "default": true },
+        "Progress Bar": { "type": "BOOLEAN", "default": true },
+        "Action 2": { "type": "BOOLEAN", "default": true },
+        "Title Label": { "type": "TEXT", "default": "タイトル" },
+        "Close Button": { "type": "BOOLEAN", "default": true },
+        "Title": { "type": "BOOLEAN", "default": true },
+        "Snackbar Actions": { "type": "BOOLEAN", "default": true }
+      },
+      "variants": { "standalone": { "w": 400, "h": 144, "pL": 16, "pR": 16, "pT": 16, "pB": 16, "gap": 8, "radius": 8, "fills": ["#333333"] } }
+    },
+    "Modal": {
+      "figmaId": "11017:20474",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Close Button": { "type": "BOOLEAN", "default": true },
+        "Title Label": { "type": "TEXT", "default": "タイトル" },
+        "Action": { "type": "BOOLEAN", "default": true },
+        "Secondary Button": { "type": "BOOLEAN", "default": true },
+        "Primary Button": { "type": "BOOLEAN", "default": true },
+        "Slot": { "type": "BOOLEAN", "default": true },
+        "Subtle Button": { "type": "BOOLEAN", "default": false },
+        "Message": { "type": "BOOLEAN", "default": true },
+        "Slot Instance": { "type": "INSTANCE_SWAP" },
+        "Contents": { "type": "BOOLEAN", "default": true },
+        "Style": { "type": "VARIANT", "options": ["Basic", "+ Status Icon", "+ Scrolling", "+ Status & Scrolling"] },
+        "Size": { "type": "VARIANT", "options": ["Small", "Medium", "Large"] }
+      },
+      "variants": {
+        "Style=Basic, Size=Small": { "w": 384, "h": 233, "pL": 0, "pR": 0, "pT": 0, "pB": 24, "gap": 0, "radius": 16, "fills": ["#ffffff"], "strokes": [], "strokeW": 1, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } },
+        "Style=Basic, Size=Medium": { "w": 560, "h": 233, "pL": 0, "pR": 0, "pT": 0, "pB": 24, "gap": 0, "radius": 16, "fills": ["#ffffff"], "strokes": [], "strokeW": 1, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } },
+        "Style=Basic, Size=Large": { "w": 768, "h": 233, "pL": 0, "pR": 0, "pT": 0, "pB": 24, "gap": 0, "radius": 16, "fills": ["#ffffff"], "strokes": [], "strokeW": 1, "text": { "fontSize": 16, "fontFamily": "Noto Sans JP", "fontStyle": "Bold", "color": "#333333" } }
+      }
+    },
+    "Scrim": {
+      "figmaId": "10930:5994",
+      "type": "COMPONENT",
+      "properties": {},
+      "variants": { "standalone": { "w": 1440, "h": 1024, "radius": 0, "fills": [{ "hex": "#000000", "opacity": 0.58 }] } }
+    },
+    "Date Picker": {
+      "figmaId": "11864:19567",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Backward": { "type": "BOOLEAN", "default": true },
+        "Forward": { "type": "BOOLEAN", "default": true },
+        "Today Button": { "type": "BOOLEAN", "default": true },
+        "Clear Button": { "type": "BOOLEAN", "default": true },
+        "DatePicker Actions": { "type": "BOOLEAN", "default": true },
+        "Style": { "type": "VARIANT", "options": ["Single", "Range"] }
+      },
+      "variants": {
+        "Style=Single": { "w": 312, "h": 434, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 16, "fills": ["#ffffff"], "strokes": [], "strokeW": 1, "text": { "fontSize": 16, "fontFamily": "Eina 03", "fontStyle": "Bold", "color": "#333333" } },
+        "Style=Range": { "w": 625, "h": 434, "pL": 0, "pR": 0, "pT": 0, "pB": 0, "gap": 0, "radius": 16, "fills": ["#ffffff"], "strokes": [], "strokeW": 1, "text": { "fontSize": 16, "fontFamily": "Eina 03", "fontStyle": "Bold", "color": "#333333" } }
+      }
+    },
+    "Scrollbar": {
+      "figmaId": "12471:14086",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "State": { "type": "VARIANT", "options": ["Default", "Hover"] }
+      },
+      "variants": {
+        "State=Default": { "w": 12, "h": 80, "pL": 4, "pR": 4, "pT": 4, "pB": 20, "gap": 0, "radius": 0, "fills": [], "strokes": [], "strokeW": 1, "text": null }
+      }
+    },
+    "Dropdown Menu": {
+      "figmaId": "11853:12967",
+      "type": "COMPONENT_SET",
+      "properties": {
+        "Prefix Icon": { "type": "BOOLEAN", "default": true },
+        "Suffix Icon": { "type": "BOOLEAN", "default": true },
+        "Label": { "type": "TEXT", "default": "ラベル" },
+        "Support Text": { "type": "BOOLEAN", "default": true },
+        "Prefix Icon Instance": { "type": "INSTANCE_SWAP" },
+        "Suffix Icon Instance": { "type": "INSTANCE_SWAP" },
+        "Shortcut Key": { "type": "BOOLEAN", "default": true },
+        "Checked": { "type": "BOOLEAN", "default": true },
+        "Style": { "type": "VARIANT", "options": ["Action", "Option"] },
+        "State": { "type": "VARIANT", "options": ["Enable", "Hover", "Active", "Disabled", "Destructive"] }
+      },
+      "variants": {}
+    }
+  }
+}

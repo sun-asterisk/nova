@@ -1,0 +1,27 @@
+/**
+ * Optional opt-in for the branded Noto Sans JP look.
+ *
+ * By default every component uses the OS-native `system-ui` font stack
+ * (see scripts/build-tokens.mjs's `--font-family-sds-sans` — Figma's
+ * Typography frame explicitly calls for this: no font files to load, no
+ * flash of unstyled text, consistent with the platform the user is on).
+ *
+ * If you want the same font on every platform instead, import this file
+ * once — it loads Noto Sans JP (used for both Latin and Japanese text, as the
+ * Figma Typography frame specifies) from Google Fonts and points every
+ * `typo-*` utility at it. No `<link>` tag, no
+ * `@font-face`, no separate token/class to remember on the consuming side.
+ *
+ * Usage:
+ *   import '@sun-asterisk/nova/styles';        // required
+ *   import '@sun-asterisk/nova/branded-fonts.css'; // optional
+ *
+ * Noto Sans JP is SIL Open Font License (OFL) 1.1 — free for commercial use,
+ * no attribution required beyond keeping this notice.
+ */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap');
+
+:root {
+  --font-family-sds-sans: 'Noto Sans JP', system-ui, -apple-system, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+}

@@ -1,0 +1,64 @@
+---
+interface Props {
+	tags: string[];
+}
+
+const { tags } = Astro.props;
+
+const tagColors: Record<string, { bg: string; text: string }> = {
+	beginner: { bg: '#d1fae5', text: '#065f46' },
+	designer: { bg: '#ede9fe', text: '#5b21b6' },
+	pm: { bg: '#dbeafe', text: '#1e40af' },
+	engineer: { bg: '#fef3c7', text: '#92400e' },
+	qa: { bg: '#fce7f3', text: '#9d174d' },
+};
+
+const tagLabels: Record<string, string> = {
+	beginner: '初心者',
+	designer: 'デザイナー',
+	pm: 'PM',
+	engineer: 'エンジニア',
+	qa: 'QA',
+};
+---
+
+{tags.length > 0 && (
+	<div class="tag-badges" data-pagefind-ignore>
+		{tags.map((tag) => {
+			const color = tagColors[tag] || { bg: '#e5e7eb', text: '#374151' };
+			return (
+				<a
+					href={`/tags/${tag}/`}
+					class="tag-badge"
+					style={`background-color: ${color.bg}; color: ${color.text};`}
+					data-pagefind-filter={`audience:${tag}`}
+				>
+					{tagLabels[tag] || tag}
+				</a>
+			);
+		})}
+	</div>
+)}
+
+<style>
+	.tag-badges {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: 0.5rem;
+	}
+
+	.tag-badge {
+		display: inline-block;
+		padding: 0.15rem 0.6rem;
+		border-radius: 9999px;
+		font-size: var(--sl-text-xs);
+		font-weight: 600;
+		text-decoration: none;
+		transition: opacity 0.2s;
+	}
+
+	.tag-badge:hover {
+		opacity: 0.8;
+	}
+</style>

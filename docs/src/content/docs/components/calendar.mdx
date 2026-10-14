@@ -1,0 +1,83 @@
+---
+title: Calendar
+description: カレンダーは、DatePicker のカレンダーパネルをポップオーバーなしで常に表示するコンポーネントです。
+tags: [designer, engineer]
+---
+
+import { Aside } from '@astrojs/starlight/components';
+
+<p class="comp-lead">カレンダーは、DatePicker のカレンダーパネルをポップオーバーなしで常に表示するコンポーネントです。サイドパネルや予約ページ、絞り込み条件など、トリガーをクリックせずに日付を選ばせたい場面で使います。</p>
+
+![Calendar のバリエーション一覧](/assets/components/calendar/showcase.png)
+
+## 概要
+
+Figma には独立した「Calendar」コンポーネントはなく、Date Picker のパネル部分がそのまま Calendar にあたります。日付のグリッド、日付セルの見た目、キーボード操作は [DatePicker](/components/date-picker/) と共通の実装です。
+
+**DatePicker との使い分け**
+
+- **DatePicker** — フィールドからポップオーバーでカレンダーを開く場合
+- **Calendar** — カレンダーを常にページ上に表示しておく場合
+
+Calendar では日付をクリックした時点で選択が確定します。適用（Apply）ボタンはありません。
+
+**期間（Range）の選び方** — DatePicker と同じく、Figma の「期間選択の制御フロー」に従います。
+
+- 1回目のクリックで開始日、2回目で終了日が決まります。開始日を選んだあとは、開始日からカーソル位置までをプレビュー表示します
+- 開始日より前の日付をクリックすると、その日が新しい開始日になり、終了日はクリアされます
+- 開始日と同じ日付をクリックすると、1日だけの期間になります
+- 選択途中（終了日が未定）の状態でも `onValueChange` が `{ from, to: undefined }` で呼ばれます
+
+ページ内に置く要素なので、DatePicker のポップオーバーのような影は付けず、境界線（`border-weak`）で区切ります。
+
+## 種類・バリエーション
+
+- **Style** — Single（単一の日付）/ Range（期間）。Range では既定で2か月分を並べて表示します
+- **Date Picker Actions** — フッターの「今日」「クリア」ボタン。既定で表示され、どちらか一方だけ、または両方を非表示にできます。「今日」は今月に移動して今日を選択します（Range では今日を新しい開始日にし、終了日をクリアします）
+
+## 使い方
+
+```tsx
+import { useState } from 'react';
+import { Calendar, type DatePickerValue } from '@sun-asterisk/nova/date-picker';
+
+// 期間を選択（今日以降のみ）
+const [range, setRange] = useState<DatePickerValue>();
+<Calendar mode="range" value={range} onValueChange={setRange} minDate={new Date()} />
+
+// フッターなし
+<Calendar actions={false} aria-label="配送希望日" onValueChange={save} />
+
+// 「今日」ボタンだけ表示
+<Calendar actions={{ today: true, clear: false }} />
+```
+
+## 主な Props
+
+| Prop | 型 | 既定値 | 説明 |
+|---|---|---|---|
+| `mode` | `'single' \| 'range'` | `'single'` | 選択モード |
+| `value` | `DatePickerValue` | — | 制御モードの値。`value` を渡すと（`undefined` でも）制御モードになります |
+| `defaultValue` | `DatePickerValue` | — | 非制御モードの初期値 |
+| `onValueChange` | `(value) => void` | — | 選択のたびに呼ばれます |
+| `numberOfMonths` | `number` | Single: `1` / Range: `2` | 並べて表示する月数 |
+| `minDate` / `maxDate` | `Date` | — | 範囲外の日付は選択不可。範囲外になった値はクリアされます |
+| `actions` | `boolean \| { today?: boolean; clear?: boolean }` | `true` | フッターの「今日」「クリア」ボタン |
+| `todayLabel` / `clearLabel` | `string` | `'今日'` / `'クリア'` | ボタンのラベル |
+| `aria-label` | `string` | `'日付選択カレンダー'` | パネルの名前 |
+
+そのほか `defaultMonth` / `month` / `onMonthChange` / `locale` / `weekStartsOn` など、DatePicker と同じ react-day-picker の Props を渡せます。
+
+## アクセシビリティ
+
+- パネルは名前付きの `role="group"` です。用途が分かる `aria-label` を指定してください
+- 日付グリッドは `Tab` で1回だけ止まり、矢印キー / `Home` / `End` / `PageUp` / `PageDown` で日付を移動、`Enter` / `Space` で選択します（DatePicker と同じ）
+- 日付セルには日の数字だけでなく完全な日付が読み上げ名として付きます。読み上げの言語は `locale` で指定してください
+- 「クリア」ボタンは値が空のあいだ無効になります
+
+## 関連リンク
+
+- [Storybook で試す](/storybook/?path=/docs/components-calendar--docs)
+- [DatePicker](/components/date-picker/)
+
+<Aside type="note">本ページは React 実装とコンポーネント仕様書（`docs/components/calendar.md`）をもとに作成しています。Figma からの引用ではありません。</Aside>

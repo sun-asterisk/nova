@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.app.json",
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist/types",
+    "noEmit": false,
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src/components/**/*", "src/index.ts", "src/vite-env.d.ts"],
+  "exclude": ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx", "**/*.figma.ts", "node_modules"]
+}
