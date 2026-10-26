@@ -4,9 +4,8 @@
 import { WorkerEntrypoint } from 'cloudflare:workers';
 
 // 認証なしの公開入口。Service binding 経由でのみ呼べる (named entrypoint には公開 URL が
-// ない) — Pages プロジェクト nova-landing が nova.sun-asterisk.com のドキュメント系パスを
-// ここへ転送する。workers.dev へのアクセスは従来どおり下の export default (Basic 認証) に入る。
-// 経緯・転送するパス一覧: sun-design-system-web 側の handoff-public-docs-on-nova-domain.md
+// ない)。nova.sun-asterisk.com のドキュメント系パスはここに転送される。
+// それ以外のアクセスは下の export default (Basic 認証) に入る。
 export class PublicDocs extends WorkerEntrypoint {
   async fetch(request) {
     return this.env.ASSETS.fetch(request);

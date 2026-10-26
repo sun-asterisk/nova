@@ -4,10 +4,8 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
-	// Public domain (canonical / sitemap). The same build is also served on the
-	// Worker's workers.dev URL behind Basic Auth (dev access);
-	// nova.sun-asterisk.com reaches it through the PublicDocs entrypoint
-	// (auth-worker.js) via the nova-landing Pages service binding.
+	// Public domain (canonical / sitemap). nova.sun-asterisk.com reaches this
+	// build through the PublicDocs entrypoint in auth-worker.js.
 	site: 'https://nova.sun-asterisk.com',
 	integrations: [
 		starlight({

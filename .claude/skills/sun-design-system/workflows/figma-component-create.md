@@ -187,7 +187,7 @@ YYYY-MM-DD
 Sonnet に設計書の該当部分 + 実行コードを渡す。
 
 **Sonnet へ渡す内容:**
-- File Key (`yvgNjlff3R3PjFE1r2QA9K` または環境変数)
+- File Key (`fSzxt8wKkXsn8fmxkPBUr2` または環境変数)
 - Components ページ nodeId (`1:3`)
 - コンポーネントセットの JS 構築コード (variants の createComponent ループ、トークン適用、property 定義)
 - 配置座標 (既存の右端より x+100 程度。`design-system-update` workflow と同じ方式)

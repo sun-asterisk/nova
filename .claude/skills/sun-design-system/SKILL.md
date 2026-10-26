@@ -149,7 +149,7 @@ Figma の Components ページ (nodeId `1:3`) の **最上位レイヤーに存�
 - `.figma-sync/snapshots/latest.json` — 既存全コンポーネントのバリアント構造
 - `scripts/global.css` — Figma トークン → CSS 変数
 - `src/components/` — React コンポーネント実装
-- `.env` の `FIGMA_FILE_KEY` — Figma ファイルキー (現在: `yvgNjlff3R3PjFE1r2QA9K`)
+- `.env` の `FIGMA_FILE_KEY` — Figma ファイルキー (現在: `fSzxt8wKkXsn8fmxkPBUr2`)
 
 ## Figma 内の主要 nodeId (参考)
 
