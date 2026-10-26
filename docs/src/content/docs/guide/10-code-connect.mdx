@@ -106,6 +106,12 @@ import { Button } from '@sun-asterisk/nova';
 新しいファイルに向けるときは、必ず `pnpm run code-connect:check` をそのファイルに対して実行し、失敗がないことを確認してください。
 </Aside>
 
+### 必要な Figma のプランと権限
+
+- Code Connect は、Figma の **Professional / Organization / Enterprise** プランで、**Dev シートまたは Full シート**を持つ人が使えます。Professional プランでは、有効なライブラリとフレームワークがそれぞれ 1 つまでです（[Figma のドキュメント](https://developers.figma.com/docs/code-connect/)）。
+- publish に使う Personal access token には、**Code Connect: Write** と **File content: Read** のスコープが必要です。
+- Figma Community 版の Nova を複製したファイルには、Code Connect の登録は**引き継がれません**。複製先で Dev Mode や Figma MCP に Nova のコードを表示させるには、次の手順で登録してください。
+
 ### 複製先での手順
 
 1. Figma ファイルを複製し、複製先のコンポーネントを**チームライブラリに publish** する（これを忘れると紐付きません）
@@ -116,7 +122,7 @@ import { Button } from '@sun-asterisk/nova';
    FIGMA_ACCESS_TOKEN=<Figma の Personal access token>
    ```
 
-   トークンは Figma の **Settings → Security → Personal access tokens** で発行します。
+   トークンは Figma の **Settings → Security → Personal access tokens** で発行します（スコープは Code Connect: Write と File content: Read）。
 3. 確認してから publish する
 
    ```bash
@@ -142,7 +148,7 @@ import { Button } from '@sun-asterisk/nova';
 
 ## CI による自動 publish
 
-master への push（PR のマージ）で `src/components/**/*.figma.ts` か `figma.config.json` が変わると、GitHub Actions（`.github/workflows/code-connect-deploy.yml`）が**変更されたマッピングだけ**を 1 ファイルずつ publish します。1 ファイルずつ実行するのは、1 回の CLI 実行に壊れたファイルが 1 つでも含まれると、同時に指定した他のファイルも登録されなくなるためです。
+`main` への push（リリース）で `src/components/**/*.figma.ts` か `figma.config.json` が変わると、GitHub Actions（`.github/workflows/code-connect-deploy.yml`）が**変更されたマッピングだけ**を 1 ファイルずつ publish します。1 ファイルずつ実行するのは、1 回の CLI 実行に壊れたファイルが 1 つでも含まれると、同時に指定した他のファイルも登録されなくなるためです。
 
 - つまり、**`*.figma.ts` を変更する PR をマージすることが publish の承認**になります。レビューはその前提で行ってください。
 - このワークフローには、リポジトリの Secret `FIGMA_ACCESS_TOKEN` と Variable `FIGMA_FILE_KEY` の設定が必要です。

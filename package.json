@@ -1,8 +1,8 @@
 {
   "name": "@sun-asterisk/nova",
   "private": false,
-  "version": "1.0.1",
-  "description": "Sun design system - A React component library built with TypeScript and Tailwind CSS.",
+  "version": "1.0.2",
+  "description": "Sun* Design System Nova — accessible React components with design tokens. Works with or without Tailwind CSS.",
   "author": "Sun Asterisk",
   "license": "MIT",
   "packageManager": "pnpm@10.7.1",

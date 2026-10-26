@@ -19,7 +19,7 @@ For every `.styles.ts` and component `.tsx` file in scope:
 1. **Color (§1)** — grep for raw hex (`#[0-9a-fA-F]{3,8}`), `rgba(`/`rgb(`, or a primitive-looking class (`bg-neutral-`, `text-red-`, `border-blue-` etc. — anything that isn't a semantic name). Flag every hit with file:line.
 2. **Typography (§2)** — grep for `font-family` set directly (inline style, or a Tailwind arbitrary value like `font-['Inter']`), or font-size/weight/line-height set outside a `typo-*` class. A component importing `@font-face` or a Google Fonts URL directly (instead of via `branded-fonts.css`) is a P0 finding.
 3. **Spacing/Radius (§3)** — grep for arbitrary bracket values (`p-\[`, `gap-\[`, `rounded-\[`, `m-\[`) with no adjacent comment explaining why the token scale doesn't cover it.
-4. **Elevation (§4)** — grep for `shadow-\[` or inline `box-shadow`/`rgba(` shadow values instead of a `shadow-level-*` class. Cross-check the component's role against `design.md` §6.1's level table — flag a mismatch as informational (P2), not a hard failure, since a documented reason can justify it.
+4. **Elevation (§4)** — grep for `shadow-\[` or inline `box-shadow`/`rgba(` shadow values instead of a `shadow-sds-level-*` class. Cross-check the component's role against `design.md` §6.1's level table — flag a mismatch as informational (P2), not a hard failure, since a documented reason can justify it.
 5. **Interaction (§5)** — for each interactive component:
    - Does it set `focus-visible:outline-none` (or equivalent) without a replacement ring? (P0 — this exact bug was previously found on `Switch`.)
    - For button-like/menu-item components: is there a visible Active/press state using the right token family (`surface-*-active` for buttons, `surface-subtle` for menu items)?
@@ -33,6 +33,6 @@ Before reporting a finding, re-read the actual line you're citing — don't infe
 
 ## Output
 
-Report findings grouped by rule section, most severe (P0) first. For each: file:line, a one-sentence description of the violation, and the concrete fix (e.g. "replace `shadow-[0_2px_4px_rgba(0,0,0,0.2)]` with `shadow-level-3`"). If a component is fully compliant, say so explicitly rather than omitting it — a silent absence of findings should never be the only signal that something was checked.
+Report findings grouped by rule section, most severe (P0) first. For each: file:line, a one-sentence description of the violation, and the concrete fix (e.g. "replace `shadow-[0_2px_4px_rgba(0,0,0,0.2)]` with `shadow-sds-level-3`"). If a component is fully compliant, say so explicitly rather than omitting it — a silent absence of findings should never be the only signal that something was checked.
 
 Do not fix violations yourself unless explicitly asked to — your default mode is audit and report, matching how this project's other design-system audits (Figma parity, accessibility) work.

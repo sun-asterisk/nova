@@ -1,4 +1,4 @@
-# Sun Design System — DESIGN.md
+# Sun* Design System Nova — DESIGN.md
 
 Sun* Design System Nova の React コンポーネントライブラリ (`@sun-asterisk/nova`) のデザインシステム仕様。AI コーディングエージェント (Claude Code / Cursor / Copilot 等) がこのファイルを読めば、追加のプロンプトなしで一貫した UI を生成できることを目的とする。
 
@@ -15,7 +15,7 @@ Sun* Design System Nova の React コンポーネントライブラリ (`@sun-as
 Sun Design System は「業務アプリケーションのためのニュートラルな土台」を提供する。派手な色彩や装飾ではなく、情報の優先順位とコンテンツそのものを主役にするために、ベースは低彩度のニュートラル、アクセントとしてブランドカラー (Sun Red) を差し込む構成を取る。
 
 - **Primary 表面** は赤ではなく **ダークニュートラル (Neutral 700)** を使用する。「業務用途で長時間見続けても疲れない」「赤を多用すると警告に見える」ためのトレードオフ。
-- **Sun Red (#ff2200)** は `surface-emphasis` / `text-emphasis` / `border-emphasis` としてのみ登場する。CTA の強調、リンク、重要ステータスに限定。
+- **強調の赤 (`red-500` = #dd2305)** は `surface-emphasis` / `text-emphasis` / `border-emphasis` としてのみ登場する。CTA の強調、重要ステータスに限定。ブランドの Sun Red (`brand-sun-red` = #ff2200) は UI の色ではなくブランド識別用 (§2.1)。
 - **角丸は控えめ** (基本 `rounded-sds-200` = 8px)。カジュアルすぎず、鋭角すぎない中間値を選択。
 - **影は最小限**。フローティング要素 (Modal, Snackbar, DropdownMenu, DatePicker) のみ使用する。
 - **情報密度は中〜高**。モバイル/デスクトップ両対応で、業務データを詰め込めるように余白を取りすぎない。
@@ -46,14 +46,14 @@ UI 実装では **必ず Semantic トークンを使う**。Primitive (`--color-
 | `surface-primary-hover` | neutral-600 | Primary hover |
 | `surface-primary-active` | neutral-900 | Primary active |
 | `surface-secondary` | gray-300 | Secondary 表面 |
-| `surface-secondary-hover` | black-alpha-50 | Secondary hover |
-| `surface-emphasis` | red-500 (#e62305) | CTA 強調・ブランド色使用箇所 |
+| `surface-secondary-hover` | gray-100 | Secondary hover |
+| `surface-emphasis` | red-500 (#dd2305) | CTA 強調 |
 | `surface-emphasis-hover` | red-400 | Emphasis hover |
 | `surface-emphasis-active` | red-600 | Emphasis active |
 | `surface-danger` | red-500 | 破壊的操作の塗り |
-| `surface-success` | green-400 | 成功状態の塗り |
+| `surface-success` | green-500 | 成功状態の塗り |
 | `surface-info` | blue-500 | 情報状態の塗り |
-| `surface-caution` | yellow-200 | 注意状態の塗り |
+| `surface-caution` | yellow-600 | 注意状態の塗り |
 | `surface-disabled` | neutral-50 | 無効要素の塗り |
 | `background-base` | white | ページ背景 |
 | `background-container` | neutral-25 (#fafafa) | セクション・カード背景 |
@@ -66,21 +66,23 @@ UI 実装では **必ず Semantic トークンを使う**。Primitive (`--color-
 | `background-scrim` | black-alpha-600 | Modal オーバーレイ |
 | `text-primary` | neutral-800 (#333333) | 本文メイン |
 | `text-secondary` | neutral-600 (#5a5a5a) | 補助テキスト |
-| `text-tertiary` | neutral-400 | 三次テキスト |
 | `text-emphasis` | red-500 | 強調テキスト・リンクホバー |
 | `text-link` | blue-600 | リンク |
 | `text-placeholder` | neutral-500 | プレースホルダー |
 | `text-disable` | neutral-400 | 無効テキスト |
-| `text-danger` / `text-success` / `text-info` / `text-caution` | red/green/blue/yellow-7xx | ステータステキスト |
+| `text-danger` / `text-success` / `text-info` / `text-caution` | red-600 / green-700 / blue-700 / yellow-700 | ステータステキスト |
 | `text-on-surface` | white | Primary/Emphasis surface 上のテキスト |
 | `border-basic` | neutral-300 | 基本ボーダー |
 | `border-weak` | neutral-100 | 弱いボーダー |
+| `border-disable` | neutral-100 | 無効要素のボーダー |
 | `border-strong` | neutral-800 | Secondary ボタン用の強いボーダー |
 | `border-focus` | blue-600 | フォーカスリング |
 | `border-emphasis` / `border-danger` / `border-success` / `border-info` / `border-caution` | 各ステータス色 | ステータスボーダー |
 | `icon-primary` | neutral-800 | 主要アイコン |
 | `icon-secondary` | neutral-600 | 補助アイコン |
-| `icon-disable` | neutral-300 | 無効アイコン |
+| `icon-disable` | neutral-400 | 無効アイコン |
+
+`text-tertiary` は廃止済み（2026.7.27）。補助テキストには `text-secondary` を使う。
 
 ### 2.3 Status Role Mapping
 
@@ -102,7 +104,7 @@ UI 実装では **必ず Semantic トークンを使う**。Primitive (`--color-
 Figma の Typography フレーム自体に「フォントは原則としてシステムフォントを適用する。実装時は総称フォント `system-ui` を指定する」という指示があるため、デフォルトは特定の Web フォントではなく **OS ネイティブのシステムフォントスタック**。Figma 上で見える `Noto Sans JP` はプレビュー用の表示であり、そのままバンドルすべきフォント名ではない。Nova は Inter を使わない（欧文・数字も含めて Noto Sans JP に統一）。
 
 ```css
---font-family-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+--font-family-sds-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 ```
 
 全 `typo-*` ユーティリティはこの1つの変数だけを参照する（日本語/英語で別々のフォント変数を持たない — 言語別の書体切り替えは廃止）。フォントファイルの読み込みが一切不要になり、FOUT/追加ネットワークリクエストが発生しない。
@@ -114,7 +116,7 @@ import '@sun-asterisk/nova/styles';
 import '@sun-asterisk/nova/branded-fonts.css'; // optional
 ```
 
-`branded-fonts.css`（`src/branded-fonts.css`）が Google Fonts から Noto Sans JP を読み込み（欧文・和文の両方に使う）、`--font-family-sans` を上書きする — 手動での `<link>` タグや `@font-face` 記述は不要。Noto Sans JP は SIL Open Font License (OFL) 1.1 で商用利用無料。
+`branded-fonts.css`（`src/branded-fonts.css`）が Google Fonts から Noto Sans JP を読み込み（欧文・和文の両方に使う）、`--font-family-sds-sans` を上書きする — 手動での `<link>` タグや `@font-face` 記述は不要。Noto Sans JP は SIL Open Font License (OFL) 1.1 で商用利用無料。
 
 **Figma との既知の差分（2026-10-13 時点）**: Figma 側には Inter がまだ残っている — Typography フレームの Typeface 欄（「欧文・数字: Inter」）と、Label/En 系のテキストスタイル（変数 `Font family/English` = Inter。Badge・DatePicker・Tab・DropdownMenu が使用）。**実装では Inter を使わない**（既定は `system-ui`、ブランドフォントは欧文・和文とも Noto Sans JP）。Dev Mode の CSS 欄に `font-family: Inter` と表示されても、コードに書き写さないこと。Figma 側は今後のライブラリ更新で Noto Sans JP に統一する予定で、更新したら Figma の更新履歴（Overview のスライド 7）とドキュメントサイトの更新情報に載せ、この注記を削除する。
 
@@ -196,16 +198,16 @@ import '@sun-asterisk/nova/branded-fonts.css'; // optional
 ### 4.4 Feedback & Overlay
 
 - **Tooltip** (Radix Tooltip): bg `background-container-inverse` (neutral-800), text white, radius `rounded-sds-100`, shadow `level-3` (Figma の Tooltip に適用されている effect style は "Elevation/Lv.3")
-- **Snackbar**: 画面下固定、status に応じた背景色 (info/success/caution/danger)
+- **Snackbar**: 背景は状態によらず `background-container-inverse` の1色、shadow `level-4`。状態 (`variant`: info / success / warning / error / loading) はアイコンで示す。表示位置は `showSnackbar()` の `position` (既定 `bottom-right`)
 - **Modal** (Radix Dialog): `background-scrim` オーバーレイ + 中央白カード (radius `rounded-sds-400` = 16px, shadow `level-5`)
 - **DropdownMenu** (Radix DropdownMenu): white bg, radius `rounded-sds-200`, shadow `level-2` (Figma "Elevation Lv.2"), item 間 4px, 各 item は hover で `surface-subtle-hover`（Danger も同じ。赤い背景は使わない）（Active は §7.2 の通り `surface-subtle`）。`surface-button-secondary-hover` という名前のトークンは存在しない（使うと hover/focus の背景色が描画されない）
 
 ### 4.5 Navigation & Structure
 
-- **Tab** (Radix Tabs): 選択タブの下線 `border-emphasis`、非選択は `text-secondary`
+- **Tabs** (Radix Tabs): 選択タブは `text-primary` + 下線 `border-strong` (2px)、非選択は `text-secondary`
 - **Divider**: `border-weak` の horizontal/vertical ライン
 - **Badge**: status 別の小ラベル (pill または rounded)
-- **ScrollArea**: カスタム実装のスクロール領域 (縦/横)
+- **Scrollbar** (`Scrollbar` / `ScrollBarArea`): Radix ScrollArea ベースのスクロール領域 (縦/横)
 - **DatePicker**: 月送りカレンダー。Selected は `surface-primary`、Today は `text-emphasis` + bold
 
 ### 4.6 Interactive State Ordering
@@ -224,32 +226,36 @@ Tailwind では後方のセレクタが優先されるため、クラス順序�
 
 ### 5.1 Spacing Scale
 
-すべての余白は以下の 10 段階のみを使用する。中間値 (`p-[18px]` 等) は禁止。
+すべての余白は以下の数値スケールのみを使用する（Tailwind では `p-sds-200`、`gap-sds-150` のように書く）。中間値 (`p-[18px]` 等) は禁止。文字キー (`xxs`/`xs`/`s`/`m`/`l`/`xl` 等) は 2026.04.10 に廃止済みで、CSS は生成されない。
 
 | Token | px (1rem=16px) | 用途 |
 |---|---|---|
-| `xxs` | 4 | アイコンとテキストの隙間 |
-| `xs` | 8 | ボタン内パディング / 小コンポーネント間 |
-| `s` | 12 | フォーム要素間 |
-| `m` | 16 | カード内パディング / 中コンポーネント間 |
-| `l` | 24 | セクション内余白 |
-| `xl` | 32 | セクション間 |
-| `xxl` | 40 | 大きなセクション間 |
-| `3xl` | 48 | ページ上下余白 |
-| `4xl` | 64 | ヒーローセクション |
-| `5xl` | 80 | ランディング余白 |
+| `sds-25` | 2 | 極小の隙間 |
+| `sds-50` | 4 | アイコンとテキストの隙間 |
+| `sds-100` | 8 | ボタン内パディング / 小コンポーネント間 |
+| `sds-150` | 12 | フォーム要素間 |
+| `sds-200` | 16 | カード内パディング / 中コンポーネント間 |
+| `sds-300` | 24 | セクション内余白 |
+| `sds-400` | 32 | セクション間 |
+| `sds-500` | 40 | 大きなセクション間 |
+| `sds-600` | 48 | ページ上下余白 |
+| `sds-800` | 64 | ヒーローセクション |
+| `sds-1000` | 80 | ランディング余白 |
 
 ### 5.2 Radius Scale
 
+Tailwind では `rounded-sds-200` のように書く。文字キー (`radius-xs`/`s`/`m`/`l`/`xl`) は 2026.04.10 に廃止済み。
+
 | Token | Value | 用途 |
 |---|---|---|
-| `radius-none` | 0 | 明示的に角なし |
-| `radius-xs` | 2px | 極小要素 (Badge 等) |
-| `radius-s` | 4px | Tooltip, タグ |
-| `radius-m` | 8px | **既定**。Button, Input, Card |
-| `radius-l` | 16px | Modal, 大きなカード |
-| `radius-xl` | 24px | 特殊パネル |
-| `radius-full` | 9999px | 円形, pill |
+| `sds-0` | 0 | 明示的に角なし |
+| `sds-50` | 2px | 極小要素 |
+| `sds-100` | 4px | Tooltip |
+| `sds-200` | 8px | **既定**。Button, Input, DropdownMenu |
+| `sds-300` | 12px | 中間 |
+| `sds-400` | 16px | Modal |
+| `sds-600` | 24px | 特殊パネル |
+| `sds-full` | 9999px | 円形, pill |
 
 ### 5.3 Grid & Container
 
@@ -271,11 +277,13 @@ Tailwind では後方のセレクタが優先されるため、クラス順序�
 
 | Token | 用途 |
 |---|---|
-| `shadow-sds-level-1` | Card hover, Badge |
-| `shadow-sds-level-2` | Popover 小, DatePicker, DropdownMenu (どちらも Figma で "Elevation Lv.2") |
-| `shadow-sds-level-3` | Tooltip, Select |
-| `shadow-sds-level-4` | Snackbar, Sticky Header |
-| `shadow-sds-level-5` | Modal, 最上位フローティング |
+| `shadow-sds-level-1` | Switch のつまみ |
+| `shadow-sds-level-2` | DatePicker, DropdownMenu (どちらも Figma で "Elevation Lv.2") |
+| `shadow-sds-level-3` | Tooltip |
+| `shadow-sds-level-4` | Snackbar |
+| `shadow-sds-level-5` | Modal |
+
+Card・Popover・Select・Tag・Toast・Sticky Header は Nova のコンポーネントとして**未提供**。アプリ側で同等の浮いた要素を作る場合は、上の表の近い役割のレベルを使う（例: 小さな浮きパネルは level-2）。
 
 ### 6.2 Surface Hierarchy
 
@@ -285,9 +293,9 @@ z-axis に沿って以下の順で重なる:
 Page background (surface-base, z=0)
   └─ Container (background-container, z=0, shadow=none)
        └─ Card (surface-base, z=1, shadow=level-1 optional)
-            └─ Popover/Tooltip (z=100, shadow=level-3, Popover 小=level-2)
+            └─ DropdownMenu / DatePicker (z=100, shadow=level-2) / Tooltip (z=100, shadow=level-3)
                  └─ Modal overlay (scrim + card, z=200, shadow=level-5)
-                      └─ Toast/Snackbar (z=300, shadow=level-4)
+                      └─ Snackbar (z=300, shadow=level-4)
 ```
 
 **Rule**: 影は「浮いている要素」にのみ使用する。ページ内の静的カードは基本 `border-weak` で境界を示し、影は使わない (影の濫用は UI が重く見える原因)。
@@ -353,7 +361,7 @@ border-radius: inherit; /* 対象要素の角丸を引き継ぐ */
 - **Do** `cn()` ユーティリティでクラスをマージする (`twMerge` により競合解消)。
 - **Do** インタラクティブ要素にはすべて `focus:outline-2 focus:outline-sds-border-focus` を付ける。
 - **Do** Radix UI が提供する primitive があるコンポーネントでは必ず Radix をベースにする (Dialog, DropdownMenu, Tooltip, Tabs, Switch, Checkbox, RadioGroup)。
-- **Do** font-family は `--font-family-sans`（デフォルト `system-ui` スタック）を使う。ブランドフォント（Noto Sans JP）が必要な場合は `branded-fonts.css` を import する（§3.1 参照）— コンポーネント内で font-family を直接指定しない。
+- **Do** font-family は `--font-family-sds-sans`（デフォルト `system-ui` スタック）を使う。ブランドフォント（Noto Sans JP）が必要な場合は `branded-fonts.css` を import する（§3.1 参照）— コンポーネント内で font-family を直接指定しない。
 - **Do** アイコンのみの要素 (children が icon のみの Button 等) には `aria-label` を必ず付与する。
 - **Do** ユーザーに見える文字列 (「クリア」「今日」、曜日名、月名 等) は props として外部から注入できるようにする。日本語デフォルト値を持ってよいが、必ず override 可能にする (i18n-ready)。
 
@@ -363,7 +371,7 @@ border-radius: inherit; /* 対象要素の角丸を引き継ぐ */
 - **Don't** Sun Red (`surface-emphasis`) を Primary のように多用しない。Emphasis は画面内で 1〜2 箇所まで。
 - **Don't** 影を静的カードに使わない (`shadow-*` はフローティング要素のみ)。
 - **Don't** 生の `shadow-[0_4px_...]` を書かない。必ず `shadow-sds-level-1〜5` のトークンを使う。
-- **Don't** `radius-s` (4px) を Button や Card に使わない (既定は `radius-m` = 8px)。
+- **Don't** `rounded-sds-100` (4px) を Button や Card に使わない (既定は `rounded-sds-200` = 8px)。
 - **Don't** 中間サイズの余白 (`p-[10px]`, `mt-[18px]`) を使わない。スケール外の値が必要ならデザイナーに確認。
 - **Don't** `size-[40px]` などの任意サイズ値を使わない。Tailwind scale (`size-10`) または spacing token で表現する。トークンで表現できない固定寸法の場合のみ任意値を許容し、理由コメントを付ける。
 - **Don't** ロケール依存文字列 (日本語の曜日名、ボタンラベル等) をコンポーネント内で `const WEEKDAYS = [...]` のように定義しない。必ず props 化する。
@@ -401,7 +409,7 @@ Heading は Mobile (〜`md`) で `typo-heading-mobile-*`、Desktop (`md:` 以上
 ### 9.3 Touch Targets
 
 - **Minimum tap target**: 40 × 40 px (Button `medium` 相当)。44 × 44 px を推奨。
-- **Mobile では Button `small` を避ける** (32px 高は押しにくい)。アイコン近接の場合は間隔 `xs` 以上を空ける。
+- **Mobile では Button `small` を避ける** (32px 高は押しにくい)。アイコン近接の場合は間隔 `sds-100` (8px) 以上を空ける。
 
 ### 9.4 Responsive Collapsing Strategy
 
@@ -449,14 +457,19 @@ Sun Design System (design.md 参照) を使って <画面名> を作成して。
 import {
   Button,
   Input, TextField, Textarea, TextareaField,
-  RadioGroup, Switch,
+  Checkbox, RadioGroup, RadioGroupItem, Switch,
   Badge, Divider,
-  Tooltip, Tab,
-  Snackbar, Modal,
+  TooltipProvider, Tooltip,
+  Tabs, TabsList, TabsTrigger, TabsContent,
+  SnackbarContainer, showSnackbar,
+  Modal, ModalTrigger, ModalContent, ModalHeader, ModalTitle, ModalBody, ModalFooter,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem,
-  ScrollArea,
+  Scrollbar, ScrollBarArea,
   DatePicker,
 } from '@sun-asterisk/nova';
+
+// Tooltip を使う場合は、アプリのルート付近に TooltipProvider を1つ置く
+<TooltipProvider>{/* app */}</TooltipProvider>
 ```
 
 ### 10.4 File-level Checklist (生成時)
@@ -478,7 +491,7 @@ import {
 | ファイル | 内容 |
 |---|---|
 | `scripts/global.css` | すべての CSS 変数 (色・余白・Radius・Shadow・Typography) |
-| `scripts/design-tokens.tokens.json` | Figma エクスポートのトークン原本 (Style Dictionary ソース) |
+| `scripts/design-tokens.tokens.json` | `pnpm tokens:sync` が Figma の変数から生成する中間ファイル (Style Dictionary ソース)。手で編集しない |
 | `src/components/index.ts` | 全公開コンポーネントのエクスポート一覧 |
 | `src/components/<name>/<Name>.styles.ts` | 各コンポーネントの variant 定義 (tv()) |
 | `.claude/skills/sun-design-system/` | Design System 統合スキル (Figma 更新 / Figma コンポーネント追加 / React 実装 / 既存コンポーネント変更の 4 workflow) |

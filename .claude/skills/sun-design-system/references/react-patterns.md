@@ -73,7 +73,7 @@ export const <name>Styles = tv({
   slots: {
     container: `
       w-[312px] rounded-l bg-surface-base p-m
-      shadow-level-5
+      shadow-sds-level-5
     `,
     header: 'flex items-center justify-between mb-m',
     daySelected: `
@@ -103,7 +103,7 @@ const styles = <name>Styles();
 container: `w-[312px] /* fixed calendar width, no matching token */`,
 
 // NG: トークンがあるのに任意値
-shadow: `shadow-[0_4px_6px_...]`,  // → shadow-level-5
+shadow: `shadow-[0_4px_6px_...]`,  // → shadow-sds-level-5
 size: `size-[40px]`,                 // → size-10
 ```
 
@@ -271,7 +271,7 @@ export const CustomLocale: Story = {
 
 | 間違い | 正しい書き方 |
 |---|---|
-| `shadow-[0_4px_6px_...]` | `shadow-level-5` |
+| `shadow-[0_4px_6px_...]` | `shadow-sds-level-5` |
 | `size-[40px]` | `size-10` |
 | `bg-[#ff2200]` | `bg-surface-emphasis` |
 | `text-[14px]` | `typo-mobile-ja-body-m` (utility) |

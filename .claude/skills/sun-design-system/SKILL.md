@@ -61,7 +61,7 @@ Sun* Design System Nova (`@sun-asterisk/nova`) の Figma と React 側の作業�
 
 ### Figma の値が古い/矛盾していると感じたら
 
-`scripts/design-tokens.tokens.json` は手動エクスポートの古いスナップショット。値が現状と合わない・おかしいと思ったら、まず `pnpm run figma:pull` を再実行するか `scripts/figma-variables.json` の `$changelog` を確認する — 各 Foundation フレームの更新履歴が全件入っている。憶測で「バグ」と判断して直接修正しない。`figma:pull` は Figma REST API で Variables を読み (`.env` の `FIGMA_ACCESS_TOKEN` / `FIGMA_FILE_KEY` が必要)、`scripts/figma-variables.json` に書き出すだけで、`design-tokens.tokens.json` は変更しない。
+トークンの正本は Figma の変数（Variables）。`scripts/design-tokens.tokens.json` は `pnpm tokens:sync` が Figma から生成し直す中間ファイルで、手で編集しない。値が現状と合わない・おかしいと思ったら、まず `pnpm run figma:pull` を再実行するか `scripts/figma-variables.json` の `$changelog` を確認する — 各 Foundation フレームの更新履歴が全件入っている。憶測で「バグ」と判断して直接修正しない。`figma:pull` は Figma REST API で Variables を読み (`.env` の `FIGMA_ACCESS_TOKEN` / `FIGMA_FILE_KEY` が必要)、`scripts/figma-variables.json` に書き出すだけで、`design-tokens.tokens.json` は変更しない。
 
 ### Figma 操作の鉄則
 
@@ -85,7 +85,7 @@ Figma の Components ページ (nodeId `1:3`) の **最上位レイヤーに存�
 
 ---
 
-## 3 つの Workflow
+## 4 つの Workflow
 
 ### A. design-system-update (Figma 全体更新)
 
@@ -149,7 +149,7 @@ Figma の Components ページ (nodeId `1:3`) の **最上位レイヤーに存�
 - `.figma-sync/snapshots/latest.json` — 既存全コンポーネントのバリアント構造
 - `scripts/global.css` — Figma トークン → CSS 変数
 - `src/components/` — React コンポーネント実装
-- `.env` の `FIGMA_FILE_KEY` — Figma ファイルキー (現在: `fSzxt8wKkXsn8fmxkPBUr2`)
+- `.env` の `FIGMA_FILE_KEY` — Figma ファイルキー (Nova｜Master: `fSzxt8wKkXsn8fmxkPBUr2`)
 
 ## Figma 内の主要 nodeId (参考)
 
